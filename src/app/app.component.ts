@@ -6,7 +6,7 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
 import { ListPage } from '../pages/list/list';
-
+import { HomePage } from '../pages/home/home';
 
 @Component({
   templateUrl: 'app.html'
@@ -15,7 +15,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // make HelloIonicPage the root (or first) page
-  rootPage: any = HelloIonicPage;
+  rootPage: any = HomePage;
   pages: Array<{title: string, component: any}>;
 
   constructor(
