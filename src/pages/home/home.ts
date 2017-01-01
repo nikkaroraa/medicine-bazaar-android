@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';  
-import { Platform, ActionSheetController } from 'ionic-angular';             
+import { Platform, ActionSheetController } from 'ionic-angular';   
+import {Camera} from 'ionic-native'; 
+import { Woocommerce } from '../../providers/woocommerce';         
 /*
   Generated class for the Home page.
 
@@ -12,53 +14,56 @@ import { Platform, ActionSheetController } from 'ionic-angular';
   templateUrl: 'home.html'
 })
 export class HomePage {
-
+  public base64Image: string;
+  private imageSrc: string;
   constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform, public actionsheetCtrl: ActionSheetController) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
   }
   
+  
   openMenu() {
     let actionSheet = this.actionsheetCtrl.create({
-      title: 'Albums',
+      title: 'Choose an option to upload',
       cssClass: 'action-sheets-basic-page',
       buttons: [
         {
-          text: 'Delete',
-          role: 'destructive',
-          icon: !this.platform.is('ios') ? 'trash' : null,
+          text: 'Camera',
+          icon: !this.platform.is('ios') ? 'camera' : null,
           handler: () => {
-            console.log('Delete clicked');
+            console.log('Camera option selected');
+            Camera.getPicture({
+                destinationType: Camera.DestinationType.DATA_URL,
+                targetWidth: 1000,
+                targetHeight: 1000
+            }).then((imageData) => {
+                // imageData is a base64 encoded string
+                this.base64Image = "data:image/jpeg;base64," + imageData;
+            }, (err) => {
+                console.log(err);
+            });
           }
         },
         {
-          text: 'Share',
-          icon: !this.platform.is('ios') ? 'share' : null,
+          text: 'Gallery',
+          icon: !this.platform.is('ios') ? 'gallery' : null,
           handler: () => {
-            console.log('Share clicked');
-          }
-        },
-        {
-          text: 'Play',
-          icon: !this.platform.is('ios') ? 'arrow-dropright-circle' : null,
-          handler: () => {
-            console.log('Play clicked');
-          }
-        },
-        {
-          text: 'Favorite',
-          icon: !this.platform.is('ios') ? 'heart-outline' : null,
-          handler: () => {
-            console.log('Favorite clicked');
-          }
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel', // will always sort to be on the bottom
-          icon: !this.platform.is('ios') ? 'close' : null,
-          handler: () => {
-            console.log('Cancel clicked');
+            console.log('Gallery option selected');
+              let cameraOptions = {
+    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+    destinationType: Camera.DestinationType.FILE_URI,      
+    quality: 100,
+    targetWidth: 1000,
+    targetHeight: 1000,
+    encodingType: Camera.EncodingType.JPEG,      
+    correctOrientation: true
+  }
+
+  Camera.getPicture(cameraOptions)
+    .then(file_uri => this.imageSrc = file_uri, 
+    err => console.log(err));
+              
           }
         }
       ]

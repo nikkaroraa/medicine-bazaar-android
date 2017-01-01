@@ -15,13 +15,20 @@
 <ion-img src="http://loremflickr.com/400/300/medicine"></ion-img>
 
 <button ion-button block (click)="openMenu()">
-    Show Action Sheet &nbsp;<ion-icon name="md-attach"></ion-icon>
+    Order with Prescription &nbsp;<ion-icon name="md-attach"></ion-icon>
 </button>
 
 <div text-center>OR</div>
 
 <button ion-button block>Search &nbsp;<ion-icon name="md-search"></ion-icon></button>
+<ion-card>
+    <ion-card-content>
+      
 
-
-
+      Latest Picture (clicked):
+      <img [src]="base64Image" *ngIf="base64Image" />
+      Latest Picture (retrieved):
+      <img [src]="imageSrc" *ngIf="imageSrc" />      
+    </ion-card-content>
+</ion-card>
 </ion-content>
