@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
  
 import { Http } from '@angular/http';
-import 'rxjs/add/operator/map';           
+import 'rxjs/add/operator/map';  
+import { Product} from '../models/products';
+import { Woocommerce } from '../providers/woocommerce';
 /*
   Generated class for the Home page.
 
@@ -14,12 +16,12 @@ import 'rxjs/add/operator/map';
 })
 export class HomePage {
  
-  products: any;
+  products:Product[];
  
-  constructor(public http: Http) {
+  constructor(public http: Http,private woocommerce: Woocommerce) {
  
-    this.http.get('https://www.ezmart.in/wp-json/wc/v1/products?consumer_key=ck_688fda4ec5e99c64dbc995c8e8270373f8b43f81&consumer_secret=cs_dca8a667e2990fc62885c5887465d23c12c21c8e').map(res => res.json()).subscribe(data => {
-        this.products = data;
+    woocommerce.load().subscribe(data => {
+        this.products=data;
         console.log(this.products);
     },
     err => {
