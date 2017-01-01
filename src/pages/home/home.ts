@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';  
-import { Platform, ActionSheetController } from 'ionic-angular';   
-import {Camera} from 'ionic-native'; 
-import { Woocommerce } from '../../providers/woocommerce';         
+ 
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/map';           
 /*
   Generated class for the Home page.
 
@@ -14,61 +13,21 @@ import { Woocommerce } from '../../providers/woocommerce';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  public base64Image: string;
-  private imageSrc: string;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public platform: Platform, public actionsheetCtrl: ActionSheetController) {}
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad HomePage');
-  }
-  
-  
-  openMenu() {
-    let actionSheet = this.actionsheetCtrl.create({
-      title: 'Choose an option to upload',
-      cssClass: 'action-sheets-basic-page',
-      buttons: [
-        {
-          text: 'Camera',
-          icon: !this.platform.is('ios') ? 'camera' : null,
-          handler: () => {
-            console.log('Camera option selected');
-            Camera.getPicture({
-                destinationType: Camera.DestinationType.DATA_URL,
-                targetWidth: 1000,
-                targetHeight: 1000
-            }).then((imageData) => {
-                // imageData is a base64 encoded string
-                this.base64Image = "data:image/jpeg;base64," + imageData;
-            }, (err) => {
-                console.log(err);
-            });
-          }
-        },
-        {
-          text: 'Gallery',
-          icon: !this.platform.is('ios') ? 'gallery' : null,
-          handler: () => {
-            console.log('Gallery option selected');
-              let cameraOptions = {
-    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-    destinationType: Camera.DestinationType.FILE_URI,      
-    quality: 100,
-    targetWidth: 1000,
-    targetHeight: 1000,
-    encodingType: Camera.EncodingType.JPEG,      
-    correctOrientation: true
-  }
-
-  Camera.getPicture(cameraOptions)
-    .then(file_uri => this.imageSrc = file_uri, 
-    err => console.log(err));
-              
-          }
-        }
-      ]
+ 
+  products: any;
+ 
+  constructor(public http: Http) {
+ 
+    this.http.get('https://www.ezmart.in/wp-json/wc/v1/products?consumer_key=ck_688fda4ec5e99c64dbc995c8e8270373f8b43f81&consumer_secret=cs_dca8a667e2990fc62885c5887465d23c12c21c8e').map(res => res.json()).subscribe(data => {
+        this.products = data;
+        console.log(this.products);
+    },
+    err => {
+        console.log("Oops!");
     });
-    actionSheet.present();
-}    
   
+  }
 }
+    
+  
+
