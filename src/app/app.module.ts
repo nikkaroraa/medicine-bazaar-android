@@ -5,7 +5,6 @@ import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { ListPage } from '../pages/list/list';
 import { HomePage } from '../pages/home/home';
-import {Woocommerce} from '../providers/woocommerce';
 
 @NgModule({
   declarations: [
@@ -26,6 +25,6 @@ import {Woocommerce} from '../providers/woocommerce';
     ListPage,
     HomePage
   ],
-  providers: [Woocommerce]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
 export class AppModule {}

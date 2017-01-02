@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
  
-import { Http } from '@angular/http';
+import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';  
-import { Product} from '../models/products';
-import { Woocommerce } from '../providers/woocommerce';
+import { FetchProducts } from '../../providers/fetch-products.service';
+         
 /*
   Generated class for the Home page.
 
@@ -12,23 +12,25 @@ import { Woocommerce } from '../providers/woocommerce';
 */
 @Component({
   selector: 'page-home',
-  templateUrl: 'home.html'
+  templateUrl: 'home.html',
+    providers: [ FetchProducts ]
 })
 export class HomePage {
  
-  products:Product[];
+  public products: any;
  
-  constructor(public http: Http,private woocommerce: Woocommerce) {
+  constructor(public http: Http, public fetchProducts: FetchProducts) {
  
-    woocommerce.load().subscribe(data => {
-        this.products=data;
-        console.log(this.products);
-    },
-    err => {
-        console.log("Oops!");
-    });
+    this.loadProducts();
   
   }
+loadProducts(){
+  this.fetchProducts.load()
+  .then(data => {
+    this.products = data;
+  });
+}
+
 }
     
   
