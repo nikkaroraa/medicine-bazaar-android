@@ -26,6 +26,9 @@
       {{product.name}}
     </ion-item>
   </ion-list>
-
+Latest Picture:
+      <img [src]="base64Image" *ngIf="base64Image" />
+Retrieved Image:
+      <img [src]="imageSrc" *ngIf="imageSrc"/> 
 
 </ion-content>
