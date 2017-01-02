@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/niks/ionicProjects/medicineBazaarAndroid/platforms/android/build/intermediates/res/merged/debug/xml/provider_paths.xml",
+        "source": "/home/niks/ionicProjects/medicineBazaarAndroid/platforms/android/res/xml/provider_paths.xml"
+    },
+    {
+        "merged": "/home/niks/ionicProjects/medicineBazaarAndroid/platforms/android/build/intermediates/res/merged/debug/xml/config.xml",
+        "source": "/home/niks/ionicProjects/medicineBazaarAndroid/platforms/android/res/xml/config.xml"
+    }
+]
