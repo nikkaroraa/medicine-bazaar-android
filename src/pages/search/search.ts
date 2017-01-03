@@ -17,15 +17,15 @@ import { SearchProduct } from '../../providers/search-product.service';
 })
 export class SearchPage {
 
-   public products: any;
-public s_products: Array<any> = [];
+   public products: Array<any> = [];
+public s_products: any;
 searchQuery: string = '';
   items: string[];
 
  public perpage: number = 2;
 public start: number =1;
 
-  constructor(public http: Http, public fetchProducts: FetchProducts,public searchProduct : SearchProduct) {
+  constructor(public http: Http, public fetchProducts: FetchProducts, public searchProduct : SearchProduct) {
       
     this.loadProducts();
   this.searchProducts();
@@ -34,7 +34,7 @@ this.initializeItems();
 
 
 initializeItems() {
-    this.items = this.s_products;
+    this.items = this.products;
   }
 getItems(ev: any) {
     // Reset items back to all of the items
@@ -52,15 +52,25 @@ getItems(ev: any) {
   }
 loadProducts(){
   this.fetchProducts.load()
-  .then(data => {
-    this.products = data;
+  .then(data => {;
+for(var i = 0; i < ( data.length ); i++){
+ this.products.push(data[i].name);
+  
+//  console.log(data);
+}
+       
+//this.start++;
+//console.log(this.s_products);
 console.log(this.products);
   });
 }
 searchProducts(){
     this.searchProduct.load()
     .then(data => {
-for(var i = 0; i < ( this.perpage*this.start ); i++){
+        
+    this.s_products = data;
+console.log(this.s_products);
+/*for(var i = 0; i < ( this.perpage*this.start ); i++){
  this.s_products.push(data[i].name);
   
 //  console.log(data);
@@ -68,7 +78,7 @@ for(var i = 0; i < ( this.perpage*this.start ); i++){
        
 //this.start++;
 //console.log(this.s_products);
-console.log(this.s_products);
+console.log(this.s_products);*/
 });
     
 }
