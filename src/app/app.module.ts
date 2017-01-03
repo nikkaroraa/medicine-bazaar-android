@@ -5,6 +5,7 @@ import { HelloIonicPage } from '../pages/hello-ionic/hello-ionic';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { ListPage } from '../pages/list/list';
 import { HomePage } from '../pages/home/home';
+import { SearchPage } from '../pages/search/search';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { HomePage } from '../pages/home/home';
     HelloIonicPage,
     ItemDetailsPage,
     ListPage,
-    HomePage
+    HomePage,
+    SearchPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -23,7 +25,8 @@ import { HomePage } from '../pages/home/home';
     HelloIonicPage,
     ItemDetailsPage,
     ListPage,
-    HomePage
+    HomePage,
+    SearchPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
