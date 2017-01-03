@@ -1,34 +1,42 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar class="bar bar-positive">
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Medicine Bazaar</ion-title>
-      <ion-buttons (click)="searchToggle()" end> <ion-icon name="search" color="secondary"></ion-icon> </ion-buttons>
-      <ion-buttons (click)="searchToggle()" end> <ion-icon name="cart" color="primary"></ion-icon><ion-badge>8</ion-badge> </ion-buttons>
+    <ion-title>Medicine Bazaa&#8377;</ion-title>
+      <ion-buttons (click)="navSearch()" end> <ion-icon name="search" color="dark" style="font-size:2.3em;"></ion-icon> </ion-buttons>
+      <ion-buttons end> <ion-icon name="cart" color="dark" style="font-size:2.3em;"></ion-icon><ion-badge color="danger">8</ion-badge> </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-<h3>Welcome to MedicineBazaar</h3>
+
 <ion-img src="http://loremflickr.com/400/300/medicine"></ion-img>
 
-<button ion-button block (click)="openMenu()">
-    Show Action Sheet &nbsp;<ion-icon name="attach"></ion-icon>
+<button ion-button block round outline icon-right (click)="openMenu()">
+    Upload Prescription &nbsp;<ion-icon style="font-size:2em;" name="md-clipboard" color="danger"></ion-icon>
 </button>
 
 <div text-center>OR</div>
 
-<button ion-button block>Search &nbsp;<ion-icon name="md-search"></ion-icon></button>
-<ion-list>
-    <ion-item *ngFor="let product of products">
-      {{product.name}}
-    </ion-item>
-  </ion-list>
-    <p>Latest Picture:</p>
-      <img [src]="base64Image" *ngIf="base64Image" />
-Retrieved Image:
-      <img [src]="imageSrc" *ngIf="imageSrc"/> 
+<button ion-button block round outline icon-right (click)="navSearch()">Search &nbsp;<ion-icon style="font-size:2em;" name="md-search" color="danger"></ion-icon></button>
+<ion-card *ngIf="base64Image">
+  <ion-card-header>
+    Captured (for Testing)
+  </ion-card-header>
+  <ion-card-content>
+    <img [src]="base64Image"/>
+  </ion-card-content>
+</ion-card>
+<ion-card *ngIf="imageSrc">
+  <ion-card-header>
+    Gallery (for Testing)
+  </ion-card-header>
+  <ion-card-content>
+    <img [src]="imageSrc" /> 
 
+  </ion-card-content>
+</ion-card>
+      
 </ion-content>

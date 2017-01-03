@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
  
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';  
-import { FetchProducts } from '../../providers/fetch-products.service';
+
 import {Camera} from 'ionic-native';
 import { Platform, ActionSheetController } from 'ionic-angular';
-         
+import { NavController} from 'ionic-angular';
+import {SearchPage} from '../search/search';         
 /*
   Generated class for the Home page.
 
@@ -16,26 +17,24 @@ import { Platform, ActionSheetController } from 'ionic-angular';
 
   selector: 'page-home',
   templateUrl: 'home.html',
-    providers: [ FetchProducts ]
+    
 })
 export class HomePage {
  
-  public products: any;
+  searchPage = SearchPage;
     public base64Image: string;
 private imageSrc: string;
  
-  constructor(public http: Http, public fetchProducts: FetchProducts, public platform: Platform, public actionsheetCtrl: ActionSheetController) {
+  constructor(public http: Http,public platform: Platform, public actionsheetCtrl: ActionSheetController, public navCtrl: NavController) {
       
-    this.loadProducts();
+    
   
   }
-loadProducts(){
-  this.fetchProducts.load()
-  .then(data => {
-    this.products = data;
-  });
-}
 
+navSearch(){
+    
+    this.navCtrl.push(this.searchPage);
+}
 openMenu() {
     let actionSheet = this.actionsheetCtrl.create({
       title: 'Choose an option to upload',
