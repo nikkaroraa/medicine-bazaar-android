@@ -13,6 +13,26 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding class="my-page">
+<ion-card *ngFor="let product of s_products">
 
+  <ion-card-header>
+
+    {{product.name}}
+  </ion-card-header>
+<ion-slides [options]="{pager:true}">
+  <ion-slide *ngFor="let image of product.images">
+    <img src={{image.src}} />
+  </ion-slide>
+</ion-slides>
+
+  <ion-card-content>
+      <span class="heading">Description:</span><div style="" [innerHTML]="product.description"></div>
+      
+
+      <span class="heading">Price:</span> <span class="value">&#x20b9; {{product.price}}</span>
+<div>&nbsp;</div>
+<button text-center ion-button round outline block color="danger">Add to Cart</button>
+  </ion-card-content>
+</ion-card>
 </ion-content>

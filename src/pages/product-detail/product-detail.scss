@@ -1,3 +1,21 @@
-page-product-detail {
+@import url('https://fonts.googleapis.com/css?family=Droid+Sans');
+$droid_font: 'Droid Sans', sans-serif;
 
+page-product-detail {
+    .my-page {
+ 
+    
+        .heading{
+            font-weight: 600;
+            font-size: 1em;
+            font-family: $droid_font;
+            color: dimgray;
+        }
+        .value{
+            font-weight: 600;
+            font-size:1.3em;
+            font-family: $droid_font;
+            color: darkgreen;
+        }
+}
 }

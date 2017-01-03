@@ -16,9 +16,6 @@
         "cordova-plugin-device": {
             "PACKAGE_NAME": "com.ionicframework.medicinebazzar361733"
         },
-        "cordova-plugin-splashscreen": {
-            "PACKAGE_NAME": "com.ionicframework.medicinebazzar361733"
-        },
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "com.ionicframework.medicinebazzar361733"
         },
@@ -26,6 +23,9 @@
             "PACKAGE_NAME": "com.ionicframework.medicinebazzar361733"
         },
         "ionic-plugin-keyboard": {
+            "PACKAGE_NAME": "com.ionicframework.medicinebazzar361733"
+        },
+        "cordova-plugin-splashscreen": {
             "PACKAGE_NAME": "com.ionicframework.medicinebazzar361733"
         }
     },

@@ -16,11 +16,11 @@ perpage:number = 2;
 }
 
 
-   load() {
+   load(productName: any) {
 
     return new Promise(resolve => {
       
-      this.http.get('https://www.ezmart.in/wp-json/wc/v1/products?per_page='+this.perpage+'&consumer_key=ck_688fda4ec5e99c64dbc995c8e8270373f8b43f81&consumer_secret=cs_dca8a667e2990fc62885c5887465d23c12c21c8e')
+      this.http.get('https://www.ezmart.in/wp-json/wc/v1/products?filter[name]='+productName+'&consumer_key=ck_688fda4ec5e99c64dbc995c8e8270373f8b43f81&consumer_secret=cs_dca8a667e2990fc62885c5887465d23c12c21c8e')
         .map(res => res.json())
         .subscribe(data => {
           resolve(data);

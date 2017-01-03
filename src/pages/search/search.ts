@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import { FetchProducts } from '../../providers/fetch-products.service';
 import { SearchProduct } from '../../providers/search-product.service';
 import { NavController, NavParams } from 'ionic-angular';
+import { ProductDetailPage} from '../product-detail/product-detail';
 /*
   Generated class for the Search page.
 
@@ -29,16 +30,15 @@ public start: number =1;
   constructor(public http: Http, public fetchProducts: FetchProducts, public searchProduct : SearchProduct, public navCtrl: NavController, public navParams: NavParams) {
       
     this.loadProducts();
-  this.searchProducts();
+ // this.searchProducts();
 //this.initializeItems(); //for hiding the products at the time of page loading
   }
 
-itemTapped(event, item) {
+ itemTapped(event, item) {
     this.navCtrl.push(ProductDetailPage, {
-for(var i = 0; i < (products.length) ; i++){if(item == productDetail[i].name){      
-item: productDetail[i]
-    }}
+      item: item
     });
+console.log("itemTapped:" + item);
   }
 initializeItems() {
     this.items = this.products;
@@ -62,7 +62,7 @@ loadProducts(){
   .then(data => {;
 for(var i = 0; i < ( data.length ); i++){
  this.products.push(data[i].name);
-  this.productDetail.push(data[i]);
+  //this.productDetail.push(data[i]);
 //  console.log(data);
 }
        
@@ -71,13 +71,14 @@ for(var i = 0; i < ( data.length ); i++){
 console.log(this.products);
   });
 }
-searchProducts(){
+
+/*searchProducts(){
     this.searchProduct.load()
     .then(data => {
         
     this.s_products = data;
 console.log(this.s_products);
-/*for(var i = 0; i < ( this.perpage*this.start ); i++){
+for(var i = 0; i < ( this.perpage*this.start ); i++){
  this.s_products.push(data[i].name);
   
 //  console.log(data);
@@ -85,11 +86,11 @@ console.log(this.s_products);
        
 //this.start++;
 //console.log(this.s_products);
-console.log(this.s_products);*/
+console.log(this.s_products);
 });
     
 }
-    
+*/    
  
 
 }
