@@ -12,8 +12,9 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'product-detail.html'
 })
 export class ProductDetailPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+selectedItem: any;
+  constructor(public navCtrl: NavController, public navParams: NavParams) {this.selectedItem = navParams.get('item');
+console.log(this.selectedItem);}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProductDetailPage');

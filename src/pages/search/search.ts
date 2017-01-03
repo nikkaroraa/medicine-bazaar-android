@@ -4,6 +4,7 @@ import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';  
 import { FetchProducts } from '../../providers/fetch-products.service';
 import { SearchProduct } from '../../providers/search-product.service';
+import { NavController, NavParams } from 'ionic-angular';
 /*
   Generated class for the Search page.
 
@@ -21,18 +22,24 @@ export class SearchPage {
 public s_products: any;
 searchQuery: string = '';
   items: string[];
-
+public productDetail: any;
  public perpage: number = 2;
 public start: number =1;
 
-  constructor(public http: Http, public fetchProducts: FetchProducts, public searchProduct : SearchProduct) {
+  constructor(public http: Http, public fetchProducts: FetchProducts, public searchProduct : SearchProduct, public navCtrl: NavController, public navParams: NavParams) {
       
     this.loadProducts();
   this.searchProducts();
-this.initializeItems();
+//this.initializeItems(); //for hiding the products at the time of page loading
   }
 
-
+itemTapped(event, item) {
+    this.navCtrl.push(ProductDetailPage, {
+for(var i = 0; i < (products.length) ; i++){if(item == productDetail[i].name){      
+item: productDetail[i]
+    }}
+    });
+  }
 initializeItems() {
     this.items = this.products;
   }
@@ -55,7 +62,7 @@ loadProducts(){
   .then(data => {;
 for(var i = 0; i < ( data.length ); i++){
  this.products.push(data[i].name);
-  
+  this.productDetail.push(data[i]);
 //  console.log(data);
 }
        
