@@ -69,17 +69,16 @@ search(searchEvent) {
 this.offset=0;
 console.log("Typed value is:" + this.searchQuery + "Offset Value is dsd:" + this.offset);
 if (this.searchQuery.trim() !== '' || this.searchQuery.trim().length > 3) {
-      this.fetchProducts.searchProducts(this.searchQuery, 0).subscribe(products => {
+      this.fetchProducts.searchProducts(this.searchQuery).subscribe(products => {
         this.products=products;
 console.log(this.products);
       });
-    }
-this.canLoadMore = true;
-this.offset += 10;
+    }if (this.searchQuery.trim() !== '' || this.searchQuery.trim().length > 3) {
+
   }
+}
 
-
- doInfinite(infiniteScroll: any) {
+/* doInfinite(infiniteScroll: any) {
     console.log('Begin async operation');
 
     setTimeout(() => {
@@ -93,22 +92,23 @@ console.log("Typed value is:" + this.searchQuery + "Offset Value is:" + this.off
       this.fetchProducts.searchProducts(this.searchQuery, this.offset).subscribe(products => {
         this.products.push(products);
 console.log(this.products);
-if(products.length < 10){
-    this.canLoadMore = false;
-console.log("No more products");
-return;
-}else{
-    this.offset += 10;
-}
+
+//if(products.length < 10){
+  //  this.canLoadMore = false;
+//console.log("No more products");
+//return;
+//}else{
+
+//}
       });
     
-
 
 
       console.log('Async operation has ended');
       infiniteScroll.complete();
     }, 500);
   }
+*/
 /*loadProducts(){
   this.fetchProducts.load()
   .then(data => {;
@@ -144,5 +144,6 @@ console.log(this.s_products);
 }
 */    
  
+
 
 }

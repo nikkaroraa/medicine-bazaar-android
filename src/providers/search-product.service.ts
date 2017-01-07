@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class SearchProduct {
-perpage:number = 2;
+
   
   constructor(public http: Http) {
 }

@@ -8,6 +8,7 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 import { HomePage } from '../pages/home/home';
 import { SearchPage } from '../pages/search/search';
 import {ItemDetailsPage} from '../pages/item-details/item-details';
+import {TestPagePage} from '../pages/test-page/test-page';
 @Component({
   templateUrl: 'app.html'
 })
@@ -28,7 +29,8 @@ export class MyApp {
     this.pages = [
     
      {title: 'Search Products', component: SearchPage},
-        {title: 'Infinite Scroll', component: ItemDetailsPage}
+        {title: 'Infinite Scroll', component: ItemDetailsPage},
+{title: 'TetsInfinite', component: TestPagePage}
     ];
   }
 

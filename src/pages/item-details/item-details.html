@@ -15,8 +15,8 @@
   <h4 text-center *ngIf="selectedItem">
     You navigated here from <b>{{selectedItem.title}}</b>
   </h4>
-<ion-list>
-   <ion-item *ngFor="let i of items">{{i}}</ion-item>
+<ion-list [virtualScroll]="items" approxItemHeight="50px;">
+   <ion-item *virtualItem="let i">{{i}}</ion-item>
  </ion-list>
 
 <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
