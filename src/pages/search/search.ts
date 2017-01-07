@@ -69,17 +69,16 @@ search(searchEvent) {
 this.offset=0;
 console.log("Typed value is:" + this.searchQuery + "Offset Value is dsd:" + this.offset);
 if (this.searchQuery.trim() !== '' || this.searchQuery.trim().length > 3) {
-      this.fetchProducts.searchProducts(this.searchQuery, 0).subscribe(products => {
+      this.fetchProducts.searchProducts(this.searchQuery).subscribe(products => {
         this.products=products;
 console.log(this.products);
       });
     }if (this.searchQuery.trim() !== '' || this.searchQuery.trim().length > 3) {
-this.canLoadMore = true;
-this.offset += 10;
+
   }
 }
 
- doInfinite(infiniteScroll: any) {
+/* doInfinite(infiniteScroll: any) {
     console.log('Begin async operation');
 
     setTimeout(() => {
@@ -99,7 +98,7 @@ console.log(this.products);
 //console.log("No more products");
 //return;
 //}else{
-    this.offset += 10;
+
 //}
       });
     
@@ -109,7 +108,7 @@ console.log(this.products);
       infiniteScroll.complete();
     }, 500);
   }
-
+*/
 /*loadProducts(){
   this.fetchProducts.load()
   .then(data => {;
