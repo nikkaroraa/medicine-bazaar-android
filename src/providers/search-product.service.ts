@@ -20,7 +20,7 @@ export class SearchProduct {
 
     return new Promise(resolve => {
       
-      this.http.get('https://www.ezmart.in/wp-json/wc/v1/products?filter[name]='+productName+'&consumer_key=ck_688fda4ec5e99c64dbc995c8e8270373f8b43f81&consumer_secret=cs_dca8a667e2990fc62885c5887465d23c12c21c8e')
+      this.http.get('https://www.medicinebazaar.in/wp-json/wc/v1/products?filter[name]='+productName+'&consumer_key=ck_f5801ed200d3c77e22b29a02b108928363f8b655&consumer_secret=cs_87191385746051414467143670e0c915ac37bf0a')
         .map(res => res.json())
         .subscribe(data => {
           resolve(data);
