@@ -34,6 +34,25 @@ export class SearchProduct {
     });
     });
   } 
+    
+loadById(productId: any) {
+
+    return new Promise(resolve => {
+      
+      this.http.get('https://www.medicinebazaar.in/wp-json/wc/v1/products/'+productId+'?consumer_key=ck_f5801ed200d3c77e22b29a02b108928363f8b655&consumer_secret=cs_87191385746051414467143670e0c915ac37bf0a')
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+          
+        },
+        err => {
+        console.log("Oops! There is some error in this. The loadById function");
+    },
+        () => {
+        console.log('Completed');
+    });
+    });
+  } 
      
 
 }

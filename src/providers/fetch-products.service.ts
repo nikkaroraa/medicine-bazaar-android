@@ -45,7 +45,9 @@ searchProducts(searchParam: string) {
 console.log("Inside the searchProducts:" + searchParam );
 
     
+
 return this.http.get('https://www.medicinebazaar.in/wp-json/wc/v1/products?search='+searchParam+'&per_page='+50+'&order=asc&consumer_key=ck_f5801ed200d3c77e22b29a02b108928363f8b655&consumer_secret=cs_87191385746051414467143670e0c915ac37bf0a') 
+
       .map(res =>(res.json()))
 
   }
