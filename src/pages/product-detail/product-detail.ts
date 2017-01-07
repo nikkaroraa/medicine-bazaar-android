@@ -20,21 +20,41 @@ export class ProductDetailPage {
 selectedItem: any;
 s_products: any;
  selectedItemName: any;
+public itemUpsell: Array<any> = [];
+public substitutes: Array<any> = [];
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct) {
       this.selectedItem = navParams.get('product');
       this.selectedItemName = this.selectedItem.name;
+     /* for(var i =0; i < this.selectedItem.upsell_ids.length; i++){
+      this.selectedItemUpSellId.push(this.selectedItem.upsell_ids[i]);
+          console.log("The Ids are" + this.selectedItemUpSellId);
+      }*/
+console.log(this.selectedItem.upsell_ids.length);
 console.log("The selected item name is:" + this.selectedItemName);
+for(var j = 0; j < this.selectedItem.upsell_ids.length; j++){
+console.log("Upsell Id: " + this.selectedItem.upsell_ids[j]);
+this.itemUpsell.push(this.selectedItem.upsell_ids[j]);
 //this.searchProducts(this.selectedItem);
-
+console.log("The id's are " + this.itemUpsell);
+}
 this.searchProduct.load(this.selectedItemName)
     .then(data => {
         
     this.s_products = data;
 console.log("The retrieved detailed product is" + this.s_products);
 
-    
+        
   });
+for(var j=0; j< this.itemUpsell.length; j++){
+this.searchProduct.loadById(this.itemUpsell[j])
+   .then(data => {
     
+    console.log("Value of "+ j + data);
+this.substitutes.push(data);
+    console.log(this.substitutes);
+});
+}
   }
  
   ionViewDidLoad() {

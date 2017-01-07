@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+
 import {PeopleService} from '../../providers/people-service';
 /*
   Generated class for the TestPage page.
