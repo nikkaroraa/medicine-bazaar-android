@@ -15,9 +15,9 @@
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
-                        "startOffset": 166,
+                        "startOffset": 167,
                         "endColumn": 63,
-                        "endOffset": 225
+                        "endOffset": 226
                     }
                 }
             },
@@ -26,8 +26,8 @@
                     "startLine": 3,
                     "startColumn": 4,
                     "startOffset": 119,
-                    "endColumn": 51,
-                    "endOffset": 166
+                    "endColumn": 52,
+                    "endOffset": 167
                 },
                 "from": {
                     "file": "/home/niks/ionicProjects/medicineBazaarAndroid/platforms/android/res/values/strings.xml",
@@ -35,8 +35,8 @@
                         "startLine": 2,
                         "startColumn": 4,
                         "startOffset": 55,
-                        "endColumn": 51,
-                        "endOffset": 102
+                        "endColumn": 52,
+                        "endOffset": 103
                     }
                 }
             },
@@ -44,18 +44,18 @@
                 "to": {
                     "startLine": 4,
                     "startColumn": 4,
-                    "startOffset": 171,
+                    "startOffset": 172,
                     "endColumn": 58,
-                    "endOffset": 225
+                    "endOffset": 226
                 },
                 "from": {
                     "file": "/home/niks/ionicProjects/medicineBazaarAndroid/platforms/android/res/values/strings.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
-                        "startOffset": 107,
+                        "startOffset": 108,
                         "endColumn": 58,
-                        "endOffset": 161
+                        "endOffset": 162
                     }
                 }
             }
