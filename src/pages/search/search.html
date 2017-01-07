@@ -18,7 +18,7 @@
 
 <ion-content padding>
 <ion-searchbar (ionInput)="search($event)"></ion-searchbar>
-<ion-list [virtualScroll]="products" approxItemHeight="50px">
+<ion-list [virtualScroll]="products" approxItemHeight="50px;">
   <ion-item *virtualItem="let product" (click)="itemTapped($event, product)">
     {{ product.name }}
   </ion-item>
@@ -28,5 +28,5 @@
    <ion-infinite-scroll-content 
 loadingSpinner="bubbles"
       loadingText="Loading more data..."></ion-infinite-scroll-content>
-</ion-infinite-scroll>
+</ion-infinite-scroll>  
 </ion-content>
