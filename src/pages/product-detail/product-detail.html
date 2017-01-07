@@ -30,7 +30,7 @@
 
       <span class="heading">Price:</span> <span class="value">&#x20b9; {{product.price}}</span>
 <div>&nbsp;</div>
-<button text-center ion-button round outline block color="danger">Add to Cart</button>
+<button text-center ion-button round outline block color="danger" (click)="showToast('bottom',product)">Add to Cart</button>
   </ion-card-content>
 </ion-card>
 
@@ -50,7 +50,7 @@
 
       <span class="heading">Price:</span> <span class="value">&#x20b9; {{substitute.price}}</span>
 <div>&nbsp;</div>
-<ion-buttons  (click)="presentToast()">Add to Cart</ion-buttons>
+<button text-center ion-button round outline block color="danger" (click)="showToast('bottom')">Add to Cart</button>
   </ion-card-content>
 </ion-card>
 </ion-content>
