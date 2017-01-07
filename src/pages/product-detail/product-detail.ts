@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { SearchProduct } from '../../providers/search-product.service';
+import { ToastController } from 'ionic-angular';
+
 
 
 /*
@@ -23,7 +25,7 @@ s_products: any;
 public itemUpsell: Array<any> = [];
 public substitutes: Array<any> = [];
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct,public toastCtrl: ToastController) {
       this.selectedItem = navParams.get('product');
       this.selectedItemName = this.selectedItem.name;
      /* for(var i =0; i < this.selectedItem.upsell_ids.length; i++){
@@ -56,6 +58,22 @@ this.substitutes.push(data);
 });
 }
   }
+  //toast for gocart bottom popup
+   presentToast() {
+    
+   let toast = this.toastCtrl.create({
+    message: 'Go to Payment',
+    duration: 3000,
+    position: 'bottom'
+  });
+console.log("hello toast");
+  toast.onDidDismiss(() => {
+    console.log('Dismissed toast');
+  });
+
+  toast.present();
+}
+//end of toast
  
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProductDetailPage');

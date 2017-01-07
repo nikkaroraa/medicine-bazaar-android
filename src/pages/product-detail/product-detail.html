@@ -8,8 +8,8 @@
 
   <ion-navbar>
     <ion-title>Product Detail</ion-title>
-<ion-buttons (click)="navSearch()" end> <ion-icon name="search" color="dark" style="font-size:2.3em;"></ion-icon> </ion-buttons>
-<ion-buttons end> <ion-icon name="cart" color="dark" style="font-size:2.3em;"></ion-icon><ion-badge color="danger">8</ion-badge> </ion-buttons>
+    <ion-buttons (click)="navSearch()" end> <ion-icon name="search" color="dark" style="font-size:2.3em;"></ion-icon> </ion-buttons>
+      <ion-buttons end> <ion-icon name="cart" color="dark" style="font-size:2.3em;"></ion-icon><ion-badge color="danger">8</ion-badge> </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -50,7 +50,7 @@
 
       <span class="heading">Price:</span> <span class="value">&#x20b9; {{substitute.price}}</span>
 <div>&nbsp;</div>
-<button text-center ion-button round outline block color="danger">Add to Cart</button>
+<ion-buttons  (click)="presentToast()">Add to Cart</ion-buttons>
   </ion-card-content>
 </ion-card>
 </ion-content>
