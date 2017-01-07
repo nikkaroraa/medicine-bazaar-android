@@ -20,7 +20,7 @@ export class SearchProduct {
 
     return new Promise(resolve => {
       
-      this.http.get('https://www.medicinebazaar.in/wp-json/wc/v1/products?filter[name]='+productName+'&consumer_key=ck_f5801ed200d3c77e22b29a02b108928363f8b655&consumer_secret=cs_87191385746051414467143670e0c915ac37bf0a')
+      this.http.get('https://www.medicinebazaar.in/wp-json/wc/v1/products?filter[name]='+productName+'&consumer_key=ck_3a2b7fddd1fac4e6c7ea6cec3afc19259ef76c6b&consumer_secret=cs_5653cf147e9fe76f72a98a2b0d8e3728f0e9e129')
         .map(res => res.json())
         .subscribe(data => {
           resolve(data);
@@ -39,7 +39,7 @@ loadById(productId: any) {
 
     return new Promise(resolve => {
       
-      this.http.get('https://www.medicinebazaar.in/wp-json/wc/v1/products/'+productId+'?consumer_key=ck_f5801ed200d3c77e22b29a02b108928363f8b655&consumer_secret=cs_87191385746051414467143670e0c915ac37bf0a')
+      this.http.get('https://www.medicinebazaar.in/wp-json/wc/v1/products/'+productId+'?consumer_key=ck_3a2b7fddd1fac4e6c7ea6cec3afc19259ef76c6b&consumer_secret=cs_5653cf147e9fe76f72a98a2b0d8e3728f0e9e129')
         .map(res => res.json())
         .subscribe(data => {
           resolve(data);
