@@ -4,7 +4,7 @@ import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';  
 import { FetchProducts } from '../../providers/fetch-products.service';
 import { SearchProduct } from '../../providers/search-product.service';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams} from 'ionic-angular';
 import { ProductDetailPage} from '../product-detail/product-detail';
 /*
   Generated class for the Search page.
@@ -21,26 +21,28 @@ export class SearchPage {
 
    public products: Array<any> = [];
 public s_products: any;
-searchQuery: string = '';
+public searchQuery: any = '';
   items: string[];
 public productDetail: any;
  public perpage: number = 2;
 public start: number =1;
+public offset: any = 0;
+public canLoadMore : any = true;
 
   constructor(public http: Http, public fetchProducts: FetchProducts, public searchProduct : SearchProduct, public navCtrl: NavController, public navParams: NavParams) {
       
-    this.loadProducts();
+   // this.loadProducts();
  // this.searchProducts();
 //this.initializeItems(); //for hiding the products at the time of page loading
   }
 
- itemTapped(event, item) {
+ itemTapped(event, product) {
     this.navCtrl.push(ProductDetailPage, {
-      item: item
+      product: product
     });
-console.log("itemTapped:" + item);
+console.log("itemTapped:" + product);
   }
-initializeItems() {
+/*initializeItems() {
     this.items = this.products;
   }
 getItems(ev: any) {
@@ -57,11 +59,61 @@ getItems(ev: any) {
       })
     }
   }
-loadProducts(){
+*/
+search(searchEvent) {
+    this.searchQuery = searchEvent.target.value;
+    // We will only perform the search if we have 3 or more characters
+   // if (term.trim() === '' || term.trim().length < 3) {
+      
+      // Get the searched users from github
+this.offset=0;
+console.log("Typed value is:" + this.searchQuery + "Offset Value is dsd:" + this.offset);
+if (this.searchQuery.trim() !== '' || this.searchQuery.trim().length > 3) {
+      this.fetchProducts.searchProducts(this.searchQuery, 0).subscribe(products => {
+        this.products=products;
+console.log(this.products);
+      });
+    }
+this.canLoadMore = true;
+this.offset += 10;
+  }
+
+
+ doInfinite(infiniteScroll: any) {
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      
+    // We will only perform the search if we have 3 or more characters
+   // if (term.trim() === '' || term.trim().length < 3) {
+      
+      // Get the searched users from github
+console.log("Typed value is:" + this.searchQuery + "Offset Value is:" + this.offset);
+
+      this.fetchProducts.searchProducts(this.searchQuery, this.offset).subscribe(products => {
+        this.products.push(products);
+console.log(this.products);
+if(products.length < 10){
+    this.canLoadMore = false;
+console.log("No more products");
+return;
+}else{
+    this.offset += 10;
+}
+      });
+    
+
+
+
+      console.log('Async operation has ended');
+      infiniteScroll.complete();
+    }, 500);
+  }
+/*loadProducts(){
   this.fetchProducts.load()
   .then(data => {;
 for(var i = 0; i < ( data.length ); i++){
- this.products.push(data[i].name);
+ this.products.push(data[i]);
   //this.productDetail.push(data[i]);
 //  console.log(data);
 }
@@ -71,7 +123,7 @@ for(var i = 0; i < ( data.length ); i++){
 console.log(this.products);
   });
 }
-
+*/
 /*searchProducts(){
     this.searchProduct.load()
     .then(data => {

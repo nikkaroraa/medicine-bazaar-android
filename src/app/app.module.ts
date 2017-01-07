@@ -4,13 +4,15 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { SearchPage } from '../pages/search/search';
 import { ProductDetailPage } from '../pages/product-detail/product-detail';
+import {ItemDetailsPage} from '../pages/item-details/item-details';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     SearchPage,
-    ProductDetailPage
+    ProductDetailPage,
+      ItemDetailsPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -20,7 +22,8 @@ import { ProductDetailPage } from '../pages/product-detail/product-detail';
     MyApp,
     HomePage,
     SearchPage,
-    ProductDetailPage
+    ProductDetailPage,
+ItemDetailsPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })

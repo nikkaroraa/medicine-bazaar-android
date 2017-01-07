@@ -19,17 +19,18 @@ export class ProductDetailPage {
 
 selectedItem: any;
 s_products: any;
- 
+ selectedItemName: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct) {
-      this.selectedItem = navParams.get('item');
-console.log(this.selectedItem);
+      this.selectedItem = navParams.get('product');
+      this.selectedItemName = this.selectedItem.name;
+console.log("The selected item name is:" + this.selectedItemName);
 //this.searchProducts(this.selectedItem);
 
-this.searchProduct.load(this.selectedItem)
+this.searchProduct.load(this.selectedItemName)
     .then(data => {
         
     this.s_products = data;
-console.log(this.s_products);
+console.log("The retrieved detailed product is" + this.s_products);
 
     
   });
