@@ -1,2 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/home/niks/ionicProjects/medicineBazaarAndroid/platforms/android/libs"/></dataSet><dataSet config="debug"><source path="/home/niks/ionicProjects/medicineBazaarAndroid/platforms/android/src/debug/jniLibs"/></dataSet></merger>
