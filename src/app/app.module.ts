@@ -7,6 +7,7 @@ import { SearchPage } from '../pages/search/search';
 import { ProductDetailPage } from '../pages/product-detail/product-detail';
 import {ItemDetailsPage} from '../pages/item-details/item-details';
 import {TestPagePage} from '../pages/test-page/test-page';
+
 @NgModule({
   declarations: [
     MyApp,

@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
 import { SearchProduct } from '../../providers/search-product.service';
-
+import { ToastController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 
 /*
   Generated class for the ProductDetail page.
@@ -22,8 +23,17 @@ s_products: any;
  selectedItemName: any;
 public itemUpsell: Array<any> = [];
 public substitutes: Array<any> = [];
+public product:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct,public toastCtrl: ToastController,storage: Storage) {
+      //storage try
+       storage.set('product',"3");
+
+     // Or to get a key/value pair
+     storage.get('product').then((val) => {
+       console.log('Your name is', "dalip");
+     })
+      //end storage try
       this.selectedItem = navParams.get('product');
       this.selectedItemName = this.selectedItem.name;
      /* for(var i =0; i < this.selectedItem.upsell_ids.length; i++){
@@ -56,6 +66,24 @@ this.substitutes.push(data);
 });
 }
   }
+  //toast for gocart bottom popup
+   showToast(position:string,product) {
+    console.log("buy product :")
+    console.log(product);
+       
+   let toast = this.toastCtrl.create({
+    message: 'Go to Payment',
+    duration: 3000,
+    position: 'bottom'
+  });
+
+  toast.onDidDismiss(() => {
+    console.log('Dismissed toast');
+  });
+
+  toast.present(toast);
+}
+//end of toast
  
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProductDetailPage');
