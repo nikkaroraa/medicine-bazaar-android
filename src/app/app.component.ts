@@ -16,6 +16,7 @@ import {CartPage} from '../pages/cart/cart';
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
+    
 
   // make HelloIonicPage the root (or first) page
   rootPage: any = HomePage;

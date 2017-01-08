@@ -31,6 +31,6 @@ ItemDetailsPage,
 TestPagePage,
 CartPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, Storage]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, Storage,]
 })
 export class AppModule {}

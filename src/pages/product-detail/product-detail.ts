@@ -4,6 +4,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { SearchProduct } from '../../providers/search-product.service';
 import { ToastController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { Globalvariable } from '../../providers/globalvariable';
 
 /*
   Generated class for the ProductDetail page.
@@ -14,7 +15,7 @@ import { Storage } from '@ionic/storage';
 @Component({
   selector: 'page-product-detail',
   templateUrl: 'product-detail.html',
-providers: [ SearchProduct ]
+providers: [ SearchProduct,Globalvariable ]
 })
 export class ProductDetailPage {
 
@@ -26,14 +27,11 @@ public substitutes: Array<any> = [];
 public product:any;
 public cartProducts: Array<any> = [];
 public cartInitialised : any;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct,public toastCtrl: ToastController,public storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct,public toastCtrl: ToastController,public storage: Storage,public globalvariable:Globalvariable) {
       //storage try
-
-this.storage.set("cartInitialised", true);
-       this.storage.get("cartInitialised").then((val) => {
-       console.log('The value of cartInitialised is: in the' + val);
-this.cartInitialised = val; 
-       });
+       console.log("global variable value:");
+      this.globalvariable.getCartInitialised();
+       
      // Or to get a key/value pair
      
       //end storage try
@@ -71,12 +69,12 @@ this.substitutes.push(data);
   }
   //toast for gocart bottom popup
    showToast(position:string,product) {
-    console.log("Buy product :" + product);
+    console.log("Buy product :" , product);
 
 if(!(this.cartInitialised)){
 console.log("Cart is not initialised yet");
 this.storage.set("cartProducts", product);
-this.storage.set('cartInitialised', true);
+this.cartInitialised=true;
 }else{
 console.log('Cart is initialised: ', this.cartInitialised);
 console.log('Now the cart is initialised');
@@ -91,7 +89,6 @@ if(val.length >=2 ){
     }
 
 }
-
 else{
 this.cartProducts.push(val);
 }
@@ -126,9 +123,8 @@ this.storage.set('cartProducts', this.cartProducts);
   }
 clearKey(){
     
-    
-this.storage.remove("cartProducts");
-this.storage.set("cartInitialised", false);
+this.storage.remove("cartProducts").then(()=>{});
+this.cartInitialised=false;
 }
     
 }
