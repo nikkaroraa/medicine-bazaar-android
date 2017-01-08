@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-
+import { Storage } from '@ionic/storage';
 /*
   Generated class for the Cart page.
 
@@ -12,8 +12,18 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'cart.html'
 })
 export class CartPage {
+public cartItems: Array<any> = [];
+  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+    this.storage.get('cartProducts').then((val)=> {
+        
+       console.log('On the Cart Page: ', val);
+        this.cartItems.push(val);
+        console.log("Cart Items on the Cart Page" + this.cartItems);
+        console.log('First Item' + this.cartItems[0]);
+    });
+
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CartPage');

@@ -9,6 +9,8 @@ import { HomePage } from '../pages/home/home';
 import { SearchPage } from '../pages/search/search';
 import {ItemDetailsPage} from '../pages/item-details/item-details';
 import {TestPagePage} from '../pages/test-page/test-page';
+import {CartPage} from '../pages/cart/cart';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -30,7 +32,8 @@ export class MyApp {
     
      {title: 'Search Products', component: SearchPage},
         {title: 'Infinite Scroll', component: ItemDetailsPage},
-{title: 'TetsInfinite', component: TestPagePage}
+{title: 'TestInfinite', component: TestPagePage},
+{title: 'Cart', component: CartPage}
     ];
   }
 

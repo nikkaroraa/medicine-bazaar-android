@@ -10,12 +10,14 @@
     <ion-title>Product Detail</ion-title>
     <ion-buttons (click)="navSearch()" end> <ion-icon name="search" color="dark" style="font-size:2.3em;"></ion-icon> </ion-buttons>
       <ion-buttons end> <ion-icon name="cart" color="dark" style="font-size:2.3em;"></ion-icon><ion-badge color="danger">8</ion-badge> </ion-buttons>
+      
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+<button ion-button (click)="clearKey()" color="danger">Clear Key</button>
 <ion-card *ngFor="let product of s_products"> <!-- Because the object comes up inside an array-->
 
   <ion-card-header>
@@ -50,7 +52,7 @@
 
       <span class="heading">Price:</span> <span class="value">&#x20b9; {{substitute.price}}</span>
 <div>&nbsp;</div>
-<button text-center ion-button round outline block color="danger" (click)="showToast('bottom')">Add to Cart</button>
+<button text-center ion-button round outline block color="danger" (click)="showToast('bottom', substitute)">Add to Cart</button>
   </ion-card-content>
 </ion-card>
 </ion-content>

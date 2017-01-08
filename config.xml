@@ -57,4 +57,5 @@
     <plugin name="cordova-plugin-splashscreen" spec="~4.0.1" />
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <plugin name="cordova-sqlite-storage" spec="~2.0.1" />
+    <plugin name="cordova-plugin-x-toast" spec="~2.5.2" />
 </widget>

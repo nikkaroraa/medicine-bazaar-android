@@ -24,15 +24,16 @@ s_products: any;
 public itemUpsell: Array<any> = [];
 public substitutes: Array<any> = [];
 public product:any;
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct,public toastCtrl: ToastController,storage: Storage) {
+public cartProducts: Array<any> = [];
+public cartInitialised : any;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct,public toastCtrl: ToastController,public storage: Storage) {
       //storage try
-       storage.set('product',"3");
-
+       this.storage.get('cartInitialised').then((val) => {
+       console.log('The value of cartInitialised is: ', val);
+this.cartInitialised = val; 
+       });
      // Or to get a key/value pair
-     storage.get('product').then((val) => {
-       console.log('Your name is', "dalip");
-     })
+     
       //end storage try
       this.selectedItem = navParams.get('product');
       this.selectedItemName = this.selectedItem.name;
@@ -68,17 +69,50 @@ this.substitutes.push(data);
   }
   //toast for gocart bottom popup
    showToast(position:string,product) {
-    console.log("buy product :")
-    console.log(product);
+    console.log("Buy product :" + product);
+
+if(!this.cartInitialised){
+console.log("Cart is not initialised yet");
+this.storage.set("cartProducts", product);
+this.storage.set('cartInitialised', "1");
+}else{
+console.log('Cart is initialised: ', this.cartInitialised);
+console.log('Now the cart is initialised');
+
+    this.storage.get('cartProducts').then((val)=> {
+        
+       console.log('Inside the showToast: ', val);
+this.cartProducts = [];
+if(val.length >=2 ){
+    for(var i = 0; i < val.length ; i++){
+        this.cartProducts.push(val[i]);
+    }
+
+}
+
+else{
+this.cartProducts.push(val);
+}
+
+        this.cartProducts.push(product);
+console.log(this.cartProducts);
+
+this.storage.set('cartProducts', this.cartProducts);
+//console.log("After pushing, inside the showToast", val);
+    });
+}
        
    let toast = this.toastCtrl.create({
-    message: 'Go to Payment',
+    message: 'Check your Cart',
     duration: 3000,
     position: 'bottom'
   });
 
   toast.onDidDismiss(() => {
     console.log('Dismissed toast');
+     this.storage.get('cartProducts').then((val) => {
+       console.log('The Products in the cart are: ', val);
+     }); 
   });
 
   toast.present(toast);
@@ -88,6 +122,11 @@ this.substitutes.push(data);
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProductDetailPage');
   }
-
+clearKey(){
+    
+    
+    this.storage.remove('cartProducts');
+this.storage.set('cartInitialised', "0");
+}
     
 }
