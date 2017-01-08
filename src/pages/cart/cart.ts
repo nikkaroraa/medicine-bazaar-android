@@ -13,15 +13,26 @@ import { Storage } from '@ionic/storage';
 })
 export class CartPage {
 public cartItems: Array<any> = [];
+public cartArray: Array<any> = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
 
     this.storage.get('cartProducts').then((val)=> {
         
        console.log('On the Cart Page: ', val);
-        this.cartItems.push(val);
-        console.log("Cart Items on the Cart Page" + this.cartItems);
-        console.log('First Item' + this.cartItems[0]);
-    });
+        this.cartArray.push(val);
+        if(val.length>1){console.log("Cart Items on the Cart Page" + this.cartArray);
+        console.log('First Item' + this.cartArray[0]);
+
+this.cartItems.push(this.cartArray[0]);
+console.log(this.cartItems);
+}else{
+    
+
+this.cartItems = this.cartArray;
+console.log(this.cartItems);
+
+}
+            });
 
   }
 

@@ -14,5 +14,21 @@
 
 
 <ion-content padding>
+<ion-card *ngFor="let item of cartItems"> <!-- Because the object comes up inside an array-->
 
+  <ion-card-header>
+
+    {{item.name}}
+  </ion-card-header>
+
+
+  <ion-card-content>
+      <span class="heading">Description:</span><div style="" [innerHTML]="item.description"></div>
+      
+
+      <span class="heading">Price:</span> <span class="value">&#x20b9; {{item.price}}</span>
+<div>&nbsp;</div>
+
+  </ion-card-content>
+    </ion-card>
 </ion-content>

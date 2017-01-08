@@ -28,8 +28,10 @@ public cartProducts: Array<any> = [];
 public cartInitialised : any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct,public toastCtrl: ToastController,public storage: Storage) {
       //storage try
-       this.storage.get('cartInitialised').then((val) => {
-       console.log('The value of cartInitialised is: ', val);
+
+this.storage.set("cartInitialised", true);
+       this.storage.get("cartInitialised").then((val) => {
+       console.log('The value of cartInitialised is: in the' + val);
 this.cartInitialised = val; 
        });
      // Or to get a key/value pair
@@ -71,10 +73,10 @@ this.substitutes.push(data);
    showToast(position:string,product) {
     console.log("Buy product :" + product);
 
-if(!this.cartInitialised){
+if(!(this.cartInitialised)){
 console.log("Cart is not initialised yet");
 this.storage.set("cartProducts", product);
-this.storage.set('cartInitialised', "1");
+this.storage.set('cartInitialised', true);
 }else{
 console.log('Cart is initialised: ', this.cartInitialised);
 console.log('Now the cart is initialised');
@@ -125,8 +127,8 @@ this.storage.set('cartProducts', this.cartProducts);
 clearKey(){
     
     
-    this.storage.remove('cartProducts');
-this.storage.set('cartInitialised', "0");
+this.storage.remove("cartProducts");
+this.storage.set("cartInitialised", false);
 }
     
 }
