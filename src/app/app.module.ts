@@ -9,6 +9,7 @@ import {ItemDetailsPage} from '../pages/item-details/item-details';
 import {TestPagePage} from '../pages/test-page/test-page';
 import {CartPage} from '../pages/cart/cart';
 import { LocalDB } from '../providers/local-db';
+import { Storage } from '@ionic/storage';
 /*
 export function provideStorage() {
  return new Storage(['sqlite', 'websql', 'indexeddb'], { name: '__mydb' }// optional config);
@@ -37,6 +38,6 @@ ItemDetailsPage,
 TestPagePage,
 CartPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, LocalDB]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, LocalDB, Storage]
 })
 export class AppModule {}

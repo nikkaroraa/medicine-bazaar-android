@@ -16,7 +16,7 @@ export class LocalDB {
   constructor() {
    this.db = new PouchDB('localdb');
  
-    this.remote = 'http://localhost:5984/localdb';
+   /* this.remote = 'http://localhost:5984/localdb';
  
     let options = {
       live: true,
@@ -24,7 +24,7 @@ export class LocalDB {
       continuous: true
     };
  
-    this.db.sync(this.remote, options);
+    this.db.sync(this.remote, options);*/
   }
 getAll() {
  if (this.data) {

@@ -25,17 +25,24 @@ public itemUpsell: Array<any> = [];
 public substitutes: Array<any> = [];
 public product:any;
 public cartProducts: Array<any> = [];
-public cartInitialised : any;
+public cartInitialised : any = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct,public toastCtrl: ToastController,public storage: Storage) {
       //storage try
-
-this.storage.set("cartInitialised", true);
-       this.storage.get("cartInitialised").then((val) => {
-       console.log('The value of cartInitialised is: in the' + val);
+/*       this.storage.get("cartInitialised").then((val) => {
+       console.log('The value of cartInitialised is: in the constructor' + val);
 this.cartInitialised = val; 
-       });
+       });*/
      // Or to get a key/value pair
-     
+this.storage.get('cartInitialised').then((val)=>{
+   if(!val){
+        console.log("Exists or not:", this.storage.get('cartInitialised'));
+        console.log("Cart is not initialised yet");
+          this.cartInitialised = false;
+   }else{
+    this.cartInitialised = true;   
+   } 
+});
+      
       //end storage try
       this.selectedItem = navParams.get('product');
       this.selectedItemName = this.selectedItem.name;
@@ -77,6 +84,7 @@ if(!(this.cartInitialised)){
 console.log("Cart is not initialised yet");
 this.storage.set("cartProducts", product);
 this.storage.set('cartInitialised', true);
+this.cartInitialised = true;
 }else{
 console.log('Cart is initialised: ', this.cartInitialised);
 console.log('Now the cart is initialised');
@@ -126,9 +134,15 @@ this.storage.set('cartProducts', this.cartProducts);
   }
 clearKey(){
     
-  this.storage.ready();
+ 
 this.storage.remove("cartProducts");
-this.storage.set("cartInitialised", false);
+this.cartInitialised = false;
+console.log('cartProducts key removed successfully and cartInitialised local var is set to false');
 }
+ clearAnother(){
+     
+     this.storage.remove('cartInitialised');
+     console.log('cartInitalised key removed successfully. Defautl is set to false');
+ }
     
 }

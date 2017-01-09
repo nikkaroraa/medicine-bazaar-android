@@ -6,6 +6,7 @@ import { FetchProducts } from '../../providers/fetch-products.service';
 import { SearchProduct } from '../../providers/search-product.service';
 import { NavController, NavParams} from 'ionic-angular';
 import { ProductDetailPage} from '../product-detail/product-detail';
+
 /*
   Generated class for the Search page.
 
@@ -42,24 +43,6 @@ public canLoadMore : any = true;
     });
 console.log("itemTapped:" + product);
   }
-/*initializeItems() {
-    this.items = this.products;
-  }
-getItems(ev: any) {
-    // Reset items back to all of the items
-    this.initializeItems();
-
-    // set val to the value of the searchbar
-    let val = ev.target.value;
-
-    // if the value is an empty string don't filter the items
-    if (val && val.trim() != '') {
-      this.items = this.items.filter((item) => {
-        return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
-      })
-    }
-  }
-*/
 search(searchEvent) {
     this.searchQuery = searchEvent.target.value;
     // We will only perform the search if we have 3 or more characters
@@ -78,71 +61,6 @@ console.log(this.products);
   }
 }
 
-/* doInfinite(infiniteScroll: any) {
-    console.log('Begin async operation');
-
-    setTimeout(() => {
-      
-    // We will only perform the search if we have 3 or more characters
-   // if (term.trim() === '' || term.trim().length < 3) {
-      
-      // Get the searched users from github
-console.log("Typed value is:" + this.searchQuery + "Offset Value is:" + this.offset);
-
-      this.fetchProducts.searchProducts(this.searchQuery, this.offset).subscribe(products => {
-        this.products.push(products);
-console.log(this.products);
-
-//if(products.length < 10){
-  //  this.canLoadMore = false;
-//console.log("No more products");
-//return;
-//}else{
-
-//}
-      });
-    
-
-
-      console.log('Async operation has ended');
-      infiniteScroll.complete();
-    }, 500);
-  }
-*/
-/*loadProducts(){
-  this.fetchProducts.load()
-  .then(data => {;
-for(var i = 0; i < ( data.length ); i++){
- this.products.push(data[i]);
-  //this.productDetail.push(data[i]);
-//  console.log(data);
-}
-       
-//this.start++;
-//console.log(this.s_products);
-console.log(this.products);
-  });
-}
-*/
-/*searchProducts(){
-    this.searchProduct.load()
-    .then(data => {
-        
-    this.s_products = data;
-console.log(this.s_products);
-for(var i = 0; i < ( this.perpage*this.start ); i++){
- this.s_products.push(data[i].name);
-  
-//  console.log(data);
-}
-       
-//this.start++;
-//console.log(this.s_products);
-console.log(this.s_products);
-});
-    
-}
-*/    
  
 
 
