@@ -25,9 +25,9 @@ export class ProductDetailPage {
     public substitutes: Array<any> = [];
     public product:any;
     public cartProducts: Array<any> = [];
-    public cartInitialised : any = false;
-    public prodObj;
-
+    public cartInitialised: any = false;
+    public countIncreased = false;
+    
   constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct,public toastCtrl: ToastController,public storage: Storage) {
       //storage try
       /*       
@@ -85,11 +85,14 @@ export class ProductDetailPage {
     //toast for gocart bottom popup
     showToast(position:string,product) {
         console.log("Buy product :" + product);
-
+        var that = this;
     if(!(this.cartInitialised))
     {
         console.log("Cart is not initialised yet");
-        this.cartProducts = [];
+        this.cartProducts = []; 
+        product.count = 1;
+            
+        console.log("Product Count set to 1");
         this.cartProducts.push(product);
         this.storage.set("cartProducts", this.cartProducts);
         this.storage.set('cartInitialised', true);
@@ -108,14 +111,43 @@ export class ProductDetailPage {
            for(var i = 0; i < val.length ; i++){
                 this.cartProducts.push(val[i]);
            }
-           this.cartProducts.forEach(function (value, index){
-            console.log("This is forEach", value);
+           this.cartProducts.forEach(function (item, index){
+            console.log("This is forEach", item);
+               if(item.id == product.id){
+                   console.log(item.id + "==" + product.id);
+                   item.count +=1;
+                   console.log("Count increased by 1");
+                   console.log("Value of count is:", item.count);
+                   that.countIncreased = true;
+                   console.log("The value of countIncreased: ", that.countIncreased);
+               }
+               
+
            });
+            if(!this.countIncreased){
+                product.count = 1;
+                this.cartProducts.push(product);    
+                console.log("Product Count set to 1");
+            }
 
+        
+            console.log(this.cartProducts);
+        
+        /*
+        this.cartProducts.forEach(function(item, index){
+            if(item.id == product.id && !this.countIncreased){
+                console.log(item.id + "==" + product.id);
+                item.count += 1;
+                console.log("count increased by 1 for " + item.title);
+                this.countIncreased = true;    
+            }
+        });
 
-        this.cartProducts.push(product);
-        console.log(this.cartProducts);
-
+        if(!this.countIncreased){
+          product.count = 1;
+          this.cartProducts.push(product);
+        }
+        */    
         this.storage.set('cartProducts', this.cartProducts);
 
         });
