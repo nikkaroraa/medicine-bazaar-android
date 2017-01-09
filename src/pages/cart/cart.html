@@ -23,18 +23,35 @@
 
 
   <ion-card-content>
-      <span class="heading">Description:</span><div style="" [innerHTML]="item.description"></div>
-      <span class="heading">Count:</span>{{item.count}}
-      <button ion-button icon-only>
-  <ion-icon name="add"></ion-icon>
-</button>
-      <button ion-button icon-only>
-  <ion-icon name="minus"></ion-icon>
-</button>
 
-      <span class="heading">Price:</span> <span class="value">&#x20b9; {{item.price}}</span>
+      
+<div>
+<span class="heading">Description:</span><div style="" [innerHTML]="item.description"></div>
+      </div> 
+
+
+<div><button ion-button icon-only clear (click)="decreaseCount(item)"><ion-icon md="md-remove-circle"></ion-icon></button>
+     {{item.count}}  <button ion-button icon-only clear (click)="increaseCount(item)"><ion-icon md="md-add-circle"></ion-icon></button>
+      </div>
+      <div><span class="heading">Individual Price:</span> <span class="value">&#x20b9; {{item.price}}</span></div>
+      <!--<div><span class="heading">Total Price:</span> <span class="value">&#x20b9; {{item.price*item.count}}</span></div>-->
+
 <div>&nbsp;</div>
-
+ <button ion-button icon-only clear (click)="deleteItem(item)"><ion-icon md="md-trash"></ion-icon></button>
   </ion-card-content>
-    </ion-card>
+</ion-card>
+<ion-card>
+    <ion-card-header>
+    
+
+Total Price
+</ion-card-header>
+<ion-card-content>
+<div> <span class="value">&#x20b9; {{costSumString}}</span></div>
+<div>&nbsp;</div>
+ <button ion-button block color="danger">Checkout</button> 
+</ion-card-content>
+
+</ion-card>
+      
 </ion-content>

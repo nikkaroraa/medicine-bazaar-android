@@ -4,6 +4,8 @@ import { NavController, NavParams } from 'ionic-angular';
 import { SearchProduct } from '../../providers/search-product.service';
 import { ToastController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { SearchPage } from '../search/search'; 
+import { CartPage } from '../cart/cart'; 
 
 @Component({
   selector: 'page-product-detail',
@@ -21,7 +23,7 @@ export class ProductDetailPage {
     public cartProducts: Array<any> = [];
     public cartInitialised: any = false;
     public countIncreased = false;
-    
+    public productCount: any = 0;
   constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct,public toastCtrl: ToastController,public storage: Storage) {
       //storage try
       /*       
@@ -30,6 +32,21 @@ export class ProductDetailPage {
           this.cartInitialised = val; 
       });*/
       // Or to get a key/value pair
+      /*this.storage.get('productCount').then((val)=>{
+         
+            this.cartProducts.length = val;
+         
+      });*/
+      this.storage.get('productCount').then((val)=>{
+        if(!val){
+            this.productCount = 0;
+        }
+        else{
+            this.productCount = val;
+        }
+            
+         
+      });
       this.storage.get('cartInitialised').then((val)=>{
         if(!val)
         {
@@ -89,6 +106,8 @@ export class ProductDetailPage {
         console.log("Product Count set to 1");
         this.cartProducts.push(product);
         this.storage.set("cartProducts", this.cartProducts);
+        this.storage.set("productCount", this.cartProducts.length);
+        this.productCount = this.cartProducts.length;
         this.storage.set('cartInitialised', true);
         this.cartInitialised = true;
     }
@@ -120,7 +139,9 @@ export class ProductDetailPage {
            });
             if(!this.countIncreased){
                 product.count = 1;
-                this.cartProducts.push(product);    
+                this.cartProducts.push(product);
+                this.storage.set('productCount', this.cartProducts.length);
+                this.productCount = this.cartProducts.length;
                 console.log("Product Count set to 1");
             }
 
@@ -178,5 +199,27 @@ export class ProductDetailPage {
          this.storage.remove('cartInitialised');
          console.log('cartInitalised key removed successfully. Defautl is set to false');
     }
+    checkCart(){
+    
+    this.navCtrl.push(CartPage);
+    }
+    navSearch(){
+    
+    this.navCtrl.push(SearchPage);
+    }
+    ionViewDidEnter(){
+    this.storage.get('productCount').then((val)=>{
+        if(!val){
+            console.log('this.ProductCoitasd', this.productCount);
+            this.productCount = 0;
+        }
+        else{
+            console.log('this.ProductCoitasd', this.productCount);
+            this.productCount = val;
+        }
+            
+         
+      });
+}
     
 }
