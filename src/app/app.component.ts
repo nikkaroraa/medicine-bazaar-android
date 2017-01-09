@@ -10,7 +10,7 @@ import { SearchPage } from '../pages/search/search';
 import {ItemDetailsPage} from '../pages/item-details/item-details';
 import {TestPagePage} from '../pages/test-page/test-page';
 import {CartPage} from '../pages/cart/cart';
-
+import { TabsPage } from '../pages/tabs/tabs';
 @Component({
   templateUrl: 'app.html'
 })
@@ -33,7 +33,8 @@ export class MyApp {
      {title: 'Search Products', component: SearchPage},
         {title: 'Infinite Scroll', component: ItemDetailsPage},
 {title: 'TestInfinite', component: TestPagePage},
-{title: 'Cart', component: CartPage}
+{title: 'Cart', component: CartPage},
+{title: 'login ', component: TabsPage}
     ];
   }
 

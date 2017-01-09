@@ -25,6 +25,12 @@
   <ion-card-content>
       <span class="heading">Description:</span><div style="" [innerHTML]="item.description"></div>
       <span class="heading">Count:</span>{{item.count}}
+      <button ion-button icon-only>
+  <ion-icon name="add"></ion-icon>
+</button>
+      <button ion-button icon-only>
+  <ion-icon name="minus"></ion-icon>
+</button>
 
       <span class="heading">Price:</span> <span class="value">&#x20b9; {{item.price}}</span>
 <div>&nbsp;</div>
