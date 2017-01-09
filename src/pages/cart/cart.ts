@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import {  TabsPage } from '../tabs/tabs';
 /*
   Generated class for the Cart page.
 
@@ -63,6 +64,13 @@ this.cartItems.forEach(function(element, index){
       }); 
       
   }
+ //login or signup page 
+ gotologin()
+ {
+     console.log("login");
+  this.navCtrl.push(TabsPage);   
+ }
+ 
   increaseCount(product){
       var that = this;
    //   product.count++;
