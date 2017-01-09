@@ -9,7 +9,7 @@
   <ion-navbar>
     <ion-title>Product Detail</ion-title>
     <ion-buttons (click)="navSearch()" end> <ion-icon name="search" color="dark" style="font-size:2.3em;"></ion-icon> </ion-buttons>
-      <ion-buttons end> <ion-icon name="cart" color="dark" style="font-size:2.3em;"></ion-icon><ion-badge color="danger">8</ion-badge> </ion-buttons>
+      <ion-buttons end> <ion-icon name="cart" color="dark" style="font-size:2.3em;"></ion-icon><ion-badge color="danger">{{this.productCount}}</ion-badge> </ion-buttons>
       
   </ion-navbar>
 
@@ -33,6 +33,11 @@
 
       <span class="heading">Price:</span> <span class="value">&#x20b9; {{product.price}}</span>
 <div>&nbsp;</div>
+<div>
+    <button ion-button icon-only clear (click)="decreaseCount(product)"><ion-icon md="md-remove-circle"></ion-icon></button>
+         {{product.count}}  
+    <button ion-button icon-only clear (click)="increaseCount(product)"><ion-icon md="md-add-circle"></ion-icon></button>
+</div>
 <button text-center ion-button round outline block color="danger" (click)="showToast('bottom',product)">Add to Cart</button>
   </ion-card-content>
 </ion-card>

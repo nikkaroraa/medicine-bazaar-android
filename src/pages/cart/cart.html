@@ -28,14 +28,14 @@
 <span class="heading">Description:</span><div style="" [innerHTML]="item.description"></div>
       </div> 
 
-<div><button ion-button icon-only (click)="decreaseCount(item)"><ion-icon md="md-remove-circle"></ion-icon></button>
-     {{item.count}}  <button ion-button icon-only (click)="increaseCount(item)"><ion-icon md="md-add-circle"></ion-icon></button>
+<div><button ion-button icon-only clear (click)="decreaseCount(item)"><ion-icon md="md-remove-circle"></ion-icon></button>
+     {{item.count}}  <button ion-button icon-only clear (click)="increaseCount(item)"><ion-icon md="md-add-circle"></ion-icon></button>
       </div>
       <div><span class="heading">Individual Price:</span> <span class="value">&#x20b9; {{item.price}}</span></div>
       <!--<div><span class="heading">Total Price:</span> <span class="value">&#x20b9; {{item.price*item.count}}</span></div>-->
 
 <div>&nbsp;</div>
-
+ <button ion-button icon-only clear (click)="deleteItem(item)"><ion-icon md="md-trash"></ion-icon></button>
   </ion-card-content>
 </ion-card>
 <ion-card>

@@ -6,7 +6,9 @@ import 'rxjs/add/operator/map';
 import {Camera} from 'ionic-native';
 import { Platform, ActionSheetController } from 'ionic-angular';
 import { NavController} from 'ionic-angular';
-import {SearchPage} from '../search/search';         
+import {SearchPage} from '../search/search'; 
+import { Storage } from '@ionic/storage';   
+import {CartPage} from '../cart/cart';     
 /*
   Generated class for the Home page.
 
@@ -24,9 +26,21 @@ export class HomePage {
   searchPage = SearchPage;
     public base64Image: string;
 private imageSrc: string;
- 
-  constructor(public http: Http,public platform: Platform, public actionsheetCtrl: ActionSheetController, public navCtrl: NavController) {
+ public productCount: any = 0;
+  constructor(public http: Http,public platform: Platform, public actionsheetCtrl: ActionSheetController, public navCtrl: NavController, public storage: Storage) {
       
+      this.storage.get('productCount').then((val)=>{
+        if(!val){
+            console.log('this.ProductCoitasd', this.productCount);
+            this.productCount = 0;
+        }
+        else{
+            console.log('this.ProductCoitasd', this.productCount);
+            this.productCount = val;
+        }
+            
+         
+      });
     
   
   }
@@ -82,6 +96,26 @@ openMenu() {
       ]
     });
     actionSheet.present();
+}
+
+checkCart(){
+    
+    this.navCtrl.push(CartPage);
+}
+
+ionViewDidEnter(){
+    this.storage.get('productCount').then((val)=>{
+        if(!val){
+            console.log('this.ProductCoitasd', this.productCount);
+            this.productCount = 0;
+        }
+        else{
+            console.log('this.ProductCoitasd', this.productCount);
+            this.productCount = val;
+        }
+            
+         
+      });
 }
 
 }
