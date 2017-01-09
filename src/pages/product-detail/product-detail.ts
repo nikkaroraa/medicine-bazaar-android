@@ -214,5 +214,19 @@ export class ProductDetailPage {
     
     this.navCtrl.push(SearchPage);
     }
+    ionViewDidEnter(){
+    this.storage.get('productCount').then((val)=>{
+        if(!val){
+            console.log('this.ProductCoitasd', this.productCount);
+            this.productCount = 0;
+        }
+        else{
+            console.log('this.ProductCoitasd', this.productCount);
+            this.productCount = val;
+        }
+            
+         
+      });
+}
     
 }
