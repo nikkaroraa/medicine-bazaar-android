@@ -23,7 +23,7 @@ public cartArray: Array<any> = [];
         if(val.length>1){console.log("Cart Items on the Cart Page" + this.cartArray);
         console.log('First Item' + this.cartArray[0]);
 
-this.cartItems.push(this.cartArray[0]);
+this.cartItems = this.cartArray[0];
 console.log(this.cartItems);
 }else{
     
