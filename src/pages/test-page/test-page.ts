@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { SQLite } from 'ionic-native';
 
-import {PeopleService} from '../../providers/people-service';
+
 /*
   Generated class for the TestPage page.
 
@@ -10,46 +11,42 @@ import {PeopleService} from '../../providers/people-service';
 @Component({
   selector: 'page-test-page',
   templateUrl: 'test-page.html',
-providers:[PeopleService]
+
 })
 export class TestPagePage {
+public database: SQLite;
+    public people: Array<Object>;
+ 
+  constructor() {
+    this.database = new SQLite();
+            this.database.openDatabase({name: "data.db", location: "default"}).then(() => {
+                this.refresh();
+            }, (error) => {
+                console.log("ERROR: ", error);
+            }); 
+  }
 
-  public products:any = [];
-  private start:number=0;
+public add() {
+        this.database.executeSql("INSERT INTO people (firstname, lastname) VALUES ('Nic', 'Raboy')", []).then((data) => {
+            console.log("INSERTED: " + JSON.stringify(data));
+        }, (error) => {
+            console.log("ERROR: " + JSON.stringify(error.err));
+        });
+    }
+ 
+    public refresh() {
+        this.database.executeSql("SELECT * FROM people", []).then((data) => {
+            this.people = [];
+            if(data.rows.length > 0) {
+                for(var i = 0; i < data.rows.length; i++) {
+                    this.people.push({firstname: data.rows.item(i).firstname, lastname: data.rows.item(i).lastname});
+                }
+            }
+        }, (error) => {
+            console.log("ERROR: " + JSON.stringify(error));
+        });
+    }
   
-  constructor(public peopleService:PeopleService) {
-    
-    this.loadProduct();
-console.log('Products are:::' + this.products)
-  }
   
-  loadProduct() {
-    
-    return new Promise(resolve => {
-      
-      this.peopleService.load(this.start)
-      .then(data => {
-        
-        
-          this.products= data;
-        
-        
-        resolve(true);
-        
-      });
-            
-    });
-
-  }
-  
-  doInfinite(infiniteScroll:any) {
-     console.log('doInfinite, start is currently '+this.start);
-     this.start+=50;
-     
-     this.loadProduct().then(()=>{
-       infiniteScroll.complete();
-     });
-     
-  }
 
 }

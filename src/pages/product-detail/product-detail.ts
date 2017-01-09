@@ -126,7 +126,7 @@ this.storage.set('cartProducts', this.cartProducts);
   }
 clearKey(){
     
-    
+  this.storage.ready();
 this.storage.remove("cartProducts");
 this.storage.set("cartInitialised", false);
 }

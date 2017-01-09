@@ -1,5 +1,5 @@
 import { NgModule, ErrorHandler } from '@angular/core';
-import { Storage } from '@ionic/storage';
+
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -8,6 +8,12 @@ import { ProductDetailPage } from '../pages/product-detail/product-detail';
 import {ItemDetailsPage} from '../pages/item-details/item-details';
 import {TestPagePage} from '../pages/test-page/test-page';
 import {CartPage} from '../pages/cart/cart';
+import { LocalDB } from '../providers/local-db';
+/*
+export function provideStorage() {
+ return new Storage(['sqlite', 'websql', 'indexeddb'], { name: '__mydb' }// optional config);
+}
+  */                  
 @NgModule({
   declarations: [
     MyApp,
@@ -31,6 +37,6 @@ ItemDetailsPage,
 TestPagePage,
 CartPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, Storage]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, LocalDB]
 })
 export class AppModule {}

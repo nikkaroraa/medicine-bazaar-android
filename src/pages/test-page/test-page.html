@@ -8,20 +8,21 @@
 
   <ion-navbar>
     <ion-title>testPage</ion-title>
+ <ion-buttons start>
+            <button (click)="refresh()">Refresh</button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button (click)="add()">Add</button>
+        </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-<ion-list [virtualScroll]="products" approxItemHeight="50px">
-        <ion-item *virtualItem="let product">
-            
-            <h2>{{product.name}}</h2>
-        </ion-item>
-    </ion-list>
-
- <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-   <ion-infinite-scroll-content></ion-infinite-scroll-content>
- </ion-infinite-scroll>
+    <ion-list>
+         <ion-item *ngFor="let person of people">
+             {{person.firstname}} {{person.lastname}}
+         </ion-item>
+     </ion-list>
 </ion-content>
