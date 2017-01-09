@@ -19,19 +19,12 @@ public cartArray: Array<any> = [];
     this.storage.get('cartProducts').then((val)=> {
         
        console.log('On the Cart Page: ', val);
-        this.cartArray.push(val);
-        if(val.length>1){console.log("Cart Items on the Cart Page" + this.cartArray);
-        console.log('First Item' + this.cartArray[0]);
-
-this.cartItems = this.cartArray[0];
-console.log(this.cartItems);
-}else{
-    
+        this.cartArray = val;
+        
 
 this.cartItems = this.cartArray;
 console.log(this.cartItems);
 
-}
             });
 
   }
