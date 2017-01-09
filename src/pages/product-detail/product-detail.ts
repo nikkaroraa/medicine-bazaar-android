@@ -26,6 +26,8 @@ public substitutes: Array<any> = [];
 public product:any;
 public cartProducts: Array<any> = [];
 public cartInitialised : any = false;
+public prodObj;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct,public toastCtrl: ToastController,public storage: Storage) {
       //storage try
 /*       this.storage.get("cartInitialised").then((val) => {
@@ -82,7 +84,9 @@ this.substitutes.push(data);
 
 if(!(this.cartInitialised)){
 console.log("Cart is not initialised yet");
-this.storage.set("cartProducts", product);
+this.cartProducts = [];
+this.cartProducts.push(product);
+this.storage.set("cartProducts", this.cartProducts);
 this.storage.set('cartInitialised', true);
 this.cartInitialised = true;
 }else{
@@ -93,16 +97,19 @@ console.log('Now the cart is initialised');
         
        console.log('Inside the showToast: ', val);
 this.cartProducts = [];
-if(val.length >=2 ){
+//if(val.length >=2 ){
     for(var i = 0; i < val.length ; i++){
         this.cartProducts.push(val[i]);
     }
 
-}
+//}
 
-else{
-this.cartProducts.push(val);
-}
+//else{
+//this.cartProducts.push(val);
+this.cartProducts.forEach(function (value, index){
+    console.log("This is forEach", value);
+});
+//}
 
         this.cartProducts.push(product);
 console.log(this.cartProducts);
