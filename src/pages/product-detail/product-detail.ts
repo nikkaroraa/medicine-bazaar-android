@@ -4,6 +4,8 @@ import { NavController, NavParams } from 'ionic-angular';
 import { SearchProduct } from '../../providers/search-product.service';
 import { ToastController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { SearchPage } from '../search/search'; 
+import { CartPage } from '../cart/cart'; 
 
 /*
   Generated class for the ProductDetail page.
@@ -203,6 +205,14 @@ export class ProductDetailPage {
 
          this.storage.remove('cartInitialised');
          console.log('cartInitalised key removed successfully. Defautl is set to false');
+    }
+    checkCart(){
+    
+    this.navCtrl.push(CartPage);
+    }
+    navSearch(){
+    
+    this.navCtrl.push(SearchPage);
     }
     
 }
