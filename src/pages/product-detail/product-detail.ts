@@ -5,12 +5,6 @@ import { SearchProduct } from '../../providers/search-product.service';
 import { ToastController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
-/*
-  Generated class for the ProductDetail page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-product-detail',
   templateUrl: 'product-detail.html',
@@ -18,19 +12,6 @@ providers: [ SearchProduct ]
 })
 export class ProductDetailPage {
 
-<<<<<<< HEAD
-selectedItem: any;
-s_products: any;
- selectedItemName: any;
-public itemUpsell: Array<any> = [];
-public substitutes: Array<any> = [];
-public product:any;
-public cartProducts: Array<any> = [];
-public cartInitialised : any = false;
-public prodObj;
-
-
-=======
     selectedItem: any;
     s_products: any;
     selectedItemName: any;
@@ -41,7 +22,6 @@ public prodObj;
     public cartInitialised: any = false;
     public countIncreased = false;
     
->>>>>>> 2ec7ceed82d9d7ca44cd6ef7369a43f7221f93f0
   constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct,public toastCtrl: ToastController,public storage: Storage) {
       //storage try
       /*       
@@ -156,7 +136,6 @@ public prodObj;
                 this.countIncreased = true;    
             }
         });
-
         if(!this.countIncreased){
           product.count = 1;
           this.cartProducts.push(product);
