@@ -13,7 +13,7 @@ import {CartPage} from '../pages/cart/cart';
 import { TabsPage } from '../pages/tabs/tabs';
 import { LogintabPage } from '../pages/logintab/logintab';
 import {CheckoutPage} from '../pages/checkout/checkout';
-
+import {FbLoginPage} from '../pages/fb-login/fb-login';
 
 import firebase from 'firebase';
 
@@ -41,12 +41,12 @@ export class MyApp {
     };
       firebase.initializeApp(config);
 
-    firebase.auth().onAuthStateChanged( user => {
+   /* firebase.auth().onAuthStateChanged( user => {
       if (!user) {
         this.rootPage = LogintabPage;
         console.log("There's not a logged in user!");
       }
-    });
+    });*/
 
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -62,7 +62,8 @@ export class MyApp {
 {title: 'TestInfinite', component: TestPagePage},
 {title: 'Cart', component: CartPage},
 {title: 'Login ', component: TabsPage},
-{title: 'Checkout', component: CheckoutPage}
+{title: 'Checkout', component: CheckoutPage},
+{title: 'FbLogin', component: FbLoginPage}
     ];
       
   }
