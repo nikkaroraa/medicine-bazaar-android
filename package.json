@@ -22,6 +22,7 @@
     "@ionic/storage": "1.1.7",
     "@types/pouchdb": "5.4.28",
     "angular2-jwt": "^0.1.27",
+    "firebase": "^3.6.4",
     "ionic-angular": "2.0.0-rc.4",
     "ionic-native": "2.2.11",
     "ionicons": "3.0.0",
