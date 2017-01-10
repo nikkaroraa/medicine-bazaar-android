@@ -14,7 +14,6 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { LogintabPage } from '../pages/logintab/logintab';
 import {CheckoutPage} from '../pages/checkout/checkout';
 import {FbLoginPage} from '../pages/fb-login/fb-login';
-import {NewFbLoginPage} from '../pages/new-fb-login/new-fb-login';
 
 import firebase from 'firebase';
 
@@ -48,7 +47,7 @@ export class MyApp {
         console.log("There's not a logged in user!");
       }
     });*/
-      
+
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -64,8 +63,7 @@ export class MyApp {
 {title: 'Cart', component: CartPage},
 {title: 'Login ', component: TabsPage},
 {title: 'Checkout', component: CheckoutPage},
-{title: 'FbLogin', component: FbLoginPage},
-{title: 'NewFbLogin', component: NewFbLoginPage}
+{title: 'FbLogin', component: FbLoginPage}
     ];
       
   }
