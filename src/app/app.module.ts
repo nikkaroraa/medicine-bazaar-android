@@ -13,6 +13,12 @@ import { Storage } from '@ionic/storage';
 import {TabsPage} from '../pages/tabs/tabs';
 import {LogintabPage} from '../pages/logintab/logintab';
 import {SignuptabPage} from '../pages/signuptab/signuptab';
+
+import { ResetPasswordPage } from '../pages/reset-password/reset-password';
+import {CheckoutPage} from '../pages/checkout/checkout';
+
+// Import Providers
+import { AuthData } from '../providers/auth-data';
 /*
 export function provideStorage() {
  return new Storage(['sqlite', 'websql', 'indexeddb'], { name: '__mydb' }// optional config);
@@ -29,7 +35,9 @@ export function provideStorage() {
       CartPage,
       TabsPage,
       LogintabPage,
-      SignuptabPage
+      SignuptabPage,
+      ResetPasswordPage,
+      CheckoutPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -45,9 +53,11 @@ TestPagePage,
 CartPage,
 TabsPage,
 LogintabPage,
-SignuptabPage
+SignuptabPage,
+ResetPasswordPage,
+CheckoutPage
       
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, LocalDB, Storage]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, LocalDB, Storage, AuthData]
 })
 export class AppModule {}

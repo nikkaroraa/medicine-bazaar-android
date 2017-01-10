@@ -8,12 +8,21 @@
 
   <ion-navbar>
     <ion-title>testPage</ion-title>
-
+ <ion-buttons start>
+            <button (click)="refresh()">Refresh</button>
+        </ion-buttons>
+        <ion-buttons end>
+            <button (click)="add()">Add</button>
+        </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-    <button ion-button outline block (click)="openBrowser()">Open Browser</button>
+    <ion-list>
+         <ion-item *ngFor="let person of people">
+             {{person.firstname}} {{person.lastname}}
+         </ion-item>
+     </ion-list>
 </ion-content>
