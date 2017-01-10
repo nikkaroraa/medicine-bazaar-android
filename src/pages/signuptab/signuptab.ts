@@ -12,17 +12,10 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'signuptab.html'
 })
 export class SignuptabPage {
-  public newUser:any={};
-  public billing_address:any={};
-  
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {}
-  //user signup 
-  signUp(newUser,billing_address)
-  {
-      console.log("signUp function");
-  }
-  
- ionViewDidLoad() {
+
+  ionViewDidLoad() {
     console.log('ionViewDidLoad SignuptabPage');
   }
 
