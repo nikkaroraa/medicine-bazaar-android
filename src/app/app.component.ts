@@ -14,6 +14,8 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { LogintabPage } from '../pages/logintab/logintab';
 import {CheckoutPage} from '../pages/checkout/checkout';
 import {FbLoginPage} from '../pages/fb-login/fb-login';
+import {GoogleLoginPage} from '../pages/google-login/google-login';
+import{UserPage} from '../pages/user/user';
 
 import firebase from 'firebase';
 
@@ -63,7 +65,8 @@ export class MyApp {
 {title: 'Cart', component: CartPage},
 {title: 'Login ', component: TabsPage},
 {title: 'Checkout', component: CheckoutPage},
-{title: 'FbLogin', component: FbLoginPage}
+{title: 'FbLogin', component: FbLoginPage},
+{title: 'GLogin', component: GoogleLoginPage}
     ];
       
   }

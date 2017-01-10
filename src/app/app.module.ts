@@ -17,6 +17,8 @@ import {SignuptabPage} from '../pages/signuptab/signuptab';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import {CheckoutPage} from '../pages/checkout/checkout';
 import {FbLoginPage} from '../pages/fb-login/fb-login';
+import {GoogleLoginPage} from '../pages/google-login/google-login';
+import{UserPage} from '../pages/user/user';
 // Import Providers
 import { AuthData } from '../providers/auth-data';
 /*
@@ -38,7 +40,9 @@ export function provideStorage() {
       SignuptabPage,
       ResetPasswordPage,
       CheckoutPage,
-      FbLoginPage
+      FbLoginPage,
+      GoogleLoginPage,
+      UserPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -57,7 +61,9 @@ LogintabPage,
 SignuptabPage,
 ResetPasswordPage,
 CheckoutPage,
-FbLoginPage
+FbLoginPage,
+GoogleLoginPage,
+UserPage
       
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, LocalDB, Storage, AuthData]
