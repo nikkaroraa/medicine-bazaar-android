@@ -11,6 +11,13 @@ import {ItemDetailsPage} from '../pages/item-details/item-details';
 import {TestPagePage} from '../pages/test-page/test-page';
 import {CartPage} from '../pages/cart/cart';
 import { TabsPage } from '../pages/tabs/tabs';
+
+import { LogintabPage } from '../pages/logintab/logintab';
+import {CheckoutPage} from '../pages/checkout/checkout';
+import {FbLoginPage} from '../pages/fb-login/fb-login';
+
+import firebase from 'firebase';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -25,8 +32,30 @@ export class MyApp {
     public platform: Platform,
     public menu: MenuController
   ) {
-    this.initializeApp();
 
+    
+      const config = {
+      apiKey: "AIzaSyByyA3R_KJMD2LF9G95eu7qM5xGA7evMGc",
+    authDomain: "medicinebazaarandroid.firebaseapp.com",
+    databaseURL: "https://medicinebazaarandroid.firebaseio.com",
+    storageBucket: "medicinebazaarandroid.appspot.com",
+    messagingSenderId: "420052832956"
+    };
+      firebase.initializeApp(config);
+
+   /* firebase.auth().onAuthStateChanged( user => {
+      if (!user) {
+        this.rootPage = LogintabPage;
+        console.log("There's not a logged in user!");
+      }
+    });*/
+
+    platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      StatusBar.styleDefault();
+      Splashscreen.hide();
+    });
     // set our app's pages
     this.pages = [
     
@@ -34,6 +63,7 @@ export class MyApp {
         {title: 'Infinite Scroll', component: ItemDetailsPage},
 {title: 'TestInfinite', component: TestPagePage},
 {title: 'Cart', component: CartPage},
+/*
 {title: 'login ', component: TabsPage}
     ];
   }
@@ -46,6 +76,15 @@ export class MyApp {
       Splashscreen.hide();
     });
   }
+*/
+{title: 'Login ', component: TabsPage},
+{title: 'Checkout', component: CheckoutPage},
+{title: 'FbLogin', component: FbLoginPage}
+    ];
+      
+  }
+
+
 
   openPage(page) {
     // close the menu when clicking a link from the menu

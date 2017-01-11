@@ -1,6 +1,12 @@
+
+import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-import { FetchProducts } from '../../providers/fetch-products.service';
+import { FormBuilder, Validators } from '@angular/forms';
+import { AuthData } from '../../providers/auth-data';
+import { EmailValidator } from '../../validators/email';
+
+import {LogintabPage} from '../logintab/logintab'
+
 /*
   Generated class for the Signuptab page.
 
@@ -9,86 +15,91 @@ import { FetchProducts } from '../../providers/fetch-products.service';
 */
 @Component({
   selector: 'page-signuptab',
-  templateUrl: 'signuptab.html',
-  providers:[FetchProducts]
+
+  templateUrl: 'signuptab.html'
 })
 export class SignuptabPage {
-  public newUser:any={};
-  public billing_address:any={};
-  public user:any; 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public fetchProducts:FetchProducts) {
-      this.newUser.isvalid=true;
-  }
-  //user signup 
-  signUp(newUser,billing_address)
-  {
-      console.log("signUp function");
-  }
-  
- ionViewDidLoad() {
-    console.log('ionViewDidLoad SignuptabPage');
-  }
- //check email
- checkUserEmail(email)
- {
-     
-    
-    var regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    
-    if(!regex.test(email)){
+  public signupForm;
+  emailChanged: boolean = false;
+  passwordChanged: boolean = false;
+  submitAttempt: boolean = false;
+  loading: any;
+
+
+  constructor(public nav: NavController, public authData: AuthData, public formBuilder: FormBuilder,
+    public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
       
-      this.newUser.isValid = false;
-      /*
-      $ionicPopup.show({
-        template: "<center>Invalid Email! Please Check!</center>",
-        buttons: [{
-          text: 'OK'
-        }]
+    this.signupForm = formBuilder.group({
+      email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
+      password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
+    })
+  }
+
+  /**
+   * Receives an input field and sets the corresponding fieldChanged property to 'true' to help with the styles.
+   */
+  elementChanged(input){
+    let field = input.inputControl.name;
+    this[field + "Changed"] = true;
+  }
+
+  /**
+   * If the form is valid it will call the AuthData service to sign the user up password displaying a loading
+   *  component while the user waits.
+   *
+   * If the form is invalid it will just log the form value, feel free to handle that as you like.
+   */
+  signupUser(){
+    this.submitAttempt = true;
+
+    if (!this.signupForm.valid){
+      console.log(this.signupForm.value);
+    } else {
+      this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password).then(() => {
+        //this.nav.setRoot(HomePage);
+          console.log("Successfully Signed Up");
+      }, (error) => {
+        this.loading.dismiss().then( () => {
+          var errorMessage: string = error.message;
+            console.log("Error in signing up.");
+          let alert = this.alertCtrl.create({
+            message: errorMessage,
+            buttons: [
+              {
+                text: "Ok",
+                role: 'cancel'
+              }
+            ]
+          });
+          alert.present();
+        });
       });
-      */
-        console.log(this.newUser.isValid);
-        console.log(email);
-        console.log("invalid email");
-      
-      return;
-      
-    }
-    
-    
-    this.fetchProducts.searchUser(email).subscribe(user => {
-        this.user=user;
-console.log(this.user);
+
+      /*this.loading = this.loadingCtrl.create({
+        dismissOnPageChange: true,
       });
-    /*
-    Woocommerce.get('customers/email/'+email,  function(err, data, res){
-      
-      if(err)
-        console.log(err);
-        
-      if(JSON.parse(this.user).customer){
-      
-       if(this.user) {
-        this.newUser.isValid = false;
-        
-        $ionicPopup.show({
-          template: "<center>EMail is already registered. Please login or use another email address.</center>",
-          buttons: [{
-            text: "Login",
-            onTap: function(e){
-              $state.go("app.login");
-            }
-          },{
-            text: "OK"
-          }]
-        })
-        
-      }
-      else{
-        this.newUser.isValid = true;
-      }
-  
-})
+        console.log("I dont know exactly");
+      this.loading.present();
+
 */
- }
+ this.loading = this.loadingCtrl.create({
+    spinner: 'hide',
+    content: 'Loading Please Wait...'
+  });
+
+  this.loading.present();
+
+  setTimeout(() => {
+   this.nav.push(LogintabPage);
+  }, 1000);
+
+  setTimeout(() => {
+    this.loading.dismiss();
+  }, 5000);
+console.log("Helloo");
+  
+  
+    }
+  }
 
 }

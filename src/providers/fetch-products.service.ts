@@ -49,15 +49,8 @@ return this.http.get('https://www.medicinebazaar.in/wp-json/wc/v1/products?searc
       .map(res =>(res.json()))
 
   }
-    
-//customers details
-searchUser(email: string) {
-console.log("Inside the searchUser:" + email );
 
-    return this.http.get('https://www.medicinebazaar.in/wp-json/wc/v1/customers?email='+email +'&consumer_key=ck_3a2b7fddd1fac4e6c7ea6cec3afc19259ef76c6b&consumer_secret=cs_5653cf147e9fe76f72a98a2b0d8e3728f0e9e129') 
-      .map(res =>(res.json()))
 
-  }
 
 
 }

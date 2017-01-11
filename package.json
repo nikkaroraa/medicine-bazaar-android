@@ -21,7 +21,10 @@
     "@angular/platform-server": "2.2.1",
     "@ionic/storage": "1.1.7",
     "@types/pouchdb": "5.4.28",
+<<<<<<< HEAD
     "firebase": "^3.6.5",
+=======
+>>>>>>> f84bd10bd642b3695f824197d0c323b146f882c9
     "ionic-angular": "2.0.0-rc.4",
     "ionic-native": "2.2.11",
     "ionicons": "3.0.0",
