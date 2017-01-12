@@ -11,6 +11,7 @@ import {ItemDetailsPage} from '../pages/item-details/item-details';
 import {TestPagePage} from '../pages/test-page/test-page';
 import {CartPage} from '../pages/cart/cart';
 import { TabsPage } from '../pages/tabs/tabs';
+
 import { LogintabPage } from '../pages/logintab/logintab';
 import {CheckoutPage} from '../pages/checkout/checkout';
 import {FbLoginPage} from '../pages/fb-login/fb-login';
@@ -28,11 +29,12 @@ export class MyApp {
   // make HelloIonicPage the root (or first) page
   rootPage: any = HomePage;
   pages: Array<{title: string, component: any}>;
-  
+
   constructor(
     public platform: Platform,
     public menu: MenuController
   ) {
+
     
       const config = {
       apiKey: "AIzaSyByyA3R_KJMD2LF9G95eu7qM5xGA7evMGc",
@@ -63,6 +65,20 @@ export class MyApp {
         {title: 'Infinite Scroll', component: ItemDetailsPage},
 {title: 'TestInfinite', component: TestPagePage},
 {title: 'Cart', component: CartPage},
+/*
+{title: 'login ', component: TabsPage}
+    ];
+  }
+
+  initializeApp() {
+    this.platform.ready().then(() => {
+      // Okay, so the platform is ready and our plugins are available.
+      // Here you can do any higher level native things you might need.
+      StatusBar.styleDefault();
+      Splashscreen.hide();
+    });
+  }
+*/
 {title: 'Login ', component: TabsPage},
 {title: 'Checkout', component: CheckoutPage},
 {title: 'FbLogin', component: FbLoginPage},
@@ -70,6 +86,7 @@ export class MyApp {
     ];
       
   }
+
 
 
   openPage(page) {

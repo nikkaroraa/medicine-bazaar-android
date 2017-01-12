@@ -12,11 +12,28 @@ import { NavController, NavParams } from 'ionic-angular';
   templateUrl: 'checkout.html'
 })
 export class CheckoutPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CheckoutPage');
-  }
-
+    /*
+  declare var window: any;
+declare var cordova: any;
+*/
+ constructor(public NavCtrl:NavController,public Nav:NavParams) 
+    {
+        
+    }
+    
+ /*   
+ static get parameters() {
+        return [[Platform]];
+    }
+ 
+    constructor(platform) {
+        this.platform = platform;
+    }
+ 
+    launch(url) {
+        this.platform.ready().then(() => {
+            cordova.InAppBrowser.open(url, "_system", "location=true");
+        });
+    }
+    */
 }

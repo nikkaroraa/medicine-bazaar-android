@@ -51,4 +51,6 @@ return this.http.get('https://www.medicinebazaar.in/wp-json/wc/v1/products?searc
   }
 
 
+
+
 }

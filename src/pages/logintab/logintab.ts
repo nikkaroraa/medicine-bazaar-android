@@ -1,3 +1,4 @@
+
 import { 
   NavController, 
   LoadingController, 
@@ -11,6 +12,7 @@ import { ResetPasswordPage } from '../reset-password/reset-password';
 import { EmailValidator } from '../../validators/email';
 import { CheckoutPage } from '../checkout/checkout';
 
+
 /*
   Generated class for the Logintab page.
 
@@ -22,6 +24,7 @@ import { CheckoutPage } from '../checkout/checkout';
   templateUrl: 'logintab.html'
 })
 export class LogintabPage {
+
  public loginForm;
   emailChanged: boolean = false;
   passwordChanged: boolean = false;
@@ -91,6 +94,7 @@ console.log("Helloo");
 
   goToResetPassword(){
     this.nav.push(ResetPasswordPage);
+
   }
 
 }
