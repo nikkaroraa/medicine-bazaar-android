@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import {InAppBrowser} from 'ionic-native';
+import {Http, Headers, RequestOptions} from 'angular2/http';
+import 'rxjs/Rx';
+import {Injectable} from 'angular2/core';
+import { Xyz } from '../../providers/xyz';
+
 
 
 /*
@@ -11,15 +16,23 @@ import {InAppBrowser} from 'ionic-native';
 @Component({
   selector: 'page-test-page',
   templateUrl: 'test-page.html',
-
+  providers: [Xyz]
 })
-export class TestPagePage {
 
+export class TestPagePage {
+  
+    
+    
+    
  
-  constructor() {
+  constructor(public xyz:Xyz) {
      
   }
 
+  callPayment()
+  {
+      this.xyz.paymentGateway();
+  }
 
   openBrowser(){
       
