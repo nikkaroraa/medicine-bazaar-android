@@ -14,5 +14,46 @@
 
 
 <ion-content padding>
+     <form (ngSubmit)="logForm()">
+      <ion-item>
+        <ion-label>Key</ion-label>
+        <ion-input type="text" [(ngModel)]="order.key" name="key" value=""></ion-input>
+      </ion-item>
+         <ion-item>
+        <ion-label>Transaction id</ion-label>
+        <ion-input type="text" [(ngModel)]="order.txnid" name="txnid"></ion-input>
+      </ion-item>
+<ion-item>
+        <ion-label>Amount</ion-label>
+        <ion-input type="text" [(ngModel)]="order.amount" name="amount"></ion-input>
+      </ion-item>
+<ion-item>
+        <ion-label>Product info</ion-label>
+        <ion-input type="text" [(ngModel)]="order.productinfo" name="productinfo"></ion-input>
+      </ion-item>
+      
+<ion-item>
+        <ion-label>First Name</ion-label>
+        <ion-input type="text" [(ngModel)]="order.firstName" name="firstname"></ion-input>
+      </ion-item>
+<ion-item>
+        <ion-label>Email</ion-label>
+        <ion-input type="text" [(ngModel)]="order.email" name="email"></ion-input>
+      </ion-item>
+<ion-item>
+        <ion-label>Phone</ion-label>
+        <ion-input type="text" [(ngModel)]="order.phone" name="phone"></ion-input>
+      </ion-item>
+<ion-item>
+        <ion-label>Success URL</ion-label>
+        <ion-input type="text" [(ngModel)]="order.firstName" name="firstname"></ion-input>
+      </ion-item>
+<ion-item>
+        <ion-label>Failure URL</ion-label>
+        <ion-input type="text" [(ngModel)]="order.firstName" name="firstname"></ion-input>
+      </ion-item>
+
+      <button ion-button type="submit" block>Submit</button>
+    </form>
 
 </ion-content>

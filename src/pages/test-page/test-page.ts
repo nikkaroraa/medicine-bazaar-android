@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import {InAppBrowser} from 'ionic-native';
 
 
 /*
@@ -21,6 +21,9 @@ export class TestPagePage {
   }
 
 
-  
+  openBrowser(){
+      
+      let browser = new InAppBrowser('https://ionic.io', '_blank', 'location=no');
+  }
 
 }
