@@ -17,7 +17,7 @@ import {CheckoutPage} from '../pages/checkout/checkout';
 import {FbLoginPage} from '../pages/fb-login/fb-login';
 import {GoogleLoginPage} from '../pages/google-login/google-login';
 import{UserPage} from '../pages/user/user';
-
+import {AccountPage} from '../pages/account/account';
 import firebase from 'firebase';
 
 @Component({
@@ -82,7 +82,8 @@ export class MyApp {
 {title: 'Login ', component: TabsPage},
 {title: 'Checkout', component: CheckoutPage},
 {title: 'FbLogin', component: FbLoginPage},
-{title: 'GLogin', component: GoogleLoginPage}
+{title: 'GLogin', component: GoogleLoginPage},
+{title: 'Account', component: AccountPage}
     ];
       
   }

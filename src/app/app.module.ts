@@ -20,6 +20,7 @@ import {CheckoutPage} from '../pages/checkout/checkout';
 import {FbLoginPage} from '../pages/fb-login/fb-login';
 import {GoogleLoginPage} from '../pages/google-login/google-login';
 import{UserPage} from '../pages/user/user';
+import {AccountPage} from '../pages/account/account';
 // Import Providers
 import { AuthData } from '../providers/auth-data';
 
@@ -45,7 +46,8 @@ export function provideStorage() {
       CheckoutPage,
       FbLoginPage,
       GoogleLoginPage,
-      UserPage
+      UserPage,
+AccountPage
 
   ],
   imports: [
@@ -62,13 +64,13 @@ TestPagePage,
 CartPage,
 TabsPage,
 LogintabPage,
-
 SignuptabPage,
 ResetPasswordPage,
 CheckoutPage,
 FbLoginPage,
 GoogleLoginPage,
-UserPage
+UserPage,
+AccountPage
       
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, LocalDB, Storage, AuthData]

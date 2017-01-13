@@ -26,17 +26,17 @@ export class TestPagePage {
     
  
   constructor(public xyz:Xyz) {
-     
+     ;
   }
 
   callPayment()
   {
-      this.xyz.paymentGateway();
+      
   }
 
   openBrowser(){
+      let browser = new InAppBrowser('https://medicinebazaar.in/payumoney/index.php', '_blank')
       
-      let browser = new InAppBrowser('https://ionic.io', '_blank', 'location=no');
   }
 
 }
