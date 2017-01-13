@@ -21,6 +21,7 @@ import {FbLoginPage} from '../pages/fb-login/fb-login';
 import {GoogleLoginPage} from '../pages/google-login/google-login';
 import{UserPage} from '../pages/user/user';
 import {AccountPage} from '../pages/account/account';
+import { AngularFireModule } from 'angularfire2';
 // Import Providers
 import { AuthData } from '../providers/auth-data';
 
@@ -28,7 +29,14 @@ import { AuthData } from '../providers/auth-data';
 export function provideStorage() {
  return new Storage(['sqlite', 'websql', 'indexeddb'], { name: '__mydb' }// optional config);
 }
-  */                  
+  */
+  export const firebaseConfig = {
+ apiKey: "AIzaSyByyA3R_KJMD2LF9G95eu7qM5xGA7evMGc",
+    authDomain: "medicinebazaarandroid.firebaseapp.com",
+    databaseURL: "https://medicinebazaarandroid.firebaseio.com",
+    storageBucket: "medicinebazaarandroid.appspot.com",
+    messagingSenderId: "420052832956"
+};                  
 @NgModule({
   declarations: [
     MyApp,
@@ -51,7 +59,8 @@ AccountPage
 
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AngularFireModule.initializeApp(firebaseConfig)
   ],
   bootstrap: [IonicApp],
   entryComponents: [

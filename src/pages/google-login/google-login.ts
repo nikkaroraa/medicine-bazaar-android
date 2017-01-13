@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
-import { UserPage } from '../user/user';
-import { GooglePlus, NativeStorage } from 'ionic-native';
+import { NavController, NavParams, LoadingController, Platform, AlertController } from 'ionic-angular';
+import { AngularFire, FirebaseListObservable, FirebaseAuthState } from 'angularfire2';
+import {GooglePlus} from 'ionic-native';
 /*
   Generated class for the GoogleLogin page.
 
@@ -13,10 +13,11 @@ import { GooglePlus, NativeStorage } from 'ionic-native';
   templateUrl: 'google-login.html'
 })
 export class GoogleLoginPage {
+userProfile: any = null;
+ constructor(public navCtrl: NavController, public loadingCtrl: LoadingController,public af: AngularFire
+   ,private platform: Platform,public alertController : AlertController) {}
 
- constructor(public navCtrl: NavController, public loadingCtrl: LoadingController) {}
-
-  doGoogleLogin(){
+ /* doGoogleLogin(){
     let nav = this.navCtrl;
     let loading = this.loadingCtrl.create({
       content: 'Please wait...'
@@ -44,4 +45,65 @@ export class GoogleLoginPage {
       loading.dismiss();
 });
   }
+*/
+  googlePlusLogin()
+  {
+ 
+      this.af.auth.subscribe((data: FirebaseAuthState) => {
+ 
+        //this.af.auth.unsubscribe();
+        console.log("in auth subscribe", data);
+ 
+        this.platform.ready().then(() => {
+           GooglePlus.login({
+             'webClientId' : '808169637831-667uavu6j7s5edp3c9p0f9bb3til0rgq.apps.googleusercontent.com' }) .then((userData) => {
+ 
+                var provider = firebase.auth.GoogleAuthProvider.credential(userData.idToken);
+ 
+                 firebase.auth().signInWithCredential(provider)
+                  .then((success) => {
+                    console.log("Firebase success: " + JSON.stringify(success));
+                    this.displayAlert(success,"signInWithCredential successful")
+                    this.userProfile = success;
+ 
+                  })
+                  .catch((error) => {
+                    console.log("Firebase failure: " + JSON.stringify(error));
+                        this.displayAlert(error,"signInWithCredential failed")
+                  });
+ 
+                 })
+             .catch((error) => {
+                    console.log("Firebase failure: " + JSON.stringify(error));
+                        this.displayAlert(error,"signInWithCredential failed")
+                  });
+ 
+            })
+       })
+ 
+  }
+  displayAlert(value,title)
+  {
+      let coolAlert = this.alertController.create({
+      title: title,
+      message: JSON.stringify(value),
+      buttons: [
+                    {
+                        text: "Cancel"
+                    },
+                    {
+                        text: "Save",
+                        handler: data => {
+                        }
+                    }
+               ]
+      });
+      coolAlert.present();
+ 
+    }
+ 
+ 
 }
+
+
+
