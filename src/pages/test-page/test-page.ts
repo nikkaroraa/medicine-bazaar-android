@@ -29,7 +29,7 @@ export class TestPagePage {
 
   constructor(public xyz:Xyz,public fetchProducts:FetchProducts) {
     console.log("call create User ...");
-    this.fetchProducts.createUser().subscribe(data => {
+   /* this.fetchProducts.createUser().subscribe(data => {
         // we've got back the raw data, now generate the core schedule data
         // and save the data for later reference
         this.data = data;
@@ -42,7 +42,7 @@ export class TestPagePage {
         console.log('Completed');
     });
    
-
+*/
   }
 
   callPayment()
