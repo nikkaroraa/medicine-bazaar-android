@@ -1,5 +1,8 @@
+
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, Platform, AlertController } from 'ionic-angular';
+ 
+import { NavController, AlertController, Platform } from 'ionic-angular';
+ 
 import { AngularFire, FirebaseListObservable, FirebaseAuthState } from 'angularfire2';
 import {GooglePlus} from 'ionic-native';
 /*
@@ -14,49 +17,21 @@ import {GooglePlus} from 'ionic-native';
 })
 export class GoogleLoginPage {
 userProfile: any = null;
- constructor(public navCtrl: NavController, public loadingCtrl: LoadingController,public af: AngularFire
-   ,private platform: Platform,public alertController : AlertController) {}
+ constructor(public navCtrl: NavController, public af: AngularFire,
+        public alertController : AlertController,
+        private platform: Platform) {}
 
- /* doGoogleLogin(){
-    let nav = this.navCtrl;
-    let loading = this.loadingCtrl.create({
-      content: 'Please wait...'
-    });
-    loading.present();
-    GooglePlus.login({
-      'scopes': '', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
-      'webClientId': '808169637831-667uavu6j7s5edp3c9p0f9bb3til0rgq.apps.googleusercontent.com', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
-      'offline': true
-    })
-    .then(function (user) {
-      loading.dismiss();
-
-      NativeStorage.setItem('user', {
-        name: user.displayName,
-        email: user.email,
-        picture: user.imageUrl
-      })
-      .then(function(){
-        nav.push(UserPage);
-      }, function (error) {
-        console.log(error);
-      })
-    }, function (error) {
-      loading.dismiss();
-});
-  }
-*/
   googlePlusLogin()
   {
  
       this.af.auth.subscribe((data: FirebaseAuthState) => {
  
-        //this.af.auth.unsubscribe();
-        console.log("in auth subscribe", data);
+        this.af.auth.unsubscribe()
+        console.log("in auth subscribe", data)
  
         this.platform.ready().then(() => {
            GooglePlus.login({
-             'webClientId' : '808169637831-667uavu6j7s5edp3c9p0f9bb3til0rgq.apps.googleusercontent.com' }) .then((userData) => {
+             'webClientId' : '<Enter your webclient ID here' }) .then((userData) => {
  
                 var provider = firebase.auth.GoogleAuthProvider.credential(userData.idToken);
  
@@ -82,6 +57,7 @@ userProfile: any = null;
        })
  
   }
+ 
   displayAlert(value,title)
   {
       let coolAlert = this.alertController.create({
@@ -102,8 +78,6 @@ userProfile: any = null;
  
     }
  
- 
 }
 
-
-
+ 

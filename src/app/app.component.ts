@@ -36,15 +36,8 @@ export class MyApp {
   ) {
 
     
-      /*const config = {
-      apiKey: "AIzaSyByyA3R_KJMD2LF9G95eu7qM5xGA7evMGc",
-    authDomain: "medicinebazaarandroid.firebaseapp.com",
-    databaseURL: "https://medicinebazaarandroid.firebaseio.com",
-    storageBucket: "medicinebazaarandroid.appspot.com",
-    messagingSenderId: "420052832956"
-    };
-      firebase.initializeApp(config);
-*/
+    
+      
    /* firebase.auth().onAuthStateChanged( user => {
       if (!user) {
         this.rootPage = LogintabPage;
