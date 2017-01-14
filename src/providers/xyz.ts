@@ -39,7 +39,7 @@ export class Xyz {
               email: "john.doe@example.com",
              phone: "654111654",
              surl:"https://www.google.com",
-             furl:"https://www.google.co.in",
+             furl:"https://www.google                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           .co.in",
              hash:"89A8C5F0F534FA47035B6AA4CE03E229401B0181D46DDC3A3206D9FAB24A4C2EE5EE2EA3F60F31B9B4E225E0C46C7DD8419107D4015B04E903349464F1CA8BC2"      
 		});
 		return this.http.post("https://test.payu.in/_payment", body, options)
