@@ -5,6 +5,8 @@ import { AuthData } from '../../providers/auth-data';
 import { EmailValidator } from '../../validators/email';
 import { CheckoutPage } from '../checkout/checkout';
 import { ResetPasswordPage } from '../reset-password/reset-password';
+import { Facebook } from 'ionic-native';
+import firebase from 'firebase';
 /*
   Generated class for the Account page.
 
@@ -16,15 +18,15 @@ import { ResetPasswordPage } from '../reset-password/reset-password';
   templateUrl: 'account.html'
 })
 export class AccountPage {
-    public signupForm;
+  public signupForm;
   emailChanged: boolean = false;
   passwordChanged: boolean = false;
   submitAttempt: boolean = false;
   loading: any;
-    
+  userProfile: any = null;
+  public loginForm;
+  Account: string = "login";    
 
-public loginForm;
-  Account: string = "login";
   constructor(public nav: NavController, public authData: AuthData, public formBuilder: FormBuilder,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
         this.signupForm = formBuilder.group({
@@ -177,5 +179,22 @@ public loginForm;
 
      this.nav.push(ResetPasswordPage);
    }
+
+   facebookLogin(){
+    Facebook.login(['email']).then( (response) => {
+      let facebookCredential = firebase.auth.FacebookAuthProvider
+        .credential(response.authResponse.accessToken);
+
+    firebase.auth().signInWithCredential(facebookCredential)
+      .then((success) => {
+        console.log("Firebase success: " + JSON.stringify(success));
+        this.userProfile = success;
+    })
+    .catch((error) => {
+    console.log("Firebase failure: " + JSON.stringify(error));
+  });
+
+    }).catch((error) => { console.log(error) });
+  }
   
 }

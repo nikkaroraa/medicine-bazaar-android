@@ -3,8 +3,9 @@ import { Component } from '@angular/core';
  
 import { NavController, AlertController, Platform } from 'ionic-angular';
  
-import { AngularFire, FirebaseListObservable, FirebaseAuthState } from 'angularfire2';
+import { FirebaseListObservable, FirebaseAuthState } from 'angularfire2';
 import {GooglePlus} from 'ionic-native';
+import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 /*
   Generated class for the GoogleLogin page.
 
@@ -17,10 +18,27 @@ import {GooglePlus} from 'ionic-native';
 })
 export class GoogleLoginPage {
 userProfile: any = null;
+user = {};
  constructor(public navCtrl: NavController, public af: AngularFire,
         public alertController : AlertController,
-        private platform: Platform) {}
-
+        private platform: Platform) {
+   this.af.auth.subscribe(user => {
+      if(user) {
+        // user logged in
+        this.user = user;
+      }
+      else {
+        // user not logged in
+        this.user = {};
+      }
+    });
+ }
+login() {
+  this.af.auth.login({
+    provider: AuthProviders.Google,
+    method: AuthMethods.Redirect
+  });
+}
   googlePlusLogin()
   {
  
@@ -31,7 +49,7 @@ userProfile: any = null;
  
         this.platform.ready().then(() => {
            GooglePlus.login({
-             'webClientId' : '<Enter your webclient ID here' }) .then((userData) => {
+             'webClientId' : '420052832956-0u8p34ddgit5ti5epriapsef9vip7552.apps.googleusercontent.com' }) .then((userData) => {
  
                 var provider = firebase.auth.GoogleAuthProvider.credential(userData.idToken);
  

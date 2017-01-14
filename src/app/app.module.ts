@@ -23,16 +23,13 @@ import{UserPage} from '../pages/user/user';
 import {AccountPage} from '../pages/account/account';
 // Import Providers
 import { AuthData } from '../providers/auth-data';
-import { AngularFireModule } from 'angularfire2';
- 
+import { 
+  AngularFireModule, 
+  AuthMethods, 
+  AuthProviders 
+} from "angularfire2"
 // YOUR SETTINGS GOES HERE!
-export const firebaseConfig = {
-      apiKey: "AIzaSyByyA3R_KJMD2LF9G95eu7qM5xGA7evMGc",
-    authDomain: "medicinebazaarandroid.firebaseapp.com",
-    databaseURL: "https://medicinebazaarandroid.firebaseio.com",
-    storageBucket: "medicinebazaarandroid.appspot.com",
-    messagingSenderId: "420052832956"
-    };  
+
 
 
 /*
@@ -63,8 +60,8 @@ AccountPage
 
   ],
   imports: [
-    IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseConfig)
+    IonicModule.forRoot(MyApp)
+    
   ],
   bootstrap: [IonicApp],
   entryComponents: [

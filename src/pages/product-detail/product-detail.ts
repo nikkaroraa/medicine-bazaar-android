@@ -23,7 +23,7 @@ export class ProductDetailPage {
     public cartProducts: Array<any> = [];
     public cartInitialised: any = false;
     public countIncreased = false;
-    public productCount: any = 0;
+    public productCount:any = 0;
   constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct,public toastCtrl: ToastController,public storage: Storage) {
       //storage try
       /*       
@@ -80,7 +80,7 @@ export class ProductDetailPage {
     this.searchProduct.load(this.selectedItemName)
         .then(data => {
             this.s_products = data;
-            console.log("The retrieved detailed product is" + this.s_products);
+            console.log("The retrieved detailed product is",this.s_products);
         });
     
     for(var j=0; j< this.itemUpsell.length; j++){
@@ -92,6 +92,12 @@ export class ProductDetailPage {
                 console.log(this.substitutes);
             });
     }
+  }
+
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad CartPage');
+
   }
     //toast for gocart bottom popup
     showToast(position:string,product) {
@@ -184,10 +190,7 @@ export class ProductDetailPage {
 }
 //end of toast
  
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad ProductDetailPage');
-    }
-    clearKey(){
+       clearKey(){
 
 
         this.storage.remove("cartProducts");
@@ -221,5 +224,26 @@ export class ProductDetailPage {
          
       });
 }
-    
+  /*decreaseCount(product){
+      var that = this;
+    //  product.count--;
+      this.cartItems.forEach(function(element, index){
+         if(element.id == product.id){
+             if(element.count <= 1){
+                that.deleteItem(element);   
+                 
+             }else{
+             element.count--;
+             console.log("Decremented the value in the cartItems array");
+             that.storage.set('cartProducts', that.cartItems);
+             console.log("Successfully made the changes in the storage element (Decremented)");
+                 console.log("Count decreased by 1 for: ", product.name);
+      that.costSum = that.costSum - Number(product.price);
+      that.costSumString = that.costSum.toFixed(2);
+             }
+         } 
+      }); 
+      
+  }
+    */
 }

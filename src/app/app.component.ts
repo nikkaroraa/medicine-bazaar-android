@@ -20,6 +20,8 @@ import{UserPage} from '../pages/user/user';
 import {AccountPage} from '../pages/account/account';
 import firebase from 'firebase';
 
+
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -35,9 +37,15 @@ export class MyApp {
     public menu: MenuController
   ) {
 
+   const firebaseConfig = {
+      apiKey: "AIzaSyByyA3R_KJMD2LF9G95eu7qM5xGA7evMGc",
+    authDomain: "medicinebazaarandroid.firebaseapp.com",
+    databaseURL: "https://medicinebazaarandroid.firebaseio.com",
+    storageBucket: "medicinebazaarandroid.appspot.com",
+    messagingSenderId: "420052832956"
+    };      
     
-    
-      
+    firebase.initializeApp(firebaseConfig);    
    /* firebase.auth().onAuthStateChanged( user => {
       if (!user) {
         this.rootPage = LogintabPage;
