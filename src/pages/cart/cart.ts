@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import {  TabsPage } from '../tabs/tabs';
-
+import {CheckoutPage} from '../checkout/checkout';
 /*
   Generated class for the Cart page.
 
@@ -11,7 +11,8 @@ import {  TabsPage } from '../tabs/tabs';
 */
 @Component({
   selector: 'page-cart',
-  templateUrl: 'cart.html'
+  templateUrl: 'cart.html',
+  
 }) 
 export class CartPage {
 public cartItems: Array<any> = [];
@@ -19,7 +20,8 @@ public cartArray: Array<any> = [];
 public costSum = 0;
 public costSumString;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage) {
+
+  constructor(public navCtrl: NavController, public navParams: NavParams,public storage: Storage) {
 var that = this;
       this.costSumString = this.costSum.toFixed(2);
     this.storage.get('cartProducts').then((val)=> {
@@ -38,6 +40,7 @@ this.cartItems.forEach(function(element, index){
             });
 
   }
+  
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad CartPage');
@@ -71,7 +74,11 @@ this.cartItems.forEach(function(element, index){
      console.log("login");
   this.navCtrl.push(TabsPage);   
  }
- 
+ //go to checkout page
+ goToCheckOut()
+ {
+   this.navCtrl.push(CheckoutPage);
+ }
   increaseCount(product){
       var that = this;
    //   product.count++;

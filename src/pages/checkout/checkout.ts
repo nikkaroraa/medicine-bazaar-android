@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {FetchProducts } from '../../providers/fetch-products.service';
+import {AlertController} from 'ionic-angular';
+import { SendSms } from '../../providers/send-sms';
 /*
   Generated class for the Checkout page.
 
@@ -10,7 +12,7 @@ import {FetchProducts } from '../../providers/fetch-products.service';
 @Component({
   selector: 'page-checkout',
   templateUrl: 'checkout.html',
-  providers: [FetchProducts]
+  providers: [FetchProducts, SendSms]
 })
 export class CheckoutPage {
     /*
@@ -21,10 +23,94 @@ public newUser:any={};
 public billing_address:any={};
 public userSend: any = {};
 public customerData: any;
- constructor(public NavCtrl:NavController,public Nav:NavParams, public fetchProducts:FetchProducts) 
+public data:any;
+public verify:any={};
+public verifyStatus:any;
+public phoneVerified:boolean=false;
+ constructor(public NavCtrl:NavController,public Nav:NavParams, public fetchProducts:FetchProducts, public alertCtrl:AlertController, public sendSms:SendSms) 
     {
         
     }
+    //send sms to user
+  genSms(phone)
+  {
+    this.sendSms.sendSMS(phone).subscribe(data => {
+        this.data = data;
+        console.log(this.data);
+      },
+        err => {
+        console.log(err);
+        this.errorSmsSentAlert();
+    },
+        () => {
+       this.sentSmsAlert();
+    });
+  }
+//sms sended
+ sentSmsAlert()  {
+  let alert = this.alertCtrl.create({
+    title: 'OTP Send',
+    subTitle: 'OTP send succesfully!',
+    buttons: ['Dismiss']
+  });
+  alert.present();
+}
+
+//error while sending
+ errorSmsSentAlert()  {
+  let alert = this.alertCtrl.create({
+    title: 'Error',
+    subTitle: 'Message not Sent',
+    buttons: ['Dismiss']
+  });
+  alert.present();
+} 
+
+
+//successfully alert verify otp
+ presentAlert()  {
+  let alert = this.alertCtrl.create({
+    title: 'OTP Verify',
+    subTitle: 'Otp verified successfully!',
+    buttons: ['Dismiss']
+  });
+  alert.present();
+}
+
+//error otp
+ errorAlert()  {
+  let alert = this.alertCtrl.create({
+    title: 'Error',
+    subTitle: 'OTP is not verified!',
+    buttons: ['Dismiss']
+  });
+  alert.present();
+}
+  
+
+  //verify sms to user
+
+  verifyOTP(otp,phone)
+  {
+    this.verify.countryCode="91";
+    this.verify.mobileNumber=phone;
+    this.verify.oneTimePassword=otp;
+    this.sendSms.verifySms(this.verify).subscribe(verifyStatus => {
+        this.verifyStatus = verifyStatus;
+        console.log(this.verifyStatus);
+        
+      },
+        err => {
+        console.log(err);
+        this.errorAlert();
+    },
+        () => {
+        console.log('Completed');
+        this.phoneVerified=true;
+        this.presentAlert();
+    });
+  }
+
     
  signUp(newUser,billing_address)
   {
