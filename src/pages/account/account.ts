@@ -7,6 +7,7 @@ import { CheckoutPage } from '../checkout/checkout';
 import { ResetPasswordPage } from '../reset-password/reset-password';
 import { Facebook } from 'ionic-native';
 import firebase from 'firebase';
+import { Storage } from '@ionic/storage';
 /*
   Generated class for the Account page.
 
@@ -26,9 +27,9 @@ export class AccountPage {
   userProfile: any = null;
   public loginForm;
   Account: string = "login";    
-
+  public userDetails: any = {};
   constructor(public nav: NavController, public authData: AuthData, public formBuilder: FormBuilder,
-    public loadingCtrl: LoadingController, public alertCtrl: AlertController) {
+    public loadingCtrl: LoadingController, public alertCtrl: AlertController, public storage: Storage) {
         this.signupForm = formBuilder.group({
               email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
               password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
@@ -66,6 +67,13 @@ export class AccountPage {
         //this.nav.setRoot(HomePage);
           console.log("Successfully Signed Up");
           this.successSignUp();
+          this.userDetails = {email: this.signupForm.value.email, password:this.signupForm.value.password};
+          this.storage.set('userDetails',this.userDetails);
+          console.log("this.userDetails", this.userDetails);
+          /*this.storage.get('userDetails').then((val)=>{
+
+            console.log("User Details are: ", val);
+          });*/
       }, (error) => {
         this.failureSignUp();
       });
@@ -92,6 +100,9 @@ export class AccountPage {
     } else {
       this.authData.loginUser(this.loginForm.value.email, this.loginForm.value.password).then( authData => {
         //this.nav.setRoot(HomePage);
+        this.userDetails = {email: this.loginForm.value.email, password:this.loginForm.value.password};
+          this.storage.set('userDetails',this.userDetails);
+          console.log("this.userDetails", this.userDetails);
         this.successLogin();
       }, error => {
         this.failureLogin();
@@ -189,6 +200,10 @@ export class AccountPage {
       .then((success) => {
         console.log("Firebase success: " + JSON.stringify(success));
         this.userProfile = success;
+        this.userDetails = {email: this.userProfile.email};
+          this.storage.set('userDetails',this.userDetails);
+          console.log("this.userDetails", this.userDetails);
+          this.successLogin();
     })
     .catch((error) => {
     console.log("Firebase failure: " + JSON.stringify(error));

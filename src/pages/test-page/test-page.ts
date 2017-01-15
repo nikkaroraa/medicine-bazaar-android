@@ -6,6 +6,7 @@ import {Injectable} from 'angular2/core';
 import { Xyz } from '../../providers/xyz';
 import {FetchProducts } from '../../providers/fetch-products.service';
 
+import { Storage } from '@ionic/storage';
 
 
 /*
@@ -22,27 +23,18 @@ import {FetchProducts } from '../../providers/fetch-products.service';
 
 export class TestPagePage {
   
-    public data:any;
+    public data = {};
     
     
  
 
-  constructor(public xyz:Xyz,public fetchProducts:FetchProducts) {
-    console.log("call create User ...");
-   /* this.fetchProducts.createUser().subscribe(data => {
-        // we've got back the raw data, now generate the core schedule data
-        // and save the data for later reference
-        this.data = data;
-        console.log(this.data);
-      },
-        err => {
-        console.log(err);
-    },
-        () => {
-        console.log('Completed');
-    });
-   
-*/
+  constructor(public storage:Storage) {
+    
+   this.storage.get('userDetails').then((val)=>{
+     this.data = val;
+            console.log("User Details are: ", val);
+            console.log("Data is: ", this.data);
+          });
   }
 
   callPayment()
