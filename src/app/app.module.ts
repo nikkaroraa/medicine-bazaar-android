@@ -21,13 +21,15 @@ import {FbLoginPage} from '../pages/fb-login/fb-login';
 import {GoogleLoginPage} from '../pages/google-login/google-login';
 import{UserPage} from '../pages/user/user';
 import {AccountPage} from '../pages/account/account';
+import {LogoutPage} from '../pages/logout/logout';
 // Import Providers
+
 import { AuthData } from '../providers/auth-data';
 import { 
   AngularFireModule, 
   AuthMethods, 
   AuthProviders 
-} from "angularfire2"
+} from "angularfire2";
 // YOUR SETTINGS GOES HERE!
 
 
@@ -56,7 +58,8 @@ export function provideStorage() {
       FbLoginPage,
       GoogleLoginPage,
       UserPage,
-AccountPage
+AccountPage,
+LogoutPage
 
   ],
   imports: [
@@ -80,7 +83,8 @@ CheckoutPage,
 FbLoginPage,
 GoogleLoginPage,
 UserPage,
-AccountPage
+AccountPage,
+LogoutPage
       
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, LocalDB, Storage, AuthData]

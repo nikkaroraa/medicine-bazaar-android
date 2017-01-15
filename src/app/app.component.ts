@@ -19,6 +19,7 @@ import {GoogleLoginPage} from '../pages/google-login/google-login';
 import{UserPage} from '../pages/user/user';
 import {AccountPage} from '../pages/account/account';
 import firebase from 'firebase';
+import {LogoutPage} from '../pages/logout/logout';
 
 
 
@@ -84,7 +85,8 @@ export class MyApp {
 {title: 'Checkout', component: CheckoutPage},
 {title: 'FbLogin', component: FbLoginPage},
 {title: 'GLogin', component: GoogleLoginPage},
-{title: 'Account', component: AccountPage}
+{title: 'Account', component: AccountPage},
+{title: 'Logout', component: LogoutPage}
     ];
       
   }
