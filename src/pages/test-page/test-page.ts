@@ -8,7 +8,7 @@ import {FetchProducts } from '../../providers/fetch-products.service';
 import { SMS } from 'ionic-native';
 import { SendSms } from '../../providers/send-sms';
 import { FormBuilder, Validators } from '@angular/forms';
-
+import {AlertController} from 'ionic-angular';
 
 /*
   Generated class for the TestPage page.
@@ -30,7 +30,7 @@ export class TestPagePage {
     public verifyStatus:any;
     
  
-  constructor(public xyz:Xyz,public fetchProducts:FetchProducts,public sendSms:SendSms) {
+  constructor(public xyz:Xyz,public fetchProducts:FetchProducts,public sendSms:SendSms,private alertCtrl: AlertController) {
    // console.log("call get all orders ...");
     
      
@@ -66,12 +66,36 @@ export class TestPagePage {
       },
         err => {
         console.log(err);
+        this.errorAlert(err);
     },
         () => {
-        console.log('Completed');
+       this.presentAlert();
     });
   }
+ 
+//successfully alert verify otp
+ presentAlert()  {
+  let alert = this.alertCtrl.create({
+    title: 'OTP Verify',
+    subTitle: 'Otp verified successfully!',
+    buttons: ['Dismiss']
+  });
+  alert.present();
+}
+
+//error otp
+ errorAlert(err)  {
+  let alert = this.alertCtrl.create({
+    title: 'Error',
+    subTitle: err,
+    buttons: ['Dismiss']
+  });
+  alert.present();
+}
+  
+
   //verify sms to user
+
   verifyOTP(otp)
   {
     this.verify.countryCode="91";
@@ -80,12 +104,15 @@ export class TestPagePage {
     this.sendSms.verifySms(this.verify).subscribe(verifyStatus => {
         this.verifyStatus = verifyStatus;
         console.log(this.verifyStatus);
+        
       },
         err => {
         console.log(err);
+        this.errorAlert(err);
     },
         () => {
         console.log('Completed');
+        this.presentAlert();
     });
   }
 
