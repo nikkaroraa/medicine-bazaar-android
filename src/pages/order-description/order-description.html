@@ -1,0 +1,44 @@
+<!--
+  Generated template for the OrderDescription page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>OrderDescription</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<ion-card>
+  <ion-card-header text-center>
+    <h1>{{ selectedMyOrder.id }}</h1>
+  </ion-card-header>
+  <ion-card-content>
+  	  <ion-list>	
+  	  	<ion-item>
+	  		<h2><ion-icon md="md-information" item-left></ion-icon>{{ selectedMyOrder.status }}</h2>
+	    	<h3><ion-icon md="md-calendar" item-left></ion-icon>{{ selectedMyOrder.dateCreated | date: 'dd/MM/yyyy' }}</h3>
+    	</ion-item>
+	  </ion-list>	
+		<ion-list *ngFor="let order of selectedMyOrder.line_items">
+    		<ion-item>
+    			<h2><ion-icon md="md-checkmark-circle-outline" item-left></ion-icon>{{ order.name }}</h2>
+	  			<h3><ion-icon md="md-checkmark-circle-outline" item-left></ion-icon>{{ order.quantity }}</h3>
+	  			<h3><ion-icon md="md-checkmark-circle-outline" item-left></ion-icon>&#8377;{{ order.price }}</h3>
+	  			<h3><ion-icon md="md-checkmark-circle-outline" item-left></ion-icon>&#8377;{{ order.total }}</h3>
+	  		</ion-item>
+	  	</ion-list>
+	  	<h2 text-center>Billing Details</h2>
+	  	<p>{{ selectedMyOrder.billing.first_name }}  {{ selectedMyOrder.billing.last_name }}</p>
+		<p>{{ selectedMyOrder.billing.address_1 }}</p>
+		<p>{{ selectedMyOrder.billing.address_2 }}</p>
+		<p>{{ selectedMyOrder.billing.email }}</p>
+		<p>{{ selectedMyOrder.billing.phone }}</p>
+  </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { FetchProducts } from '../../providers/fetch-products.service';
+import {OrderDescriptionPage} from '../order-description/order-description';
 /*
   Generated class for the MyOrders page.
 
@@ -9,13 +10,17 @@ import { FetchProducts } from '../../providers/fetch-products.service';
 */
 @Component({
   selector: 'page-my-orders',
-  templateUrl: 'my-orders.html'
+  templateUrl: 'my-orders.html',
+  providers: [FetchProducts]
 })
 export class MyOrdersPage {
  public data:any;
+ //public orderSerial: Array<any>  = [];
+ public myOrders: Array<any> = [];
+ public orderDate: Array<any> = [];
   constructor(public navCtrl: NavController, public navParams: NavParams, public fetchProducts:FetchProducts){ 
 
-   console.log("call get all orders ...");
+   console.log("Call get all orders ...");
     
      
     // Orders for a particular customer
@@ -24,13 +29,17 @@ export class MyOrdersPage {
         this.data = data;
         for(var i=0;i<this.data.length;i++)
         {
-          if(this.data[i].customer_id==2)
+          if(this.data[i].customer_id == 2)
           {
-            console.log(this.data[i].id);
+            //this.orderSerial.push(i);
+            this.data[i].dateCreated = this.data[i].date_created.substr(0,9);
+            this.myOrders.push(this.data[i]);
+            console.log(this.data[i]);
+
           }
 
         }
-        console.log(this.data);
+        //console.log(this.data);
       },
         err => {
         console.log(err);
@@ -38,6 +47,7 @@ export class MyOrdersPage {
         () => {
         console.log('Completed');
     });
+
    
 
 
@@ -45,6 +55,13 @@ export class MyOrdersPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MyOrdersPage');
+  }
+
+  orderSelected(myOrder){
+
+   this.navCtrl.push(OrderDescriptionPage, {
+      myOrder: myOrder
+    });
   }
 
 }

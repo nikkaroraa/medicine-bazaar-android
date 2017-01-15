@@ -22,7 +22,7 @@ import { LogoutPage } from '../pages/logout/logout';
 import { MyAccountPage } from '../pages/my-account/my-account';
 import { MyOrdersPage } from '../pages/my-orders/my-orders';
 import { UpdateAccountInfoPage } from '../pages/update-account-info/update-account-info';
-
+import { OrderDescriptionPage } from '../pages/order-description/order-description';
 
 @Component({
   templateUrl: 'app.html'
