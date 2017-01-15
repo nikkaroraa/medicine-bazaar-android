@@ -5,26 +5,29 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { SearchPage } from '../pages/search/search';
 import { ProductDetailPage } from '../pages/product-detail/product-detail';
-import {ItemDetailsPage} from '../pages/item-details/item-details';
-import {TestPagePage} from '../pages/test-page/test-page';
-import {CartPage} from '../pages/cart/cart';
+import { ItemDetailsPage } from '../pages/item-details/item-details';
+import { TestPagePage } from '../pages/test-page/test-page';
+import { CartPage } from '../pages/cart/cart';
 import { LocalDB } from '../providers/local-db';
 import { Storage } from '@ionic/storage';
-import {TabsPage} from '../pages/tabs/tabs';
-import {LogintabPage} from '../pages/logintab/logintab';
-import {SignuptabPage} from '../pages/signuptab/signuptab';
-import {MyAccountPage} from '../pages/my-account/my-account';
-
+import { TabsPage } from '../pages/tabs/tabs';
+import { LogintabPage } from '../pages/logintab/logintab';
+import { SignuptabPage } from '../pages/signuptab/signuptab';
+import { MyAccountPage } from '../pages/my-account/my-account';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
-import {CheckoutPage} from '../pages/checkout/checkout';
-import {FbLoginPage} from '../pages/fb-login/fb-login';
-import {GoogleLoginPage} from '../pages/google-login/google-login';
-import{UserPage} from '../pages/user/user';
-import {AccountPage} from '../pages/account/account';
-import {LogoutPage} from '../pages/logout/logout';
+import { CheckoutPage } from '../pages/checkout/checkout';
+import { FbLoginPage } from '../pages/fb-login/fb-login';
+import { GoogleLoginPage } from '../pages/google-login/google-login';
+import { UserPage } from '../pages/user/user';
+import { AccountPage } from '../pages/account/account';
+import { LogoutPage } from '../pages/logout/logout';
+import { MyOrdersPage } from '../pages/my-orders/my-orders';
+import { UpdateAccountInfoPage } from '../pages/update-account-info/update-account-info';
+
 // Import Providers
 
 import { AuthData } from '../providers/auth-data';
+
 import { 
   AngularFireModule, 
   AuthMethods, 
@@ -46,21 +49,22 @@ export function provideStorage() {
     HomePage,
     SearchPage,
     ProductDetailPage,
-      ItemDetailsPage,
-      TestPagePage,
-      CartPage,
-      TabsPage,
-      LogintabPage,
-
-      SignuptabPage,
-      ResetPasswordPage,
-      CheckoutPage,
-      FbLoginPage,
-      GoogleLoginPage,
-      UserPage,
-AccountPage,
-LogoutPage,
-MyAccountPage
+    ItemDetailsPage,
+    TestPagePage,
+    CartPage,
+    TabsPage,
+    LogintabPage,
+    SignuptabPage,
+    ResetPasswordPage,
+    CheckoutPage,
+    FbLoginPage,
+    GoogleLoginPage,
+    UserPage,
+    AccountPage,
+    LogoutPage,
+    MyAccountPage,
+    MyOrdersPage,
+    UpdateAccountInfoPage
 
   ],
   imports: [
@@ -73,20 +77,22 @@ MyAccountPage
     HomePage,
     SearchPage,
     ProductDetailPage,
-ItemDetailsPage,
-TestPagePage,
-CartPage,
-TabsPage,
-LogintabPage,
-SignuptabPage,
-ResetPasswordPage,
-CheckoutPage,
-FbLoginPage,
-GoogleLoginPage,
-UserPage,
-AccountPage,
-LogoutPage,
-MyAccountPage
+    ItemDetailsPage,
+    TestPagePage,
+    CartPage,
+    TabsPage,
+    LogintabPage,
+    SignuptabPage,
+    ResetPasswordPage,
+    CheckoutPage,
+    FbLoginPage,
+    GoogleLoginPage,
+    UserPage,
+    AccountPage,
+    LogoutPage,
+    MyAccountPage,
+    MyOrdersPage,
+    UpdateAccountInfoPage
       
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, LocalDB, Storage, AuthData]

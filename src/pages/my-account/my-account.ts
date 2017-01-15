@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { MyOrdersPage } from '../my-orders/my-orders';
+import { UpdateAccountInfoPage } from '../update-account-info/update-account-info';
 
 /*
   Generated class for the MyAccount page.
@@ -19,4 +21,17 @@ export class MyAccountPage {
     console.log('ionViewDidLoad MyAccountPage');
   }
 
+
+  toMyOrders(){
+  	this.navCtrl.push(MyOrdersPage);
+  }
+
+  toUpdateAccount(){
+  	this.navCtrl.push(UpdateAccountInfoPage);
+  }
+
+  logout(){
+
+
+  }
 }

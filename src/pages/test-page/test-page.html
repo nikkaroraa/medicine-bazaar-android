@@ -15,13 +15,21 @@
 
 
 <ion-content padding>
+    <button ion-button outline block >Open Browser</button>
+    <button ion-button outline block (click)="genSms()">Send Sms to dalip</button>
+     
 
 
-  <ion-item-group>
-    <ion-item-divider color="light">A</ion-item-divider>
-    <ion-item>{{data.email}}</ion-item>
-    <ion-item>{{data.password}}</ion-item>
-  </ion-item-group>
+    <ion-item>
+      <ion-label>Enter OTP</ion-label>
+      <ion-input  [(ngModel)]="otp" placeholder="Enter your Otp"></ion-input>
+    </ion-item>
+    
 
+    <button ion-button block  (click)="verifyOTP(otp)">
+      Submit
+    </button>
+
+  
 
 </ion-content>
