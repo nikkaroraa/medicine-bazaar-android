@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Facebook } from 'ionic-native';
 import firebase from 'firebase';
+import { Storage } from '@ionic/storage';
 
 /*
   Generated class for the FbLogin page.
@@ -15,8 +16,9 @@ import firebase from 'firebase';
 })
 export class FbLoginPage {
 
+public userDetails: any = {};
  userProfile: any = null;
-  constructor(public navCtrl: NavController) {}
+  constructor(public navCtrl: NavController, public storage: Storage) {}
 
   facebookLogin(){
     Facebook.login(['email']).then( (response) => {
@@ -27,6 +29,9 @@ export class FbLoginPage {
       .then((success) => {
         console.log("Firebase success: " + JSON.stringify(success));
         this.userProfile = success;
+        this.userDetails = {email: this.userProfile.email};
+          this.storage.set('userDetails',this.userDetails);
+          console.log("this.userDetails", this.userDetails);
     })
     .catch((error) => {
     console.log("Firebase failure: " + JSON.stringify(error));

@@ -12,7 +12,7 @@ import {  TabsPage } from '../tabs/tabs';
 @Component({
   selector: 'page-cart',
   templateUrl: 'cart.html'
-})
+}) 
 export class CartPage {
 public cartItems: Array<any> = [];
 public cartArray: Array<any> = [];

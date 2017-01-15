@@ -23,7 +23,7 @@ export class ProductDetailPage {
     public cartProducts: Array<any> = [];
     public cartInitialised: any = false;
     public countIncreased = false;
-    public productCount: any = 0;
+    public productCount:any = 0;
   constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct,public toastCtrl: ToastController,public storage: Storage) {
       //storage try
       /*       
@@ -37,6 +37,7 @@ export class ProductDetailPage {
             this.cartProducts.length = val;
          
       });*/
+
       this.storage.get('productCount').then((val)=>{
         if(!val){
             this.productCount = 0;
@@ -63,6 +64,8 @@ export class ProductDetailPage {
       //end storage try
       this.selectedItem = navParams.get('product');
       this.selectedItemName = this.selectedItem.name;
+      console.log("Lol",this.selectedItem);  
+                       
       /* 
       for(var i =0; i < this.selectedItem.upsell_ids.length; i++){
           this.selectedItemUpSellId.push(this.selectedItem.upsell_ids[i]);
@@ -80,9 +83,40 @@ export class ProductDetailPage {
     this.searchProduct.load(this.selectedItemName)
         .then(data => {
             this.s_products = data;
-            console.log("The retrieved detailed product is" + this.s_products);
+            console.log("The retrieved detailed product is",this.s_products);
+            this.storage.get('cartProducts').then((val)=> {
+              var that = this;
+           console.log('Inside the showToast: ', val);
+           this.cartProducts = [];
+
+           for(var i = 0; i < val.length ; i++){
+                this.cartProducts.push(val[i]);
+           }
+           this.cartProducts.forEach(function (item, index){
+            console.log("This is forEach", item);
+               if(item.id == that.s_products[0].id){
+                   console.log(item.id + "==" + that.s_products[0].id);
+                   that.s_products[0].count  = item.count;
+                   console.log("Count changed");
+                   
+               }
+               
+
+           });
+            
+
+        
+           
+
         });
-    
+    if(!this.s_products[0].count){
+      console.log("Count is 0");
+      this.s_products[0].count = 0;
+      console.log("After", this.s_products[0]);
+    }else{
+
+    }
+        });
     for(var j=0; j< this.itemUpsell.length; j++){
         this.searchProduct.loadById(this.itemUpsell[j])
             .then(data => {
@@ -93,6 +127,12 @@ export class ProductDetailPage {
             });
     }
   }
+
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad CartPage');
+
+  }
     //toast for gocart bottom popup
     showToast(position:string,product) {
         console.log("Buy product :" + product);
@@ -101,15 +141,16 @@ export class ProductDetailPage {
     {
         console.log("Cart is not initialised yet");
         this.cartProducts = []; 
-        product.count = 1;
+        //product.count = 1;
             
-        console.log("Product Count set to 1");
+        console.log("Product Count set to:", product.count);
         this.cartProducts.push(product);
         this.storage.set("cartProducts", this.cartProducts);
         this.storage.set("productCount", this.cartProducts.length);
         this.productCount = this.cartProducts.length;
         this.storage.set('cartInitialised', true);
         this.cartInitialised = true;
+         
     }
     else
     {
@@ -128,8 +169,8 @@ export class ProductDetailPage {
             console.log("This is forEach", item);
                if(item.id == product.id){
                    console.log(item.id + "==" + product.id);
-                   item.count +=1;
-                   console.log("Count increased by 1");
+                   item.count  = product.count;
+                   console.log("Count changed");
                    console.log("Value of count is:", item.count);
                    that.countIncreased = true;
                    console.log("The value of countIncreased: ", that.countIncreased);
@@ -138,11 +179,11 @@ export class ProductDetailPage {
 
            });
             if(!this.countIncreased){
-                product.count = 1;
+                //product.count = 1;
                 this.cartProducts.push(product);
                 this.storage.set('productCount', this.cartProducts.length);
                 this.productCount = this.cartProducts.length;
-                console.log("Product Count set to 1");
+                console.log("Product Count set to:", product.count);
             }
 
         
@@ -181,13 +222,11 @@ export class ProductDetailPage {
       });
 
       toast.present(toast);
+      this.navCtrl.pop();
 }
 //end of toast
  
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad ProductDetailPage');
-    }
-    clearKey(){
+       clearKey(){
 
 
         this.storage.remove("cartProducts");
@@ -221,5 +260,28 @@ export class ProductDetailPage {
          
       });
 }
+  decreaseCount(product){
+      
+    //  product.count--;
+             product.count--;
+             console.log("Decremented the value in the products array");
+             //this.storage.set('cartProducts', product);
+             console.log("Successfully made the changes in the storage element (Decremented)");
+                 console.log("Count decreased by 1 for: ", product.name);
+                 console.log("Product.count", product.count);
+             }    
+          
+       
+   increaseCount(product){
+      
+    //  product.count--;
+             product.count++;
+             console.log("Incremented the value in the products array");
+            // this.storage.set('cartProducts', product);
+             console.log("Successfully made the changes in the storage element (Decremented)");
+                 console.log("Count decreased by 1 for: ", product.name);
+             console.log("Product.count", product.count);
+              }      
+  
     
 }

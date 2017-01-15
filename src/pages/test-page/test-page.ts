@@ -10,6 +10,7 @@ import { SendSms } from '../../providers/send-sms';
 import { FormBuilder, Validators } from '@angular/forms';
 import {AlertController} from 'ionic-angular';
 
+
 /*
   Generated class for the TestPage page.
 
@@ -24,6 +25,7 @@ import {AlertController} from 'ionic-angular';
 
 export class TestPagePage {
   
+
     public data:any;
     public customerOrder:any;
     public verify:any={};
@@ -118,12 +120,12 @@ export class TestPagePage {
 
   callPayment()
   {
-      this.xyz.paymentGateway();
+      
   }
 
   openBrowser(){
+      let browser = new InAppBrowser('https://medicinebazaar.in/payumoney/index.php', '_blank')
       
-      let browser = new InAppBrowser('https://ionic.io', '_blank', 'location=no');
   }
 
 }
