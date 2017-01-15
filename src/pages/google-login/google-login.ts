@@ -1,11 +1,12 @@
 
 import { Component } from '@angular/core';
  
-import { NavController, AlertController, Platform } from 'ionic-angular';
+import { NavController, AlertController, LoadingController,Platform } from 'ionic-angular';
  
-import { FirebaseListObservable, FirebaseAuthState } from 'angularfire2';
+
 import {GooglePlus} from 'ionic-native';
-import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
+
+import { CheckoutPage } from '../checkout/checkout';
 /*
   Generated class for the GoogleLogin page.
 
@@ -19,10 +20,10 @@ import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 export class GoogleLoginPage {
 userProfile: any = null;
 user = {};
- constructor(public navCtrl: NavController, public af: AngularFire,
-        public alertController : AlertController,
-        private platform: Platform) {
-   this.af.auth.subscribe(user => {
+  loading: any;
+
+ constructor(public navCtrl: NavController, public alertCtrl : AlertController, private platform: Platform, public loadingCtrl: LoadingController) {
+   /*this.af.auth.subscribe(user => {
       if(user) {
         // user logged in
         this.user = user;
@@ -31,51 +32,69 @@ user = {};
         // user not logged in
         this.user = {};
       }
-    });
+    });*/
  }
+ /*
 login() {
   this.af.auth.login({
     provider: AuthProviders.Google,
     method: AuthMethods.Redirect
   });
-}
-  googlePlusLogin()
-  {
- 
-      this.af.auth.subscribe((data: FirebaseAuthState) => {
- 
-        this.af.auth.unsubscribe()
-        console.log("in auth subscribe", data)
- 
-        this.platform.ready().then(() => {
-           GooglePlus.login({
-             'webClientId' : '420052832956-0u8p34ddgit5ti5epriapsef9vip7552.apps.googleusercontent.com' }) .then((userData) => {
- 
-                var provider = firebase.auth.GoogleAuthProvider.credential(userData.idToken);
- 
-                 firebase.auth().signInWithCredential(provider)
-                  .then((success) => {
-                    console.log("Firebase success: " + JSON.stringify(success));
-                    this.displayAlert(success,"signInWithCredential successful")
-                    this.userProfile = success;
- 
-                  })
-                  .catch((error) => {
-                    console.log("Firebase failure: " + JSON.stringify(error));
-                        this.displayAlert(error,"signInWithCredential failed")
-                  });
- 
-                 })
-             .catch((error) => {
-                    console.log("Firebase failure: " + JSON.stringify(error));
-                        this.displayAlert(error,"signInWithCredential failed")
-                  });
- 
-            })
-       })
- 
+}*/
+  googleLogin(){
+    GooglePlus.login(['email']).then( (response) => {
+      let googleCredential = firebase.auth.GoogleAuthProvider
+        .credential(response.authResponse.accessToken);
+
+    firebase.auth().signInWithCredential(googleCredential)
+      .then((success) => {
+        console.log("Firebase success: " + JSON.stringify(success));
+        this.userProfile = success;
+        console.log('Google plus successfully logged in');
+        this.successLogin();
+    })
+    .catch((error) => {
+    console.log("Firebase failure: " + JSON.stringify(error));
+    this.failureLogin();
+  });
+
+    }).catch((error) => { console.log(error); this.failureLogin(); });
   }
- 
+
+  successLogin(){
+
+    this.loading = this.loadingCtrl.create({
+      spinner: 'hide',
+      content: 'Login Successfull! Please Wait...'
+    });
+
+    this.loading.present();
+
+    setTimeout(() => {
+     this.navCtrl.push(CheckoutPage);
+    }, 1000);
+
+    setTimeout(() => {
+      this.loading.dismiss();
+    }, 5000);
+
+  }
+
+  failureLogin(){
+
+
+
+   let alert = this.alertCtrl.create({
+      title: 'Login Unsuccessfull!',
+      subTitle: 'Login Unsuccessfull! Please check your username and password.',
+      buttons: ['OK']
+    });
+    alert.present();
+
+  
+
+  }
+ /*
   displayAlert(value,title)
   {
       let coolAlert = this.alertController.create({
@@ -94,7 +113,7 @@ login() {
       });
       coolAlert.present();
  
-    }
+    }*/
  
 }
 

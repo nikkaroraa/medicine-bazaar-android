@@ -13,7 +13,7 @@ import { Storage } from '@ionic/storage';
 import {TabsPage} from '../pages/tabs/tabs';
 import {LogintabPage} from '../pages/logintab/logintab';
 import {SignuptabPage} from '../pages/signuptab/signuptab';
-
+import {MyAccountPage} from '../pages/my-account/my-account';
 
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import {CheckoutPage} from '../pages/checkout/checkout';
@@ -59,7 +59,8 @@ export function provideStorage() {
       GoogleLoginPage,
       UserPage,
 AccountPage,
-LogoutPage
+LogoutPage,
+MyAccountPage
 
   ],
   imports: [
@@ -84,7 +85,8 @@ FbLoginPage,
 GoogleLoginPage,
 UserPage,
 AccountPage,
-LogoutPage
+LogoutPage,
+MyAccountPage
       
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, LocalDB, Storage, AuthData]
