@@ -31,10 +31,16 @@ export class TestPagePage {
   constructor(public storage:Storage) {
     
    this.storage.get('userDetails').then((val)=>{
+     if(!val){
+       this.data = {};
+     }
+     else{
      this.data = val;
             console.log("User Details are: ", val);
             console.log("Data is: ", this.data);
-          });
+          };  
+     })
+     
   }
 
   callPayment()

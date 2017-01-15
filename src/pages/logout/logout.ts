@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import firebase from 'firebase';
 import { AuthData } from '../../providers/auth-data';
 import {AccountPage} from '../account/account';
+import { Storage } from '@ionic/storage';
 /*
   Generated class for the Logout page.
 
@@ -15,7 +16,7 @@ import {AccountPage} from '../account/account';
 })
 export class LogoutPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public authData: AuthData) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public authData: AuthData, public storage: Storage) {
 
   }
 
@@ -26,6 +27,7 @@ export class LogoutPage {
 
 	this.authData.logoutUser().then((success)=>{
   		this.navCtrl.push(AccountPage);
+  		this.storage.remove('userDetails');
   	}, (error)=>{
   		console.log('Error:', error);
   	});
