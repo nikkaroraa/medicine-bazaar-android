@@ -60,6 +60,7 @@ export class TestPagePage {
   }
   
   //send sms to user
+  /*
   genSms()
   {
     this.sendSms.sendSMS().subscribe(data => {
@@ -117,7 +118,7 @@ export class TestPagePage {
         this.presentAlert();
     });
   }
-
+*/
   callPayment()
   {
       

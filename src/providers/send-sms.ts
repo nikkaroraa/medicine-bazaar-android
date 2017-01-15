@@ -10,17 +10,22 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class SendSms {
-  public user={
+  public user:any={}; 
+  /*={
  "countryCode": "91",
  "mobileNumber": "9818418721",
  "getGeneratedOTP": true
 };
+*/
   constructor(public http: Http) {
     
   }
   //send sms
-  sendSMS()
+  sendSMS(phone)
   {
+    this.user.countryCode=91;
+    this.user.mobileNumber=phone;
+    this.user.getGeneratedOTP=true;
   	let headers = new Headers({
       'Content-Type': 'application/json; charset=UTF-8',
       'application-Key': 'o5lW1KuiaEKocddJJ2Ez2q-1OySU8zOW3BhbPOT06NFtcuRIq6TDqxO51KWHpTIPxyZ28BYkWGe2M4M5jPeL8ySz5fk3cNK4-l47TK06_g5z5V1WfpwuK6ZYhbWZopX2HKybNBVpaIyjkxMVFVb__g=='
