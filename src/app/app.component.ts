@@ -23,7 +23,7 @@ import { MyAccountPage } from '../pages/my-account/my-account';
 import { MyOrdersPage } from '../pages/my-orders/my-orders';
 import { UpdateAccountInfoPage } from '../pages/update-account-info/update-account-info';
 import { OrderDescriptionPage } from '../pages/order-description/order-description';
-
+import { LastOrderPage } from '../pages/last-order/last-order';
 @Component({
   templateUrl: 'app.html'
 })

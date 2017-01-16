@@ -24,6 +24,7 @@ import { LogoutPage } from '../pages/logout/logout';
 import { MyOrdersPage } from '../pages/my-orders/my-orders';
 import { UpdateAccountInfoPage } from '../pages/update-account-info/update-account-info';
 import { OrderDescriptionPage } from '../pages/order-description/order-description';
+import { LastOrderPage } from '../pages/last-order/last-order';
 // Import Providers
 
 import { AuthData } from '../providers/auth-data';
@@ -65,7 +66,8 @@ export function provideStorage() {
     MyAccountPage,
     MyOrdersPage,
     UpdateAccountInfoPage,
-    OrderDescriptionPage
+    OrderDescriptionPage,
+    LastOrderPage
 
   ],
   imports: [
@@ -94,7 +96,8 @@ export function provideStorage() {
     MyAccountPage,
     MyOrdersPage,
     UpdateAccountInfoPage,
-    OrderDescriptionPage
+    OrderDescriptionPage,
+    LastOrderPage
       
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, LocalDB, Storage, AuthData]

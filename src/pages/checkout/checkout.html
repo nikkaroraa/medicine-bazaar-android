@@ -67,7 +67,8 @@
      <ion-label>Pin Code</ion-label>
      <ion-input type="text" [(ngModel)]="billing_address.postcode">  </ion-input>
      </ion-item>
-     <ion-item>
+     <!--<ion-item>
+     
      <ion-label>Phone</ion-label>
      <ion-input type="text" [(ngModel)]="billing_address.phone"> </ion-input><ion-icon *ngIf="phoneVerified" md="md-checkmark-circle"></ion-icon>
      </ion-item>
@@ -76,7 +77,7 @@
      <ion-item>
      <ion-label>OTP</ion-label>
      <ion-input type="text" [(ngModel)]="otp" (blur)="verifyOTP(otp,billing_address.phone)">  </ion-input>
-     </ion-item>
+     </ion-item>-->
      <ion-item>
       <button ion-button icon-only>Cancel</button>
     <button text-center ion-button round outline block color="danger" (click)="signUp(newUser,billing_address)">Sign Up</button>

@@ -3,6 +3,9 @@ import { NavController, NavParams } from 'ionic-angular';
 import {FetchProducts } from '../../providers/fetch-products.service';
 import {AlertController} from 'ionic-angular';
 import { SendSms } from '../../providers/send-sms';
+import {MyOrdersPage} from '../my-orders/my-orders';
+import { Storage } from '@ionic/storage';   
+import { LastOrderPage } from '../last-order/last-order';
 /*
   Generated class for the Checkout page.
 
@@ -27,7 +30,8 @@ public data:any;
 public verify:any={};
 public verifyStatus:any;
 public phoneVerified:boolean=false;
- constructor(public NavCtrl:NavController,public Nav:NavParams, public fetchProducts:FetchProducts, public alertCtrl:AlertController, public sendSms:SendSms) 
+ constructor(public navCtrl:NavController,public nav:NavParams, public fetchProducts:FetchProducts,
+  public alertCtrl:AlertController, public sendSms:SendSms, public storage: Storage) 
     {
         
     }
@@ -159,6 +163,8 @@ public phoneVerified:boolean=false;
         // and save the data for later reference
         this.customerData = data;
         console.log(this.customerData);
+        this.storage.set('customerID', this.customerData.id); //customerId set here
+        this.createUserSuccessfull();
       },
         err => {
         console.log(err);
@@ -167,6 +173,14 @@ public phoneVerified:boolean=false;
         console.log('Completed');
     });
   }   
+
+    createUserSuccessfull(){
+      console.log("Inside createUserSuccessfull", this.customerData.last_order);
+      this.navCtrl.push(LastOrderPage, {
+      response: this.customerData.last_order
+    });
+
+    }
  /*   
  static get parameters() {
         return [[Platform]];
