@@ -41,7 +41,7 @@ export class AccountPage {
               password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
         });
     } 
-
+    
   ionViewDidLoad() {
     console.log('ionViewDidLoad AccountPage');
   }

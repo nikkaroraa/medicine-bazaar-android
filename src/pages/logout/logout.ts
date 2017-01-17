@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 
 import { AuthData } from '../../providers/auth-data';
-import {AccountPage} from '../account/account';
+import {HomePage} from '../home/home';
 import { Storage } from '@ionic/storage';
 /*
   Generated class for the Logout page.
@@ -15,8 +15,9 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'logout.html'
 })
 export class LogoutPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public authData: AuthData, public storage: Storage) {
+loading: any;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public authData: AuthData, public storage: Storage,
+    public loadingCtrl: LoadingController) {
 
   }
 
@@ -26,12 +27,32 @@ export class LogoutPage {
   logoutUser(){
 
 	this.authData.logoutUser().then((success)=>{
-  		this.navCtrl.push(AccountPage);
-  		this.storage.remove('userDetails');
+  		//this.storage.remove('userDetails');
+      this.successLogout();
+  		
   	}, (error)=>{
   		console.log('Error:', error);
   	});
   	
+
+  }
+
+  successLogout(){
+
+    this.loading = this.loadingCtrl.create({
+      spinner: 'hide',
+      content: 'Logout Successfull! Please Wait...'
+    });
+
+    this.loading.present();
+
+    setTimeout(() => {
+     this.navCtrl.setRoot(HomePage);
+    }, 1000);
+
+    setTimeout(() => {
+      this.loading.dismiss();
+    }, 5000);
 
   }
 }

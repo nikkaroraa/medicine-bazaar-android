@@ -22,8 +22,12 @@ export class ItemDetailsPage {
       console.log("UserProfile is: ", this.userProfile);
       this.userProfile.child('mOq8ewEAtpVA6Vz4rMvJoHWBvIJ3').set({gender: 'Female'});
 
-
+      if(firebase.auth().currentUser){
       this.user = firebase.auth().currentUser;
+      }
+      else{
+        this.user = {};
+      }
       console.log("this.user ", this.user);
       this.updatePasswordForm = formBuilder.group({
         	password: ['',  Validators.compose([Validators.maxLength(30), Validators.required])]
@@ -54,6 +58,15 @@ export class ItemDetailsPage {
 
     	}	
 	}
+
+  sendVerificationMail(){
+    this.user.sendEmailVerification().then(function() {
+      console.log("Email sent successfully");
+    }, function(error) {
+      console.log("Email sending failed");
+    });
+
+  }
 
 
 }
