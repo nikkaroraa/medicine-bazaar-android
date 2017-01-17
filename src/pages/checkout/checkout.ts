@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import {FetchProducts } from '../../providers/fetch-products.service';
 import {AlertController} from 'ionic-angular';
 import { SendSms } from '../../providers/send-sms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 /*
   Generated class for the Checkout page.
 
@@ -27,14 +28,37 @@ public data:any;
 public verify:any={};
 public verifyStatus:any;
 public phoneVerified:boolean=false;
- constructor(public NavCtrl:NavController,public Nav:NavParams, public fetchProducts:FetchProducts, public alertCtrl:AlertController, public sendSms:SendSms) 
+public checkoutForm: FormGroup;
+submitAttempt: boolean = false;
+ constructor(public formBuilder:FormBuilder,public NavCtrl:NavController,public Nav:NavParams, public fetchProducts:FetchProducts, public alertCtrl:AlertController, public sendSms:SendSms) 
     {
-        
+       this.checkoutForm=this.formBuilder.group({
+          firstName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+          lastName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+          email:['', Validators.compose([Validators.maxLength(30), Validators.pattern('/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/'), Validators.required])],
+          password:['', Validators.compose([Validators.maxLength(10), Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$'), Validators.required])],
+          address1:['', Validators.compose([Validators.maxLength(70), Validators.pattern('^\d+\s[A-z]+\s[A-z]+'), Validators.required])],
+          address2:['', Validators.compose([Validators.maxLength(70), Validators.pattern('^\d+\s[A-z]+\s[A-z]+')])],
+          pincode:['', Validators.compose([Validators.maxLength(5), Validators.pattern('[0-9 ]*'), Validators.required])],
+          phone:['', Validators.compose([Validators.maxLength(10), Validators.pattern('[0-9 ]*'), Validators.required])],
+          username:['',Validators.compose([Validators.maxLength(10), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+          state:['I',],
+          city:['I',],
+          otp:['',]
+        }); 
     }
+    //checkout validator
+     elementChanged(input){
+    let field = input.inputControl.name;
+    this[field + "Changed"] = true;
+  }
+
+
     //send sms to user
   genSms(phone)
   {
-    this.sendSms.sendSMS(phone).subscribe(data => {
+    console.log("genSms method..",this.checkoutForm.value.phone);
+    this.sendSms.sendSMS(this.checkoutForm.value.phone).subscribe(data => {
         this.data = data;
         console.log(this.data);
       },
@@ -93,8 +117,9 @@ public phoneVerified:boolean=false;
   verifyOTP(otp,phone)
   {
     this.verify.countryCode="91";
-    this.verify.mobileNumber=phone;
-    this.verify.oneTimePassword=otp;
+    this.verify.mobileNumber=this.checkoutForm.value.phone;
+    this.verify.oneTimePassword=this.checkoutForm.value.otp;
+    console.log(this.verify);
     this.sendSms.verifySms(this.verify).subscribe(verifyStatus => {
         this.verifyStatus = verifyStatus;
         console.log(this.verifyStatus);
@@ -112,43 +137,44 @@ public phoneVerified:boolean=false;
   }
 
     
- signUp(newUser,billing_address)
+ signUp()
   {
+      this.submitAttempt=true;
       console.log("signUp function");
-      console.log("newUser: ", newUser);
-      console.log("billing_address: ", billing_address);
+      console.log("newUser: ", this.checkoutForm);
+ 
 
       this.userSend = {
 
-        "email": newUser.email,
-        "password": newUser.password,
-        "first_name": newUser.first_name,
-        "last_name": newUser.last_name,
-        "username": newUser.username,
+        "email": this.checkoutForm.value.email,
+        "password": this.checkoutForm.value.password,
+        "first_name":this.checkoutForm.value.firstName,
+        "last_name": this.checkoutForm.value.lastName,
+        "username": this.checkoutForm.value.userName,
         
         "billing": {
-          "first_name": newUser.first_name,
-          "last_name": newUser.last_name,
+          "first_name": this.checkoutForm.value.firstName,
+          "last_name": this.checkoutForm.value.lastName,
           "company": "genIThub",
-          "address_1": billing_address.address1,
-          "address_2": billing_address.address2,
-          "city": billing_address.city,
-          "state": billing_address.state,
-          "postcode": billing_address.postcode,
-          "country": billing_address.country,
-          "email": newUser.email,
-          "phone": billing_address.phone
+          "address_1": this.checkoutForm.value.address1,
+          "address_2": this.checkoutForm.value.address2,
+          "city": this.checkoutForm.value.city,
+          "state": this.checkoutForm.value.state,
+          "postcode": this.checkoutForm.value.pincode,
+          //"country": this.checkoutForm.value.country,
+          "email": this.checkoutForm.value.email,
+          "phone": this.checkoutForm.value.phone
         },
         "shipping": {
-          "first_name": newUser.first_name,
-          "last_name": newUser.last_name,
+          "first_name": this.checkoutForm.value.firstName,
+          "last_name":this.checkoutForm.value.lastName,
           "company": "genIThub",
-          "address_1": billing_address.address1,
-          "address_2": billing_address.address2,
-          "city": billing_address.city,
-          "state": billing_address.state,
-          "postcode": billing_address.postcode,
-          "country": billing_address.country
+          "address_1":this.checkoutForm.value.address1,
+          "address_2": this.checkoutForm.value.address2,
+          "city": this.checkoutForm.value.city,
+          "state": this.checkoutForm.value.state,
+          "postcode": this.checkoutForm.value.pincode,
+          "country": this.checkoutForm.value.country
         
         }
 

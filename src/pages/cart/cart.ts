@@ -3,6 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import {  TabsPage } from '../tabs/tabs';
 import {CheckoutPage} from '../checkout/checkout';
+import { ToastController } from 'ionic-angular';
 /*
   Generated class for the Cart page.
 
@@ -21,7 +22,7 @@ public costSum = 0;
 public costSumString;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public storage: Storage,public toastCtrl: ToastController) {
 var that = this;
       this.costSumString = this.costSum.toFixed(2);
     this.storage.get('cartProducts').then((val)=> {
@@ -75,8 +76,25 @@ this.cartItems.forEach(function(element, index){
   this.navCtrl.push(TabsPage);   
  }
  //go to checkout page
- goToCheckOut()
+ goToCheckOut(price)
  {
+   if(price==0)
+   {
+     let toast = this.toastCtrl.create({
+        message: 'No product in cart.',
+        duration: 3000,
+        position: 'bottom'
+       });
+
+      toast.onDidDismiss(() => {
+        console.log('Dismissed toast');
+         
+      });
+
+      toast.present(toast);
+      this.navCtrl.pop();
+      return;
+   }
    this.navCtrl.push(CheckoutPage);
  }
   increaseCount(product){

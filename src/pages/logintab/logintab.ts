@@ -42,6 +42,7 @@ export class LogintabPage {
   }
 
   elementChanged(input){
+    //console.log(input.inputControl);
     let field = input.inputControl.name;
     this[field + "Changed"] = true;
   }

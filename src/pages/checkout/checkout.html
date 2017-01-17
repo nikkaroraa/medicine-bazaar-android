@@ -16,72 +16,103 @@
 <ion-content padding>
 
      
-<ion-list>
-  <ion-item>
+
+<form [formGroup]="checkoutForm"  (ngSubmit)="signUp()">
+<ion-item>
      <ion-label>First Name</ion-label>
-     <ion-input type="text" [(ngModel)]="newUser.first_name">  </ion-input>
+    
+     <ion-input type="text" #firstName formControlName="firstName" (change)="elementChanged(firstName)"></ion-input>
      </ion-item>
+     <ion-item class="error-message" *ngIf="!checkoutForm.controls.firstName.valid && (firstNameChanged || submitAttempt)">
+      <p>Please enter only alphabet.</p>
+    </ion-item>
   <ion-item>
      <ion-label>Last Name</ion-label>
-     <ion-input type="text" [(ngModel)]="newUser.last_name">  </ion-input>
-     </ion-item>     
+     <ion-input type="text" #lastName formControlName="lastName" (change)="elementChanged(lastName)"></ion-input>
+     </ion-item> 
+   
+     
+      <ion-item class="error-message" *ngIf="!checkoutForm.controls.lastName.valid && (lastNameChanged || submitAttempt)">
+      <p>Please enter only alphabet.</p>
+    </ion-item>  
+      
+       
   <ion-item>
      <ion-label>Email</ion-label>
-     <ion-input type="email" [(ngModel)]="newUser.email">  </ion-input>
-     </ion-item>
-     <ion-item>
-     <ion-label>Password</ion-label>
-     <ion-input type="password" [(ngModel)]="newUser.password">  </ion-input>
+     <ion-input type="email" #email formControlName="email" (change)="elementChanged(email)">  </ion-input>
      </ion-item>
      
+      <ion-item class="error-message" *ngIf="!checkoutForm.controls.email.valid && (emailChanged || submitAttempt)">
+      <p>Please enter valid email.</p>
+    </ion-item>
+     <ion-item>
+     <ion-label>Password</ion-label>
+     <ion-input type="password" #password formControlName="password" (change)="elementChanged(password)">  </ion-input>
+     </ion-item>
+     
+      <ion-item class="error-message" *ngIf="!checkoutForm.controls.password.valid && (passwordChanged || submitAttempt)">
+      <p>Password is not strong.</p>
+    </ion-item>
      <ion-item>
      <ion-label> Address Line 1</ion-label>
-     <ion-input type="text" [(ngModel)]="billing_address.address1">  </ion-input>
+     <ion-input type="text" #address1 formControlName="address1" (change)="elementChanged(address1)">  </ion-input>
      </ion-item>
+     
+      <ion-item class="error-message" *ngIf="!checkoutForm.controls.address1.valid && (address1Changed || submitAttempt)">
+      <p>Address is too long.</p>
+    </ion-item>
      <ion-item>
      <ion-label>Address Line 2</ion-label>
-     <ion-input type="text" [(ngModel)]="billing_address.address2">  </ion-input>
+     <ion-input type="text" formControlName="address2" (change)="elementChanged(address2)">  </ion-input>
      </ion-item>
-     <ion-item>
+      <ion-item class="error-message" *ngIf="!checkoutForm.controls.address2.valid && (address2Changed || submitAttempt)">
+      <p>Address is too long.</p>
+    </ion-item>
+     <!--<ion-item>
+     
      <ion-label>Country</ion-label>
-     <ion-select [(ngModel)]="billing_address.country">
+     <ion-select formControlName="country">
     <ion-option value="I" selected="true">India</ion-option>
     <ion-option value="U">US</ion-option>
   </ion-select>
-     </ion-item>
+     </ion-item>-->
       <ion-item>
      <ion-label>State</ion-label>
-     <ion-select [(ngModel)]="billing_address.state">
+     <ion-select formControlName="state">
     <ion-option value="I" selected="true">New Delhi</ion-option>
     <ion-option value="U">Uttar Pradesh</ion-option>
   </ion-select>
      </ion-item>
         <ion-item>
      <ion-label>City</ion-label>
-     <ion-select [(ngModel)]="billing_address.city">
+     <ion-select formControlName="city">
     <ion-option value="I" selected="true">Delhi</ion-option>
-    <ion-option value="U">Banglore</ion-option>
+    <ion-option value="U">Bangalore</ion-option>
   </ion-select>
      </ion-item>
      <ion-item>
      <ion-label>Pin Code</ion-label>
-     <ion-input type="text" [(ngModel)]="billing_address.postcode">  </ion-input>
+     <ion-input type="text" #pincode formControlName="pincode" (change)="elementChanged(pincode)">  </ion-input>
      </ion-item>
+     <ion-item class="error-message" *ngIf="!checkoutForm.controls.pincode.valid && (pincodeChanged || submitAttempt)">
+      <p>Enter five digit pincode.</p>
+    </ion-item>
      <ion-item>
      <ion-label>Phone</ion-label>
-     <ion-input type="text" [(ngModel)]="billing_address.phone"> </ion-input><ion-icon *ngIf="phoneVerified" md="md-checkmark-circle"></ion-icon>
+     <ion-input type="text" #phone formControlName="phone" name="phone" (change)="elementChanged(phone)"> </ion-input><ion-icon *ngIf="phoneVerified" md="md-checkmark-circle"></ion-icon>
      </ion-item>
+     <ion-item class="error-message" *ngIf="!checkoutForm.controls.phone.valid && (phoneChanged || submitAttempt)">
+      <p>Enter ten digit contact number.</p>
+    </ion-item>
      <ion-item>
-    <button text-center ion-button round outline block color="danger" (click)="genSms(billing_address.phone)">Send OTP</button></ion-item>
+    <button text-center ion-button round outline block color="danger" (click)="genSms(phone)">Send OTP</button> </ion-item>
      <ion-item>
      <ion-label>OTP</ion-label>
-     <ion-input type="text" [(ngModel)]="otp" (blur)="verifyOTP(otp,billing_address.phone)">  </ion-input>
+     <ion-input type="text" formControlName="otp" (blur)="verifyOTP(otp,phone)"></ion-input>
      </ion-item>
-     <ion-item>
-      <button ion-button icon-only>Cancel</button>
-    <button text-center ion-button round outline block color="danger" (click)="signUp(newUser,billing_address)">Sign Up</button>
+    <button ion-button type="submit">Sign Up</button>
+</form>
+  
 
-	</ion-item>
-</ion-list>
 
 </ion-content>

@@ -9,6 +9,7 @@ import { NavController} from 'ionic-angular';
 import {SearchPage} from '../search/search'; 
 import { Storage } from '@ionic/storage';   
 import {CartPage} from '../cart/cart';     
+import { EmailComposer } from 'ionic-native';
 /*
   Generated class for the Home page.
 
@@ -65,7 +66,7 @@ openMenu() {
         targetWidth: 1000,
         targetHeight: 1000
     }).then((imageData) => {
-      // imageData is a base64 encoded string
+      // imageData from camera is a base64 encoded string 
         this.base64Image = "data:image/jpeg;base64," + imageData;
     }, (err) => {
         console.log(err);
@@ -86,7 +87,7 @@ openMenu() {
     encodingType: Camera.EncodingType.JPEG,      
     correctOrientation: true
   }
-
+   //imageSrc from gallery image
   Camera.getPicture(cameraOptions)
     .then(file_uri => this.imageSrc = file_uri, 
     err => console.log(err)); 

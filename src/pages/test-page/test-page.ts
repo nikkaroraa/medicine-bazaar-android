@@ -9,7 +9,7 @@ import { SMS } from 'ionic-native';
 import { SendSms } from '../../providers/send-sms';
 import { FormBuilder, Validators } from '@angular/forms';
 import {AlertController} from 'ionic-angular';
-
+import {MailSend} from '../../providers/mail-send';
 
 /*
   Generated class for the TestPage page.
@@ -20,7 +20,7 @@ import {AlertController} from 'ionic-angular';
 @Component({
   selector: 'page-test-page',
   templateUrl: 'test-page.html',
-  providers: [Xyz, FetchProducts,SendSms]
+  providers: [Xyz, FetchProducts,SendSms,MailSend]
 })
 
 export class TestPagePage {
@@ -32,93 +32,43 @@ export class TestPagePage {
     public verifyStatus:any;
     
  
-  constructor(public xyz:Xyz,public fetchProducts:FetchProducts,public sendSms:SendSms,private alertCtrl: AlertController) {
+  constructor(public mailSend:MailSend,public fetchProducts:FetchProducts,public sendSms:SendSms,private alertCtrl: AlertController) {
    // console.log("call get all orders ...");
     
-     
-    // Orders for a particular customer
-    /*
-    this.fetchProducts.getAllOrders().subscribe(data => {
-        this.data = data;
-        for(var i=0;i<this.data.length;i++)
-        {
-          if(this.data[i].customer_id==2)
-          {
-            console.log(this.data[i].id);
-          }
+    this.mailSend.mailSending().subscribe(data=>{
+    this.data=data;
+    console.log(this.data);
 
-        }
-        console.log(this.data);
-      },
-        err => {
-        console.log(err);
-    },
-        () => {
-        console.log('Completed');
+  },
+  err=> {
+    console.log(err);
+    this.mailSentAlert();
+  },
+  () => {
+    console.log('Completed');
+  this.mailSentAlert();
     });
-   */
+
   }
-  
-  //send sms to user
-  /*
-  genSms()
-  {
-    this.sendSms.sendSMS().subscribe(data => {
-        this.data = data;
-        console.log(this.data);
-      },
-        err => {
-        console.log(err);
-        this.errorAlert(err);
-    },
-        () => {
-       this.presentAlert();
-    });
-  }
- 
-//successfully alert verify otp
- presentAlert()  {
+//sms sended
+ mailSentAlert()  {
   let alert = this.alertCtrl.create({
-    title: 'OTP Verify',
-    subTitle: 'Otp verified successfully!',
+    title: 'OTP Send',
+    subTitle: 'OTP send succesfully!',
     buttons: ['Dismiss']
   });
   alert.present();
 }
 
-//error otp
- errorAlert(err)  {
+//error while sending
+ errorSentAlert()  {
   let alert = this.alertCtrl.create({
     title: 'Error',
-    subTitle: err,
+    subTitle: 'Message not Sent',
     buttons: ['Dismiss']
   });
   alert.present();
-}
-  
-
-  //verify sms to user
-
-  verifyOTP(otp)
-  {
-    this.verify.countryCode="91";
-    this.verify.mobileNumber="9818418721";
-    this.verify.oneTimePassword=otp;
-    this.sendSms.verifySms(this.verify).subscribe(verifyStatus => {
-        this.verifyStatus = verifyStatus;
-        console.log(this.verifyStatus);
-        
-      },
-        err => {
-        console.log(err);
-        this.errorAlert(err);
-    },
-        () => {
-        console.log('Completed');
-        this.presentAlert();
-    });
-  }
-*/
+} 
   callPayment()
   {
       
