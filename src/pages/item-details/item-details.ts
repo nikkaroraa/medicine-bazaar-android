@@ -21,7 +21,7 @@ export class ItemDetailsPage {
     // If we navigated to this page, we will have an item available as a nav param
       this.userProfile = firebase.database().ref('/userProfile');
       console.log("UserProfile is: ", this.userProfile);
-      this.userProfile.child('mOq8ewEAtpVA6Vz4rMvJoHWBvIJ3').set({gender: 'Female'});
+      this.userProfile.child('Yhf2kL1w0rh8MM6S72T6qqFbfLt1').set({gender: 'Female'});
 
       if(firebase.auth().currentUser){
       this.user = firebase.auth().currentUser;
