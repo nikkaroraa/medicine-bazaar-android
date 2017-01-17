@@ -15,6 +15,7 @@ export class ItemDetailsPage {
   user : any;
   updatePasswordForm: FormGroup;
   submitAttempt: boolean = false;
+  emailVerified: any = false;
   constructor(public navCtrl: NavController, public navParams: NavParams,public storage: Storage, public formBuilder: FormBuilder,
   	public modalCtrl: ModalController) {
     // If we navigated to this page, we will have an item available as a nav param
@@ -32,6 +33,8 @@ export class ItemDetailsPage {
       this.updatePasswordForm = formBuilder.group({
         	password: ['',  Validators.compose([Validators.maxLength(30), Validators.required])]
     	});
+
+      this.emailVerified = this.user.emailVerified;
   }
 
 	updatePassword(){
