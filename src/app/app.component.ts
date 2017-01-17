@@ -10,20 +10,21 @@ import { SearchPage } from '../pages/search/search';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { TestPagePage } from '../pages/test-page/test-page';
 import { CartPage } from '../pages/cart/cart';
-import { TabsPage } from '../pages/tabs/tabs';
-import { LogintabPage } from '../pages/logintab/logintab';
+
+
 import { CheckoutPage } from '../pages/checkout/checkout';
 import { FbLoginPage } from '../pages/fb-login/fb-login';
 import { GoogleLoginPage } from '../pages/google-login/google-login';
-import { UserPage } from '../pages/user/user';
+
 import { AccountPage } from '../pages/account/account';
 import firebase from 'firebase';
 import { LogoutPage } from '../pages/logout/logout';
 import { MyAccountPage } from '../pages/my-account/my-account';
-import { MyOrdersPage } from '../pages/my-orders/my-orders';
-import { UpdateAccountInfoPage } from '../pages/update-account-info/update-account-info';
-import { OrderDescriptionPage } from '../pages/order-description/order-description';
-import { LastOrderPage } from '../pages/last-order/last-order';
+
+
+
+import { LoginTestPage } from '../pages/login-test/login-test';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -47,7 +48,15 @@ export class MyApp {
       messagingSenderId: "420052832956"
     };      
     
-    firebase.initializeApp(firebaseConfig);    
+    firebase.initializeApp(firebaseConfig); 
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+      // User is signed in.
+      } else {
+      // No user is signed in.
+      }
+    });
+   
    /* firebase.auth().onAuthStateChanged( user => {
       if (!user) {
         this.rootPage = LogintabPage;
@@ -65,16 +74,17 @@ export class MyApp {
     this.pages = [
     
       {title: 'Search Products', component: SearchPage},
-      {title: 'Infinite Scroll', component: ItemDetailsPage},
-      {title: 'TestInfinite', component: TestPagePage},
+      {title: 'Test1...', component: TestPagePage},
+      {title: 'Test2...', component: ItemDetailsPage},
       {title: 'Cart', component: CartPage},
-      {title: 'Login ', component: TabsPage},
+      
       {title: 'Checkout', component: CheckoutPage},
       {title: 'FbLogin', component: FbLoginPage},
       {title: 'GLogin', component: GoogleLoginPage},
       {title: 'Account', component: AccountPage},
       {title: 'Logout', component: LogoutPage},
-      {title: 'My Account', component: MyAccountPage}
+      {title: 'My Account', component: MyAccountPage},
+      {title: 'Login Test', component: LoginTestPage}
 
     ];
       

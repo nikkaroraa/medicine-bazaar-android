@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import {FetchProducts } from '../../providers/fetch-products.service';
 import {AlertController} from 'ionic-angular';
 import { SendSms } from '../../providers/send-sms';
-import {MyOrdersPage} from '../my-orders/my-orders';
+
 import { Storage } from '@ionic/storage';   
 import { LastOrderPage } from '../last-order/last-order';
 /*

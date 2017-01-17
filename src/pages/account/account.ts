@@ -8,6 +8,7 @@ import { ResetPasswordPage } from '../reset-password/reset-password';
 import { Facebook } from 'ionic-native';
 import firebase from 'firebase';
 import { Storage } from '@ionic/storage';
+
 /*
   Generated class for the Account page.
 

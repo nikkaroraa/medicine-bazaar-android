@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import {InAppBrowser} from 'ionic-native';
-import { Http, Headers, RequestOptions} from 'angular2/http';
+
+
 import 'rxjs/Rx';
-import {Injectable} from 'angular2/core';
+
 import { Xyz } from '../../providers/xyz';
 import {FetchProducts } from '../../providers/fetch-products.service';
-import { SMS } from 'ionic-native';
+
 import { SendSms } from '../../providers/send-sms';
-import { FormBuilder, Validators } from '@angular/forms';
+
 import {AlertController} from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
