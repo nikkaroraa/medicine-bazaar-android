@@ -23,16 +23,15 @@ import { AccountPage } from '../pages/account/account';
 import { LogoutPage } from '../pages/logout/logout';
 import { MyOrdersPage } from '../pages/my-orders/my-orders';
 import { UpdateAccountInfoPage } from '../pages/update-account-info/update-account-info';
-
+import { OrderDescriptionPage } from '../pages/order-description/order-description';
+import { LastOrderPage } from '../pages/last-order/last-order';
+import { LoginTestPage } from '../pages/login-test/login-test';
+import { SigninModalPage } from '../pages/signin-modal/signin-modal';
 // Import Providers
 
 import { AuthData } from '../providers/auth-data';
 
-import { 
-  AngularFireModule, 
-  AuthMethods, 
-  AuthProviders 
-} from "angularfire2";
+
 // YOUR SETTINGS GOES HERE!
 
 
@@ -64,7 +63,11 @@ export function provideStorage() {
     LogoutPage,
     MyAccountPage,
     MyOrdersPage,
-    UpdateAccountInfoPage
+    UpdateAccountInfoPage,
+    OrderDescriptionPage,
+    LastOrderPage,
+    LoginTestPage,
+    SigninModalPage
 
   ],
   imports: [
@@ -92,7 +95,11 @@ export function provideStorage() {
     LogoutPage,
     MyAccountPage,
     MyOrdersPage,
-    UpdateAccountInfoPage
+    UpdateAccountInfoPage,
+    OrderDescriptionPage,
+    LastOrderPage,
+    LoginTestPage,
+    SigninModalPage
       
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, LocalDB, Storage, AuthData]

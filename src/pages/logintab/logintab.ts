@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthData } from '../../providers/auth-data';
 import { SignuptabPage } from '../signuptab/signuptab';
-import { HomePage } from '../home/home';
+
 import { ResetPasswordPage } from '../reset-password/reset-password';
 import { EmailValidator } from '../../validators/email';
 import { CheckoutPage } from '../checkout/checkout';

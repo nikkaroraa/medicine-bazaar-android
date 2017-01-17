@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { GooglePlus, NativeStorage } from 'ionic-native';
 import { GoogleLoginPage } from '../google-login/google-login';
 import { UserModel } from './user.model';

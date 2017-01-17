@@ -1,48 +1,59 @@
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
+import firebase from 'firebase';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import {SigninModalPage} from '../signin-modal/signin-modal';
 
 @Component({
   selector: 'page-item-details',
   templateUrl: 'item-details.html'
 })
 export class ItemDetailsPage {
-  selectedItem: any;
-items = [];
-
-  constructor(public navCtrl: NavController, public navParams: NavParams,public storage: Storage) {
+  userProfile: any;
+  user : any;
+  updatePasswordForm: FormGroup;
+  submitAttempt: boolean = false;
+  constructor(public navCtrl: NavController, public navParams: NavParams,public storage: Storage, public formBuilder: FormBuilder,
+  	public modalCtrl: ModalController) {
     // If we navigated to this page, we will have an item available as a nav param
-      this.storage.ready();
-      this.storage.set("name","hello");
-    this.storage.get("name").then((val)=>{
-       console.log("name is 1:",val); 
-        
-    });
-    this.storage.remove("name").then(() => { });
+      this.userProfile = firebase.database().ref('/userProfile');
+      console.log("UserProfile is: ", this.userProfile);
+      this.userProfile.child('mOq8ewEAtpVA6Vz4rMvJoHWBvIJ3').set({gender: 'Female'});
 
-      this.storage.set("name","nikhil");
-    this.storage.get("name").then((val)=>{
-       console.log("name is 2:",val); 
-    });
-    this.selectedItem = navParams.get('item');
- for (let i = 0; i < 30; i++) {
-      this.items.push( this.items.length );
-    }
+
+      this.user = firebase.auth().currentUser;
+      console.log("this.user ", this.user);
+      this.updatePasswordForm = formBuilder.group({
+        	password: ['',  Validators.compose([Validators.maxLength(30), Validators.required])]
+    	});
   }
 
-doInfinite(infiniteScroll) {
+	updatePassword(){
+		this.submitAttempt = true;
+    var that = this;
+		if(!this.updatePasswordForm.valid){
+         	console.log("Form not valid");
+    	} 
     
-    console.log('Begin async operation');
+    	else 
+    	{
+	        console.log("Success! Form is valid. Continuing....")
+	        console.log(this.updatePasswordForm.value);
+        	this.user.updatePassword(this.updatePasswordForm.value.password).then(function() {
+  				  // Update successful.
+  				  console.log("Password Updated Successfully");
+				  }, function(error) {
+  				  // An error happened.
+  				  console.log("Error in Password Updation. Please try again", error);
+  				  let signinModal = that.modalCtrl.create(SigninModalPage);
+  				  signinModal.present();
+  				  //recent sign in required
+				});
 
-    setTimeout(() => {
-      for (let i = 0; i < 30; i++) {
-        this.items.push( this.items.length );
-      }
+    	}	
+	}
 
-      console.log('Async operation has ended');
-      infiniteScroll.complete();
-    }, 500);
-  }
 
 }

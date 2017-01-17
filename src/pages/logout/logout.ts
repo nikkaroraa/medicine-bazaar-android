@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import firebase from 'firebase';
+
 import { AuthData } from '../../providers/auth-data';
 import {AccountPage} from '../account/account';
 import { Storage } from '@ionic/storage';

@@ -1,0 +1,35 @@
+<!--
+  Generated template for the LoginTest page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>LoginTest</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<ion-card>
+
+  <ion-card-header>
+    User Login Details
+  </ion-card-header>
+
+  <ion-card-content *ngIf="userDetails">
+    <h3>Email: {{ userDetails.email }}</h3>
+    <h3>Password: {{ userDetails.password }}</h3>
+
+  </ion-card-content>
+  <ion-card-content *ngIf="!userDetails">
+    <h3>You are not signed in</h3>
+
+  </ion-card-content>
+
+
+</ion-card>
+</ion-content>

@@ -94,10 +94,12 @@
      <ion-label>Pin Code</ion-label>
      <ion-input type="text" #pincode formControlName="pincode" (change)="elementChanged(pincode)">  </ion-input>
      </ion-item>
+
      <ion-item class="error-message" *ngIf="!checkoutForm.controls.pincode.valid && (pincodeChanged || submitAttempt)">
       <p>Enter five digit pincode.</p>
     </ion-item>
      <ion-item>
+
      <ion-label>Phone</ion-label>
      <ion-input type="text" #phone formControlName="phone" name="phone" (change)="elementChanged(phone)"> </ion-input><ion-icon *ngIf="phoneVerified" md="md-checkmark-circle"></ion-icon>
      </ion-item>
@@ -108,6 +110,7 @@
     <button text-center ion-button round outline block color="danger" (click)="genSms(phone)">Send OTP</button> </ion-item>
      <ion-item>
      <ion-label>OTP</ion-label>
+
      <ion-input type="text" formControlName="otp" (blur)="verifyOTP(otp,phone)"></ion-input>
      </ion-item>
     <button ion-button type="submit">Sign Up</button>

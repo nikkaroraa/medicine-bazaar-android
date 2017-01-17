@@ -4,6 +4,9 @@ import {FetchProducts } from '../../providers/fetch-products.service';
 import {AlertController} from 'ionic-angular';
 import { SendSms } from '../../providers/send-sms';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Storage } from '@ionic/storage';   
+import { LastOrderPage } from '../last-order/last-order';
+
 /*
   Generated class for the Checkout page.
 
@@ -28,9 +31,13 @@ public data:any;
 public verify:any={};
 public verifyStatus:any;
 public phoneVerified:boolean=false;
+
 public checkoutForm: FormGroup;
 submitAttempt: boolean = false;
- constructor(public formBuilder:FormBuilder,public NavCtrl:NavController,public Nav:NavParams, public fetchProducts:FetchProducts, public alertCtrl:AlertController, public sendSms:SendSms) 
+ 
+ constructor(public formBuilder:FormBuilder,public navCtrl:NavController,public nav:NavParams, public fetchProducts:FetchProducts,
+  public alertCtrl:AlertController, public sendSms:SendSms, public storage: Storage) 
+
     {
        this.checkoutForm=this.formBuilder.group({
           firstName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
@@ -185,6 +192,8 @@ submitAttempt: boolean = false;
         // and save the data for later reference
         this.customerData = data;
         console.log(this.customerData);
+        this.storage.set('customerID', this.customerData.id); //customerId set here
+        this.createUserSuccessfull();
       },
         err => {
         console.log(err);
@@ -193,6 +202,14 @@ submitAttempt: boolean = false;
         console.log('Completed');
     });
   }   
+
+    createUserSuccessfull(){
+      console.log("Inside createUserSuccessfull", this.customerData.last_order);
+      this.navCtrl.push(LastOrderPage, {
+      response: this.customerData.last_order
+    });
+
+    }
  /*   
  static get parameters() {
         return [[Platform]];
