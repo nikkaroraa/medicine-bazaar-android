@@ -119,8 +119,7 @@
    </ion-list>
     
       <button ion-button block round>Cancel</button>
-      <button text-center ion-button round outline block color="secondary" *ngIf="!BillingtoShipping" (click)="createUserBS(billing_address, shipping_address)">Sign Up</button>
-    
-      <button text-center ion-button round outline block color="danger" *ngIf="BillingtoShipping" (click)="createUserB(billing_address)">Sign Up</button>
+     
+      <button text-center ion-button round outline block color="danger" (click)="createUser(billing_address, shipping_address)">Sign Up</button>
     
 </ion-content>
