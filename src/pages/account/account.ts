@@ -27,6 +27,7 @@ export class AccountPage {
   loading: any;
   userProfile: any = null;
   public loginForm;
+  user: any;
   Account: string = "login";    
   public userDetails: any = {};
   constructor(public nav: NavController, public authData: AuthData, public formBuilder: FormBuilder,
@@ -71,6 +72,14 @@ export class AccountPage {
           this.userDetails = {email: this.signupForm.value.email, password:this.signupForm.value.password};
           this.storage.set('userDetails',this.userDetails);
           console.log("this.userDetails", this.userDetails);
+
+          if(firebase.auth().currentUser){
+            this.user = firebase.auth().currentUser;
+           }
+          else{
+            this.user = {};
+           }
+          this.sendVerificationMail(); //verification mail sent
           /*this.storage.get('userDetails').then((val)=>{
 
             console.log("User Details are: ", val);
@@ -104,6 +113,7 @@ export class AccountPage {
         this.userDetails = {email: this.loginForm.value.email, password:this.loginForm.value.password};
           this.storage.set('userDetails',this.userDetails);
           console.log("this.userDetails", this.userDetails);
+
         this.successLogin();
       }, error => {
         this.failureLogin();
@@ -211,6 +221,15 @@ export class AccountPage {
   });
 
     }).catch((error) => { console.log(error) });
+  }
+
+   sendVerificationMail(){
+    this.user.sendEmailVerification().then(function() {
+      console.log("Email sent successfully");
+    }, function(error) {
+      console.log("Email sending failed");
+    });
+
   }
   
 }

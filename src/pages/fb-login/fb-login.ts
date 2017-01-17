@@ -13,7 +13,7 @@ import { Storage } from '@ionic/storage';
 @Component({
   selector: 'page-fb-login',
   templateUrl: 'fb-login.html'
-})
+}) 
 export class FbLoginPage {
 
 public userDetails: any = {};

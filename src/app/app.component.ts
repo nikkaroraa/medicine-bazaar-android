@@ -10,7 +10,7 @@ import { SearchPage } from '../pages/search/search';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { TestPagePage } from '../pages/test-page/test-page';
 import { CartPage } from '../pages/cart/cart';
-
+import { ListPage } from '../pages/list/list';
 
 import { CheckoutPage } from '../pages/checkout/checkout';
 import { FbLoginPage } from '../pages/fb-login/fb-login';
@@ -22,7 +22,7 @@ import { LogoutPage } from '../pages/logout/logout';
 import { MyAccountPage } from '../pages/my-account/my-account';
 
 
-
+import {AddressPage} from '../pages/address/address';
 import { LoginTestPage } from '../pages/login-test/login-test';
 
 @Component({
@@ -76,16 +76,16 @@ export class MyApp {
       {title: 'Search Products', component: SearchPage},
       {title: 'Test1...', component: TestPagePage},
       {title: 'Test2...', component: ItemDetailsPage},
+      {title: 'Test3...', component: ListPage},
       {title: 'Cart', component: CartPage},
-      
       {title: 'Checkout', component: CheckoutPage},
       {title: 'FbLogin', component: FbLoginPage},
       {title: 'GLogin', component: GoogleLoginPage},
       {title: 'Account', component: AccountPage},
       {title: 'Logout', component: LogoutPage},
       {title: 'My Account', component: MyAccountPage},
-      {title: 'Login Test', component: LoginTestPage}
-
+      {title: 'Login Test', component: LoginTestPage},
+      {title: 'Address', component: AddressPage}
     ];
       
   }

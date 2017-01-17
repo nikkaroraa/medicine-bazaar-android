@@ -150,8 +150,8 @@ this.cartItems.forEach(function(element, index){
 */
   placeOrder(billing){
     this.newOrder = {
-      "payment_method": "bacs",
-      "payment_method_title": "Direct Bank Transfer",
+      "payment_method": "COD",
+      "payment_method_title": "Cash On Delivery",
       "set_paid": true,
       "billing": {
         "first_name": billing.first_name,

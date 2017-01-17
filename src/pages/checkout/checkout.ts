@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams,  ToastController  } from 'ionic-angular';
 import {FetchProducts } from '../../providers/fetch-products.service';
 import {AlertController} from 'ionic-angular';
 import { SendSms } from '../../providers/send-sms';
-
+import firebase from 'firebase';
 import { Storage } from '@ionic/storage';   
 import { LastOrderPage } from '../last-order/last-order';
 /*
@@ -30,10 +30,20 @@ public data:any;
 public verify:any={};
 public verifyStatus:any;
 public phoneVerified:boolean=false;
+public emailVerified: boolean = false;
+public user: any;
  constructor(public navCtrl:NavController,public nav:NavParams, public fetchProducts:FetchProducts,
-  public alertCtrl:AlertController, public sendSms:SendSms, public storage: Storage) 
+  public alertCtrl:AlertController, public sendSms:SendSms, public storage: Storage, public toastCtrl: ToastController) 
     {
-        
+        if(firebase.auth().currentUser){
+            this.user = firebase.auth().currentUser;
+             this.emailVerified = this.user.emailVerified;
+           }
+          else{
+            this.user = {};
+           }
+
+
     }
     //send sms to user
   genSms(phone)
@@ -118,6 +128,9 @@ public phoneVerified:boolean=false;
     
  signUp(newUser,billing_address)
   {
+      this.user = firebase.auth().currentUser;
+      this.emailVerified = this.user.emailVerified;
+      if(this.emailVerified){
       console.log("signUp function");
       console.log("newUser: ", newUser);
       console.log("billing_address: ", billing_address);
@@ -172,6 +185,15 @@ public phoneVerified:boolean=false;
         () => {
         console.log('Completed');
     });
+
+    }else{
+       let toast = this.toastCtrl.create({
+      message: 'Your E-mail is not verified yet. Please check your inbox.',
+      duration: 3000
+    });
+    toast.present();
+    
+    }
   }   
 
     createUserSuccessfull(){
@@ -196,4 +218,12 @@ public phoneVerified:boolean=false;
         });
     }
     */
+    emailVerifiedToast(){
+
+      let toast = this.toastCtrl.create({
+      message: 'Your E-mail is not verified yet. Please check your inbox.',
+      duration: 3000
+    });
+    toast.present();
+    }
 }

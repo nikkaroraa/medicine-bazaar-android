@@ -7,6 +7,9 @@ import { NavController, AlertController, LoadingController,Platform } from 'ioni
 import {GooglePlus} from 'ionic-native';
 
 import { CheckoutPage } from '../checkout/checkout';
+import {ListPage} from '../list/list';
+import firebase from 'firebase';
+
 /*
   Generated class for the GoogleLogin page.
 
@@ -42,23 +45,24 @@ login() {
   });
 }*/
   googleLogin(){
-    GooglePlus.login(['email']).then( (response) => {
-      let googleCredential = firebase.auth.GoogleAuthProvider
-        .credential(response.authResponse.accessToken);
+    
+      
+  GooglePlus.login({
+    'scopes': '', // optional, space-separated list of scopes, If not included or empty, defaults to `profile` and `email`.
+    'webClientId': '808169637831-667uavu6j7s5edp3c9p0f9bb3til0rgq.apps.googleusercontent.com', // optional clientId of your Web application from Credentials settings of your project - On Android, this MUST be included to get an idToken. On iOS, it is not required.
+    'offline': true
+  })
+  .then(function (user) {
+    this.navCtrl.push(CheckoutPage);
 
-    firebase.auth().signInWithCredential(googleCredential)
-      .then((success) => {
-        console.log("Firebase success: " + JSON.stringify(success));
-        this.userProfile = success;
-        console.log('Google plus successfully logged in');
-        this.successLogin();
-    })
-    .catch((error) => {
-    console.log("Firebase failure: " + JSON.stringify(error));
-    this.failureLogin();
+    
+  }, function (error) {
+    this.navCtrl.push(ListPage);
   });
 
-    }).catch((error) => { console.log(error); this.failureLogin(); });
+    
+     
+  
   }
 
   successLogin(){
