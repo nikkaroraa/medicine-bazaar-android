@@ -106,6 +106,7 @@ this.storage.get('cartProducts').then((val)=> {
         //this.createUserSuccessfull();
         this.storage.remove('cartProducts');
         this.storage.remove('productCount');
+        this.storage.remove('cartInitialised');
         this.successOrder();
       },
         err => {
@@ -155,6 +156,7 @@ this.storage.get('cartProducts').then((val)=> {
         //this.createUserSuccessfull();
         this.storage.remove('cartProducts');
         this.storage.remove('productCount');
+        this.storage.remove('cartInitialised');
         this.successOrder();
       },
         err => {
