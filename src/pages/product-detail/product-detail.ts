@@ -25,18 +25,7 @@ export class ProductDetailPage {
     public countIncreased = false;
     public productCount:any = 0;
   constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct,public toastCtrl: ToastController,public storage: Storage) {
-      //storage try
-      /*       
-      this.storage.get("cartInitialised").then((val) => {
-          console.log('The value of cartInitialised is: in the constructor' + val);
-          this.cartInitialised = val; 
-      });*/
-      // Or to get a key/value pair
-      /*this.storage.get('productCount').then((val)=>{
-         
-            this.cartProducts.length = val;
-         
-      });*/
+      
 
       this.storage.get('productCount').then((val)=>{
         if(!val){
@@ -85,15 +74,18 @@ export class ProductDetailPage {
             this.s_products = data;
             console.log("The retrieved detailed product is",this.s_products);
             this.storage.get('cartProducts').then((val)=> {
-              var that = this;
-           console.log('Inside the showToast: ', val);
-           this.cartProducts = [];
 
-           for(var i = 0; i < val.length ; i++){
-                this.cartProducts.push(val[i]);
-           }
-           this.cartProducts.forEach(function (item, index){
-            console.log("This is forEach", item);
+              if(val){
+
+               var that = this;
+               console.log('Inside the showToast: ', val);
+               this.cartProducts = [];
+
+               for(var i = 0; i < val.length ; i++){
+                    this.cartProducts.push(val[i]);
+               }
+               this.cartProducts.forEach(function (item, index){
+                console.log("This is forEach", item);
                if(item.id == that.s_products[0].id){
                    console.log(item.id + "==" + that.s_products[0].id);
                    that.s_products[0].count  = item.count;
@@ -102,7 +94,9 @@ export class ProductDetailPage {
                }
                
 
-           });
+               });
+              }
+              
             
 
         
@@ -137,7 +131,11 @@ export class ProductDetailPage {
     showToast(position:string,product) {
         console.log("Buy product :" + product);
         var that = this;
-    if(!(this.cartInitialised))
+    
+    if(product.count){
+
+
+      if(!(this.cartInitialised))
     {
         console.log("Cart is not initialised yet");
         this.cartProducts = []; 
@@ -189,20 +187,7 @@ export class ProductDetailPage {
         
             console.log(this.cartProducts);
         
-        /*
-        this.cartProducts.forEach(function(item, index){
-            if(item.id == product.id && !this.countIncreased){
-                console.log(item.id + "==" + product.id);
-                item.count += 1;
-                console.log("count increased by 1 for " + item.title);
-                this.countIncreased = true;    
-            }
-        });
-        if(!this.countIncreased){
-          product.count = 1;
-          this.cartProducts.push(product);
-        }
-        */    
+          
         this.storage.set('cartProducts', this.cartProducts);
 
         });
@@ -223,6 +208,25 @@ export class ProductDetailPage {
 
       toast.present(toast);
       this.navCtrl.pop();
+    }else{
+
+      //product.count set to 0
+
+      let toast = this.toastCtrl.create({
+        message: 'Increase the quantity to 1',
+        duration: 2000,
+        position: 'bottom'
+       });      
+
+      toast.onDidDismiss(() => {
+        console.log('Dismissed toast');
+         
+      });
+
+      toast.present(toast);
+    }
+
+    
 }
 //end of toast
  

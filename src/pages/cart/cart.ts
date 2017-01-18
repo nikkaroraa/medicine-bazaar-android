@@ -27,7 +27,10 @@ var that = this;
     this.storage.get('cartProducts').then((val)=> {
         
        console.log('On the Cart Page: ', val);
-        this.cartArray = val;
+      
+if(val){
+
+  this.cartArray = val;
         
 
 this.cartItems = this.cartArray;
@@ -37,7 +40,13 @@ this.cartItems.forEach(function(element, index){
     that.costSumString = that.costSum.toFixed(2);
     console.log("Added: ", that.costSum);
   });
-            });
+      
+}else{
+  this.cartArray = [];
+  this.cartItems = [];
+  
+}
+              });
 
   }
   
