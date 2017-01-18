@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import {FetchProducts} from '../../providers/fetch-products.service';
 import { LastOrderPage} from '../last-order/last-order';
 import firebase from 'firebase';
 import { SendSms } from '../../providers/send-sms';
-import {AlertController} from 'ionic-angular';
+import {AlertController,  LoadingController} from 'ionic-angular';
 /*
   Generated class for the Address page.
 
@@ -30,15 +30,72 @@ public verify:any={};
 public verifyStatus:any;
 public phoneVerified:boolean=false;
 public data:any;
+public emailVerified: boolean = false;
+loading: any;
+public emailID: any;
+zone: NgZone;
+nZone: NgZone;
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage,
-  public alertCtrl:AlertController, public fetchProducts: FetchProducts, public sendSms:SendSms) 
+  public alertCtrl:AlertController, public fetchProducts: FetchProducts, public sendSms:SendSms, public loadingCtrl: LoadingController) 
   {
+   this.zone = new NgZone({});
+    var that = this;
+      const firebaseConfig = {
+      apiKey: "AIzaSyByyA3R_KJMD2LF9G95eu7qM5xGA7evMGc",
+      authDomain: "medicinebazaarandroid.firebaseapp.com",
+      databaseURL: "https://medicinebazaarandroid.firebaseio.com",
+      storageBucket: "medicinebazaarandroid.appspot.com",
+      messagingSenderId: "420052832956"
+    };    
+      firebase.app().delete().then(function() {
+    that.zone.run( () => {
+  firebase.initializeApp(firebaseConfig);
+  console.log("Initialised again");
+  
 
-  	
-  	this.storage.get('userDetails').then((val)=>{
-  		this.userDetails = val; 
-  	});
+    firebase.auth().onAuthStateChanged(function(user) {
+      
+        if (user) {
+
+          // User is signed in and currentUser will no longer return null.
+           that.user = firebase.auth().currentUser;
+          that.emailVerified = that.user.emailVerified;
+          console.log("Email verified", that.emailVerified);
+          if(!that.emailVerified){
+
+      that.loading = that.loadingCtrl.create({
+      spinner: 'hide',
+    
+      content: 'You need to verify your E-mail first. Check your inbox!'
+      
+    });
+    
+    that.loading.present();
+
+    setTimeout(() => {
+      that.loading.dismiss();
+     that.navCtrl.pop();
+    }, 1000);
+
+    
+    
+    that.storage.get('userDetails').then((val)=>{
+      that.userDetails = val; 
+    });
   }
+
+        } else {
+          console.log("User doesn't exist");
+          // No user is signed in.
+        }
+      
+});
+  
+     
+  });
+});
+    
+        }
 genSms(phone)
   {
     this.sendSms.sendSMS(phone).subscribe(data => {
@@ -183,7 +240,7 @@ genSms(phone)
   }
   createUserSuccessfull(){
       console.log("Inside createUserSuccessfull", this.customerData.last_order);
-      this.navCtrl.push(LastOrderPage);
+      
 
     }
 
@@ -191,6 +248,8 @@ genSms(phone)
 
     	this.user = firebase.auth().currentUser;
     	this.userUID = this.user.uid;
+      this.emailID = this.user.email;
+      console.log(this.emailID);
       this.userProfile = firebase.database().ref('/userProfile');
 
        this.userProfile.child(this.userUID).set({customerID: this.customerData.id , billing: this.billing_address, shipping: this.shipping_address});

@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild,NgZone } from '@angular/core';
 
 import { Platform, MenuController, Nav } from 'ionic-angular';
 
@@ -34,7 +34,7 @@ export class MyApp {
   // make HelloIonicPage the root (or first) page
   rootPage: any = HomePage;
   pages: Array<{title: string, component: any}>;
-
+  zone: NgZone;
   constructor(
     public platform: Platform,
     public menu: MenuController
@@ -49,14 +49,24 @@ export class MyApp {
     };      
     
     firebase.initializeApp(firebaseConfig); 
-    firebase.auth().onAuthStateChanged(function(user) {
+    this.zone = new NgZone({});
+firebase.auth().onAuthStateChanged((user) => {
+  this.zone.run( () => {
+    if (!user) {
+      
+    } else { 
+      
+    }
+  });     
+});
+  /*  firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
       // User is signed in.
       } else {
       // No user is signed in.
       }
     });
-   
+  */ 
    /* firebase.auth().onAuthStateChanged( user => {
       if (!user) {
         this.rootPage = LogintabPage;

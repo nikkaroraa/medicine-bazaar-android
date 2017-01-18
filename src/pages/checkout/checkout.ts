@@ -32,21 +32,32 @@ public verifyStatus:any;
 public phoneVerified:boolean=false;
 public emailVerified: boolean = false;
 public user: any;
+public userProfile: any;
+public userUID: any;
+public userProfileBilling: any;
  constructor(public navCtrl:NavController,public nav:NavParams, public fetchProducts:FetchProducts,
   public alertCtrl:AlertController, public sendSms:SendSms, public storage: Storage, public toastCtrl: ToastController) 
     {
-        if(firebase.auth().currentUser){
+ /*       if(firebase.auth().currentUser){
             this.user = firebase.auth().currentUser;
              this.emailVerified = this.user.emailVerified;
            }
           else{
             this.user = {};
            }
-
-
-    }
+*/
+  this.user = firebase.auth().currentUser;
+  this.userUID = this.user.uid;
+   this.userProfile = firebase.database().ref('/userProfile/'+this.userUID+'/billing/address1');
+   var starCountRef = firebase.database().ref('userProfile/' + this.userUID + '/billing');
+starCountRef.on('value', function(snapshot) {
+  console.log("Snapshot",snapshot.val());
+});
+   
+ //  console.log("Firebase.User", firebase.User);
+   }
     //send sms to user
-  genSms(phone)
+/*  genSms(phone)
   {
     this.sendSms.sendSMS(phone).subscribe(data => {
         this.data = data;
@@ -218,7 +229,7 @@ public user: any;
         });
     }
     */
-    emailVerifiedToast(){
+/*    emailVerifiedToast(){
 
       let toast = this.toastCtrl.create({
       message: 'Your E-mail is not verified yet. Please check your inbox.',
@@ -226,4 +237,6 @@ public user: any;
     });
     toast.present();
     }
+*/
+
 }
