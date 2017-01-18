@@ -39,6 +39,7 @@ this.cartItems.forEach(function(element, index){
     console.log("Added: ", that.costSum);
   });
             });
+    
 
   }
   
@@ -78,6 +79,19 @@ this.cartItems.forEach(function(element, index){
  //go to checkout page
  goToCheckOut(price)
  {
+   // check  if user is  exist or not
+    this.storage.get('CustomerID').then((val)=>{
+        if(!val)
+        {
+          this.navCtrl.push(CheckoutPage);
+        }
+        else
+        {
+          console.log("create 2nd second order"); 
+        } 
+      });
+
+    //condition for cart empty
    if(price==0)
    {
      let toast = this.toastCtrl.create({
@@ -95,7 +109,8 @@ this.cartItems.forEach(function(element, index){
       this.navCtrl.pop();
       return;
    }
-   this.navCtrl.push(CheckoutPage);
+  
+   
  }
   increaseCount(product){
       var that = this;

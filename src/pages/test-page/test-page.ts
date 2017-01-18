@@ -119,11 +119,10 @@ this.cartItems.forEach(function(element, index){
       },
         err => {
         console.log(err);
-        this.errorAlert(err);
-    },
+        },
         () => {
         console.log('Completed');
-        this.presentAlert();
+        
     });
   }
 
