@@ -15,75 +15,75 @@
 
 <ion-content padding>
 
-     
+    <ion-card>
+  <ion-card-header text-center>
+    Use stored address
+  </ion-card-header>
+  <ion-card-content>
+ 
+   <h3 text-center>Shipping Address</h3>
+    <p>First Name: {{userShipping.first_name}}</p>
+    <p>Last Name: {{userShipping.last_name}}</p>
+    
+    <p>Address 1: {{userShipping.address1}}</p>
+    <p>Address 2: {{userShipping.address2}}</p>
+    <button ion-button (click)="placeOrderDefault()">Place Order</button> 
+  </ion-card-content>
+</ion-card>
+<h2 text-center> OR </h2>
+<ion-card>
+  <ion-card-header text-center>
+    Use a New Delivery Address
+  </ion-card-header>
+  <ion-card-content>
+
+    <h3 text-center>Shipping Address</h3>
+   
 <ion-list>
-  <ion-item>
-     <ion-label>First Name</ion-label>
-     <ion-input type="text" [(ngModel)]="newUser.first_name">  </ion-input>
-     </ion-item>
-  <ion-item>
-     <ion-label>Last Name</ion-label>
-     <ion-input type="text" [(ngModel)]="newUser.last_name">  </ion-input>
-     </ion-item>     
-  <ion-item>
-     <ion-label>Email</ion-label>
-     <ion-input type="email" [(ngModel)]="newUser.email">  </ion-input>
-     </ion-item>
-     <ion-item>
-     <ion-label>Password</ion-label>
-     <ion-input type="password" [(ngModel)]="newUser.password">  </ion-input>
-     </ion-item>
-     
-     <ion-item>
-     <ion-label> Address Line 1</ion-label>
-     <ion-input type="text" [(ngModel)]="billing_address.address1">  </ion-input>
-     </ion-item>
-     <ion-item>
-     <ion-label>Address Line 2</ion-label>
-     <ion-input type="text" [(ngModel)]="billing_address.address2">  </ion-input>
-     </ion-item>
-     <ion-item>
+    <ion-item>
+      <ion-label>First Name</ion-label>
+      <ion-input type="text" [(ngModel)]="shipping_address.first_name">  </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Last Name</ion-label>
+      <ion-input type="text" [(ngModel)]="shipping_address.last_name">  </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Address Line 1</ion-label>
+      <ion-input type="text" [(ngModel)]="shipping_address.address1">  </ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Address Line 2</ion-label>
+      <ion-input type="text" [(ngModel)]="shipping_address.address2">  </ion-input>
+    </ion-item>
+    <ion-item>
      <ion-label>Country</ion-label>
-     <ion-select [(ngModel)]="billing_address.country">
-    <ion-option value="I" selected="true">India</ion-option>
-    <ion-option value="U">US</ion-option>
-  </ion-select>
-     </ion-item>
-      <ion-item>
+     <ion-select [(ngModel)]="shipping_address.country">
+      <ion-option value="I" selected="true">India</ion-option>
+      <ion-option value="U">US</ion-option>
+     </ion-select>
+    </ion-item>
+    <ion-item>
      <ion-label>State</ion-label>
-     <ion-select [(ngModel)]="billing_address.state">
-    <ion-option value="I" selected="true">New Delhi</ion-option>
-    <ion-option value="U">Uttar Pradesh</ion-option>
-  </ion-select>
-     </ion-item>
-        <ion-item>
+     <ion-select [(ngModel)]="shipping_address.state">
+      <ion-option value="I" selected="true">New Delhi</ion-option>
+      <ion-option value="U">Uttar Pradesh</ion-option>
+     </ion-select>
+    </ion-item>
+    <ion-item>
      <ion-label>City</ion-label>
-     <ion-select [(ngModel)]="billing_address.city">
-    <ion-option value="I" selected="true">Delhi</ion-option>
-    <ion-option value="U">Banglore</ion-option>
-  </ion-select>
-     </ion-item>
-     <ion-item>
+     <ion-select [(ngModel)]="shipping_address.city">
+      <ion-option value="I" selected="true">Delhi</ion-option>
+      <ion-option value="U">Bangalore</ion-option>
+     </ion-select>
+    </ion-item>
+    <ion-item>
      <ion-label>Pin Code</ion-label>
-     <ion-input type="text" [(ngModel)]="billing_address.postcode">  </ion-input>
-     </ion-item>
-     <!--<ion-item>
-     
-     <ion-label>Phone</ion-label>
-     <ion-input type="text" [(ngModel)]="billing_address.phone"> </ion-input><ion-icon *ngIf="phoneVerified" md="md-checkmark-circle"></ion-icon>
-     </ion-item>
-     <ion-item>
-    <button text-center ion-button round outline block color="danger" (click)="genSms(billing_address.phone)">Send OTP</button></ion-item>
-     <ion-item>
-     <ion-label>OTP</ion-label>
-     <ion-input type="text" [(ngModel)]="otp" (blur)="verifyOTP(otp,billing_address.phone)">  </ion-input>
-     </ion-item>-->
-     <ion-item>
-      <button ion-button icon-only>Cancel</button>
-    <button text-center ion-button round outline block color="danger" (click)="signUp(newUser,billing_address)">Sign Up</button>
-
-
-	</ion-item>
-</ion-list>
-
+     <ion-input type="text" [(ngModel)]="shipping_address.postcode">  </ion-input>
+    </ion-item>
+    
+   </ion-list>
+   <button text-center ion-button round block color="danger" (click)="placeOrder(shipping_address)">Place Order</button>
+  </ion-card-content>
+</ion-card>
 </ion-content>

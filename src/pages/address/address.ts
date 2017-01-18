@@ -2,7 +2,7 @@ import { Component, NgZone } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import {FetchProducts} from '../../providers/fetch-products.service';
-import { LastOrderPage} from '../last-order/last-order';
+import { CheckoutPage } from '../checkout/checkout';
 import firebase from 'firebase';
 import { SendSms } from '../../providers/send-sms';
 import {AlertController,  LoadingController} from 'ionic-angular';
@@ -35,6 +35,7 @@ loading: any;
 public emailID: any;
 zone: NgZone;
 nZone: NgZone;
+customerDescription: any = {};
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage,
   public alertCtrl:AlertController, public fetchProducts: FetchProducts, public sendSms:SendSms, public loadingCtrl: LoadingController) 
   {
@@ -240,7 +241,7 @@ genSms(phone)
   }
   createUserSuccessfull(){
       console.log("Inside createUserSuccessfull", this.customerData.last_order);
-      
+      this.navCtrl.push(CheckoutPage);
 
     }
 
@@ -249,10 +250,11 @@ genSms(phone)
     	this.user = firebase.auth().currentUser;
     	this.userUID = this.user.uid;
       this.emailID = this.user.email;
+      this.customerDescription = {email: this.userDetails.email, customerID: this.customerData.id };
       console.log(this.emailID);
       this.userProfile = firebase.database().ref('/userProfile');
 
-       this.userProfile.child(this.userUID).set({customerID: this.customerData.id , billing: this.billing_address, shipping: this.shipping_address});
+       this.userProfile.child(this.userUID).set({customerDescription: this.customerDescription, billing: this.billing_address, shipping: this.shipping_address});
         console.log("Successfully stored inside the Firebase");
     }
 

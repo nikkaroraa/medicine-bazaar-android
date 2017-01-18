@@ -1,194 +1,153 @@
-import { Component } from '@angular/core';
-import { NavController, NavParams,  ToastController  } from 'ionic-angular';
+import { Component,NgZone } from '@angular/core';
+import { NavController, NavParams } from 'ionic-angular';
 import {FetchProducts } from '../../providers/fetch-products.service';
-import {AlertController} from 'ionic-angular';
-import { SendSms } from '../../providers/send-sms';
 import firebase from 'firebase';
-import { Storage } from '@ionic/storage';   
-import { LastOrderPage } from '../last-order/last-order';
-/*
-  Generated class for the Checkout page.
+import { Storage } from '@ionic/storage';
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
+
 @Component({
   selector: 'page-checkout',
   templateUrl: 'checkout.html',
-  providers: [FetchProducts, SendSms]
+  providers:  [FetchProducts]
 })
 export class CheckoutPage {
-    /*
-  declare var window: any;
-declare var cordova: any;
-*/
-public newUser:any={};
-public billing_address:any={};
-public userSend: any = {};
-public customerData: any;
-public data:any;
-public verify:any={};
-public verifyStatus:any;
-public phoneVerified:boolean=false;
-public emailVerified: boolean = false;
+    
 public user: any;
 public userProfile: any;
 public userUID: any;
-public userProfileBilling: any;
- constructor(public navCtrl:NavController,public nav:NavParams, public fetchProducts:FetchProducts,
-  public alertCtrl:AlertController, public sendSms:SendSms, public storage: Storage, public toastCtrl: ToastController) 
+public userDetails: any = {};
+public userBilling: any = {};
+public userShipping: any = {};
+zone: NgZone;
+public newOrder: any = {};
+public productsArray: Array<any> = [];
+    public orderData = {};
+    public products: Array<any> = [];
+    public customerID: any;
+    public shipping_address: any = {};
+    public customerDescription: any = {};
+ constructor(public navCtrl:NavController,public nav:NavParams,public fetchProducts:FetchProducts, public storage:Storage) 
     {
- /*       if(firebase.auth().currentUser){
-            this.user = firebase.auth().currentUser;
-             this.emailVerified = this.user.emailVerified;
-           }
-          else{
-            this.user = {};
-           }
-*/
+      this.zone = new NgZone({});
   this.user = firebase.auth().currentUser;
   this.userUID = this.user.uid;
-   this.userProfile = firebase.database().ref('/userProfile/'+this.userUID+'/billing/address1');
-   var starCountRef = firebase.database().ref('userProfile/' + this.userUID + '/billing');
-starCountRef.on('value', function(snapshot) {
-  console.log("Snapshot",snapshot.val());
-});
-   
- //  console.log("Firebase.User", firebase.User);
-   }
-    //send sms to user
-/*  genSms(phone)
-  {
-    this.sendSms.sendSMS(phone).subscribe(data => {
-        this.data = data;
-        console.log(this.data);
-      },
-        err => {
-        console.log(err);
-        this.errorSmsSentAlert();
-    },
-        () => {
-       this.sentSmsAlert();
-    });
-  }
-//sms sended
- sentSmsAlert()  {
-  let alert = this.alertCtrl.create({
-    title: 'OTP Send',
-    subTitle: 'OTP send succesfully!',
-    buttons: ['Dismiss']
-  });
-  alert.present();
-}
-
-//error while sending
- errorSmsSentAlert()  {
-  let alert = this.alertCtrl.create({
-    title: 'Error',
-    subTitle: 'Message not Sent',
-    buttons: ['Dismiss']
-  });
-  alert.present();
-} 
-
-
-//successfully alert verify otp
- presentAlert()  {
-  let alert = this.alertCtrl.create({
-    title: 'OTP Verify',
-    subTitle: 'Otp verified successfully!',
-    buttons: ['Dismiss']
-  });
-  alert.present();
-}
-
-//error otp
- errorAlert()  {
-  let alert = this.alertCtrl.create({
-    title: 'Error',
-    subTitle: 'OTP is not verified!',
-    buttons: ['Dismiss']
-  });
-  alert.present();
-}
+  var that = this;
+   //this.userProfile = firebase.database().ref('/userProfile/'+this.userUID+'/billing/address1');
+  console.log("this.userUID", this.userUID);
+   this.userProfile = firebase.database().ref('userProfile/' + this.userUID);
+    this.userProfile.on('value', function(snapshot) {
+      that.zone.run( () => {
+        console.log("Snapshot",snapshot.val());
+  that.userDetails = snapshot.val();
+  console.log("this.userDetails", that.userDetails);
+  that.userBilling = that.userDetails.billing;
+  console.log("this.userBilling", that.userBilling);
+  that.userShipping = that.userDetails.shipping;
+  console.log("that.userShipping", that.userShipping);
+  that.customerDescription = that.userDetails.customerDescription;
+      });
   
+});
 
-  //verify sms to user
-
-  verifyOTP(otp,phone)
-  {
-    this.verify.countryCode="91";
-    this.verify.mobileNumber=phone;
-    this.verify.oneTimePassword=otp;
-    this.sendSms.verifySms(this.verify).subscribe(verifyStatus => {
-        this.verifyStatus = verifyStatus;
-        console.log(this.verifyStatus);
+this.storage.get('cartProducts').then((val)=> {
         
-      },
-        err => {
-        console.log(err);
-        this.errorAlert();
-    },
-        () => {
-        console.log('Completed');
-        this.phoneVerified=true;
-        this.presentAlert();
-    });
-  }
+       console.log('On the test-page: ', val);
+       
 
-    
- signUp(newUser,billing_address)
-  {
-      this.user = firebase.auth().currentUser;
-      this.emailVerified = this.user.emailVerified;
-      if(this.emailVerified){
-      console.log("signUp function");
-      console.log("newUser: ", newUser);
-      console.log("billing_address: ", billing_address);
+       this.productsArray = val;
+         var that = this;
+       this.productsArray.forEach(function(element, index){
+          
+          that.products.push({product_id: element.id, quantity: element.count});
+        });
 
-      this.userSend = {
-
-        "email": newUser.email,
-        "password": newUser.password,
-        "first_name": newUser.first_name,
-        "last_name": newUser.last_name,
-        "username": newUser.username,
-        
-        "billing": {
-          "first_name": newUser.first_name,
-          "last_name": newUser.last_name,
-          "company": "genIThub",
-          "address_1": billing_address.address1,
-          "address_2": billing_address.address2,
-          "city": billing_address.city,
-          "state": billing_address.state,
-          "postcode": billing_address.postcode,
-          "country": billing_address.country,
-          "email": newUser.email,
-          "phone": billing_address.phone
-        },
-        "shipping": {
-          "first_name": newUser.first_name,
-          "last_name": newUser.last_name,
-          "company": "genIThub",
-          "address_1": billing_address.address1,
-          "address_2": billing_address.address2,
-          "city": billing_address.city,
-          "state": billing_address.state,
-          "postcode": billing_address.postcode,
-          "country": billing_address.country
-        
-        }
-
+            });
       }
-      console.log("call create User ...");
-      this.fetchProducts.createUser(this.userSend).subscribe(data => {
+
+      placeOrderDefault(){
+
+        this.newOrder = {
+      "payment_method": "COD",
+      "payment_method_title": "Cash On Delivery",
+      "set_paid": true,
+      "billing": {
+        "first_name": this.userBilling.first_name,
+        "last_name": this.userBilling.last_name,
+        "address_1": this.userBilling.address1,
+        "address_2": this.userBilling.address2,
+        "city": this.userBilling.city,
+        "state": this.userBilling.state,
+        "postcode": this.userBilling.postcode,
+        "country": this.userBilling.country,
+        "email": this.customerDescription.email,
+        "phone": this.userBilling.phone
+      },
+      "shipping": {
+        "first_name": this.userShipping.first_name,
+        "last_name": this.userShipping.last_name,
+        "address_1": this.userShipping.address1,
+        "address_2": this.userShipping.address2,
+        "city": this.userShipping.city,
+        "state": this.userShipping.state,
+        "postcode": this.userShipping.postcode,
+        "country": this.userShipping.country
+      },
+      "customer_id": this.customerDescription.customerID,
+      "line_items": this.products
+    }
+    this.fetchProducts.placeOrder(this.newOrder).subscribe(data => {
         // we've got back the raw data, now generate the core schedule data
         // and save the data for later reference
-        this.customerData = data;
-        console.log(this.customerData);
-        this.storage.set('customerID', this.customerData.id); //customerId set here
-        this.createUserSuccessfull();
+        this.orderData = data;
+        console.log(this.orderData);
+        //this.storage.set('customerID', this.customerData.id); //customerId set here
+        //this.createUserSuccessfull();
+      },
+        err => {
+        console.log(err);
+    },
+        () => {
+        console.log('Completed');
+    });
+      }
+      placeOrder(shipping){
+    this.newOrder = {
+      "payment_method": "COD",
+      "payment_method_title": "Cash On Delivery",
+      "set_paid": true,
+      "billing": {
+        "first_name": this.userBilling.first_name,
+        "last_name": this.userBilling.last_name,
+        "address_1": this.userBilling.address1,
+        "address_2": this.userBilling.address2,
+        "city": this.userBilling.city,
+        "state": this.userBilling.state,
+        "postcode": this.userBilling.postcode,
+        "country": this.userBilling.country,
+        "email": this.customerDescription.email,
+        "phone": this.userBilling.phone
+      },
+      "shipping": {
+        "first_name": shipping.first_name,
+        "last_name": shipping.last_name,
+        "address_1": shipping.address1,
+        "address_2": shipping.address2,
+        "city": shipping.city,
+        "state": shipping.state,
+        "postcode": shipping.postcode,
+        "country": shipping.country
+      },
+      "customer_id": this.customerDescription.customerID,
+      "line_items": this.products
+
+    }
+    this.fetchProducts.placeOrder(this.newOrder).subscribe(data => {
+        // we've got back the raw data, now generate the core schedule data
+        // and save the data for later reference
+        this.orderData = data;
+        console.log(this.orderData);
+        //this.storage.set('customerID', this.customerData.id); //customerId set here
+        //this.createUserSuccessfull();
       },
         err => {
         console.log(err);
@@ -197,46 +156,6 @@ starCountRef.on('value', function(snapshot) {
         console.log('Completed');
     });
 
-    }else{
-       let toast = this.toastCtrl.create({
-      message: 'Your E-mail is not verified yet. Please check your inbox.',
-      duration: 3000
-    });
-    toast.present();
-    
-    }
-  }   
-
-    createUserSuccessfull(){
-      console.log("Inside createUserSuccessfull", this.customerData.last_order);
-      this.navCtrl.push(LastOrderPage, {
-      response: this.customerData.last_order
-    });
-
-    }
- /*   
- static get parameters() {
-        return [[Platform]];
-    }
+  }
  
-    constructor(platform) {
-        this.platform = platform;
-    }
- 
-    launch(url) {
-        this.platform.ready().then(() => {
-            cordova.InAppBrowser.open(url, "_system", "location=true");
-        });
-    }
-    */
-/*    emailVerifiedToast(){
-
-      let toast = this.toastCtrl.create({
-      message: 'Your E-mail is not verified yet. Please check your inbox.',
-      duration: 3000
-    });
-    toast.present();
-    }
-*/
-
 }

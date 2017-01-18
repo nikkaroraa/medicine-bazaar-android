@@ -8,7 +8,7 @@ import { ResetPasswordPage } from '../reset-password/reset-password';
 import { Facebook } from 'ionic-native';
 import firebase from 'firebase';
 import { Storage } from '@ionic/storage';
-
+import {AddressPage} from '../address/address';
 /*
   Generated class for the Account page.
 
@@ -133,7 +133,7 @@ export class AccountPage {
     this.loading.present();
 
     setTimeout(() => {
-     this.nav.push(CheckoutPage);
+     this.nav.push(AddressPage);
     }, 1000);
 
     setTimeout(() => {
@@ -167,7 +167,7 @@ export class AccountPage {
     this.loading.present();
 
     setTimeout(() => {
-     this.nav.push(CheckoutPage);
+     this.nav.push(AddressPage);
     }, 1000);
 
     setTimeout(() => {
