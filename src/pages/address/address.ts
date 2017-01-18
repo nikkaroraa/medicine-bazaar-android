@@ -20,7 +20,7 @@ import {AlertController,  LoadingController} from 'ionic-angular';
 export class AddressPage {
 billing_address: any = {};
 shipping_address: any = {};
-userDetails: any;
+userDetails: any = {};
 userSend: any = {};
 customerData: any; 
 userUID: any;
@@ -79,9 +79,7 @@ nZone: NgZone;
 
     
     
-    that.storage.get('userDetails').then((val)=>{
-      that.userDetails = val; 
-    });
+    
   }
 
         } else {
@@ -94,7 +92,9 @@ nZone: NgZone;
      
   });
 });
-    
+    this.storage.get('userDetails').then((val)=>{
+      this.userDetails = val; 
+    });
         }
 genSms(phone)
   {
