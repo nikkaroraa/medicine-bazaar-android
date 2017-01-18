@@ -1,9 +1,9 @@
 import { Component,NgZone } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import {FetchProducts } from '../../providers/fetch-products.service';
 import firebase from 'firebase';
 import { Storage } from '@ionic/storage';
-
+import {HomePage} from '../home/home';
 
 @Component({
   selector: 'page-checkout',
@@ -26,7 +26,9 @@ public productsArray: Array<any> = [];
     public customerID: any;
     public shipping_address: any = {};
     public customerDescription: any = {};
- constructor(public navCtrl:NavController,public nav:NavParams,public fetchProducts:FetchProducts, public storage:Storage) 
+    loading: any;
+ constructor(public navCtrl:NavController,public nav:NavParams,public fetchProducts:FetchProducts, public storage:Storage,
+   public loadingCtrl: LoadingController) 
     {
       this.zone = new NgZone({});
   this.user = firebase.auth().currentUser;
@@ -102,6 +104,9 @@ this.storage.get('cartProducts').then((val)=> {
         console.log(this.orderData);
         //this.storage.set('customerID', this.customerData.id); //customerId set here
         //this.createUserSuccessfull();
+        this.storage.remove('cartProducts');
+        this.storage.remove('productCount');
+        this.successOrder();
       },
         err => {
         console.log(err);
@@ -148,6 +153,9 @@ this.storage.get('cartProducts').then((val)=> {
         console.log(this.orderData);
         //this.storage.set('customerID', this.customerData.id); //customerId set here
         //this.createUserSuccessfull();
+        this.storage.remove('cartProducts');
+        this.storage.remove('productCount');
+        this.successOrder();
       },
         err => {
         console.log(err);
@@ -158,4 +166,22 @@ this.storage.get('cartProducts').then((val)=> {
 
   }
  
+ successOrder(){
+
+    this.loading = this.loadingCtrl.create({
+      
+      content: 'Congratulations!!! Your order has been placed with Medicine Bazaar'
+    });
+
+    this.loading.present();
+
+    setTimeout(() => {
+     this.navCtrl.setRoot(HomePage);
+    }, 1000);
+
+    setTimeout(() => {
+      this.loading.dismiss();
+    }, 5000);
+
+  }
 }
