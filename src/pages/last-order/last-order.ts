@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { FetchProducts } from '../../providers/fetch-products.service';
+import {HomePage} from '../home/home';
 /*
   Generated class for the LastOrder page.
 
@@ -13,18 +14,20 @@ import { FetchProducts } from '../../providers/fetch-products.service';
   providers: [FetchProducts]
 })
 export class LastOrderPage {
-lastOrder: any;
-lastOrderID: any;
+public lastOrder: any = {};
+public lastOrderID: any = {};
 
-orderDetails: any;
+public orderDetails: any = {};
+public orderShipping: any = {};
   constructor(public navCtrl: NavController, public navParams: NavParams, public fetchProducts: FetchProducts) {
-
-  	this.lastOrder = this.navParams.get('response');
-  	this.lastOrderID = this.lastOrder.id;
+    console.log("Hello");
+  	this.lastOrderID = this.navParams.get('response');
+  	console.log(this.lastOrderID);
   	
   	this.fetchProducts.retrieveOrder(this.lastOrderID).subscribe((data)=>{
   		this.orderDetails = data;
   		console.log(this.orderDetails);
+      this.orderShipping = data.shipping;
   	},
   	(err)=>{
   		console.log(err);
@@ -34,6 +37,10 @@ orderDetails: any;
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LastOrderPage');
+  }
+
+  goToHome(){
+    this.navCtrl.setRoot(HomePage);
   }
 
 }

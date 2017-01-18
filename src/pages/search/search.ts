@@ -50,11 +50,17 @@ search(searchEvent) {
       
       // Get the searched users from github
 this.offset=0;
-console.log("Typed value is:" + this.searchQuery + "Offset Value is dsd:" + this.offset);
+console.log("Typed value is: " + this.searchQuery + "Offset Value is: " + this.offset);
 if (this.searchQuery.trim() !== '' || this.searchQuery.trim().length > 3) {
       this.fetchProducts.searchProducts(this.searchQuery).subscribe(products => {
-        this.products=products;
-console.log(this.products);
+        if(products.length){
+
+          this.products=products;
+          console.log(this.products);
+        }else{
+          console.log("There isn't any listed with this name. Try with a different search.");
+        }
+        
       });
     }if (this.searchQuery.trim() !== '' || this.searchQuery.trim().length > 3) {
 

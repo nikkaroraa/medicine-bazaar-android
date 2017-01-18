@@ -3,7 +3,7 @@ import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import {FetchProducts } from '../../providers/fetch-products.service';
 import firebase from 'firebase';
 import { Storage } from '@ionic/storage';
-import {HomePage} from '../home/home';
+import {LastOrderPage} from '../last-order/last-order';
 
 @Component({
   selector: 'page-checkout',
@@ -27,6 +27,7 @@ public productsArray: Array<any> = [];
     public shipping_address: any = {};
     public customerDescription: any = {};
     loading: any;
+    orderDataID: any;
  constructor(public navCtrl:NavController,public nav:NavParams,public fetchProducts:FetchProducts, public storage:Storage,
    public loadingCtrl: LoadingController) 
     {
@@ -102,6 +103,8 @@ this.storage.get('cartProducts').then((val)=> {
         // and save the data for later reference
         this.orderData = data;
         console.log(this.orderData);
+        this.orderDataID = data.id;
+        console.log(this.orderDataID);
         //this.storage.set('customerID', this.customerData.id); //customerId set here
         //this.createUserSuccessfull();
         this.storage.remove('cartProducts');
@@ -152,6 +155,8 @@ this.storage.get('cartProducts').then((val)=> {
         // and save the data for later reference
         this.orderData = data;
         console.log(this.orderData);
+        this.orderDataID = data.id;
+        console.log(this.orderDataID);
         //this.storage.set('customerID', this.customerData.id); //customerId set here
         //this.createUserSuccessfull();
         this.storage.remove('cartProducts');
@@ -178,7 +183,9 @@ this.storage.get('cartProducts').then((val)=> {
     this.loading.present();
 
     setTimeout(() => {
-     this.navCtrl.setRoot(HomePage);
+     this.navCtrl.push(LastOrderPage, {
+       response: this.orderDataID
+     });
     }, 1000);
 
     setTimeout(() => {
