@@ -1,9 +1,12 @@
 import { Component,NgZone } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController,ToastController } from 'ionic-angular';
 import {FetchProducts } from '../../providers/fetch-products.service';
 import firebase from 'firebase';
 import { Storage } from '@ionic/storage';
 import {LastOrderPage} from '../last-order/last-order';
+import {AddressPage} from '../address/address';
+import {HomePage} from '../home/home';
+import {SearchPage} from '../search/search';
 
 @Component({
   selector: 'page-checkout',
@@ -19,6 +22,7 @@ public userDetails: any = {};
 public userBilling: any = {};
 public userShipping: any = {};
 zone: NgZone;
+
 public newOrder: any = {};
 public productsArray: Array<any> = [];
     public orderData = {};
@@ -28,26 +32,65 @@ public productsArray: Array<any> = [];
     public customerDescription: any = {};
     loading: any;
     orderDataID: any;
+    emailVerified: boolean = false;
  constructor(public navCtrl:NavController,public nav:NavParams,public fetchProducts:FetchProducts, public storage:Storage,
-   public loadingCtrl: LoadingController) 
+   public loadingCtrl: LoadingController, public toastCtrl: ToastController) 
     {
       this.zone = new NgZone({});
   this.user = firebase.auth().currentUser;
   this.userUID = this.user.uid;
   var that = this;
+
+  
+
    //this.userProfile = firebase.database().ref('/userProfile/'+this.userUID+'/billing/address1');
   console.log("this.userUID", this.userUID);
+
    this.userProfile = firebase.database().ref('userProfile/' + this.userUID);
     this.userProfile.on('value', function(snapshot) {
       that.zone.run( () => {
         console.log("Snapshot",snapshot.val());
-  that.userDetails = snapshot.val();
-  console.log("this.userDetails", that.userDetails);
-  that.userBilling = that.userDetails.billing;
-  console.log("this.userBilling", that.userBilling);
-  that.userShipping = that.userDetails.shipping;
-  console.log("that.userShipping", that.userShipping);
-  that.customerDescription = that.userDetails.customerDescription;
+
+       if(snapshot.val().billing && snapshot.val().shipping && snapshot.val().customerDescription){
+          that.userDetails = snapshot.val();
+        console.log("this.userDetails", that.userDetails);
+        that.userBilling = that.userDetails.billing;
+        console.log("this.userBilling", that.userBilling);
+        that.userShipping = that.userDetails.shipping;
+        console.log("that.userShipping", that.userShipping);
+        that.customerDescription = that.userDetails.customerDescription;
+        }
+       else if(that.emailVerified){
+          that.loading = that.loadingCtrl.create({
+      spinner: 'hide',
+    
+      content: 'You need to fill up the address at first!'
+      
+    });
+    
+    that.loading.present();
+
+    setTimeout(() => {
+      that.loading.dismiss();
+     that.navCtrl.push(AddressPage);
+    }, 1000);
+        }else if(!that.emailVerified){
+           that.loading = that.loadingCtrl.create({
+      spinner: 'hide',
+    
+      content: 'You need to verify your E-mail first. Please Check your inbox!'
+      
+    });
+    
+    that.loading.present();
+
+    setTimeout(() => {
+      that.loading.dismiss();
+     that.navCtrl.push(HomePage);
+    }, 1000);
+
+        }
+        
       });
   
 });
@@ -56,20 +99,26 @@ this.storage.get('cartProducts').then((val)=> {
         
        console.log('On the test-page: ', val);
        
+       if(val){
 
-       this.productsArray = val;
+          this.productsArray = val;
          var that = this;
-       this.productsArray.forEach(function(element, index){
+         this.productsArray.forEach(function(element, index){
           
           that.products.push({product_id: element.id, quantity: element.count});
         });
+       }else if(!val){
+         this.products = val;
+       }
+      
 
             });
       }
 
       placeOrderDefault(){
 
-        this.newOrder = {
+        if(this.products){
+          this.newOrder = {
       "payment_method": "COD",
       "payment_method_title": "Cash On Delivery",
       "set_paid": true,
@@ -118,9 +167,26 @@ this.storage.get('cartProducts').then((val)=> {
         () => {
         console.log('Completed');
     });
+  }else{
+     let toast = this.toastCtrl.create({
+        message: 'There are no products in the cart!',
+        duration: 3000,
+        position: 'bottom'
+       });
+
+      toast.onDidDismiss(() => {
+        console.log('Dismissed toast');
+        this.navCtrl.setRoot(HomePage); 
+      });
+
+      toast.present(toast);
+
+  }
+        
       }
       placeOrder(shipping){
-    this.newOrder = {
+    if(this.products){
+       this.newOrder = {
       "payment_method": "COD",
       "payment_method_title": "Cash On Delivery",
       "set_paid": true,
@@ -170,6 +236,21 @@ this.storage.get('cartProducts').then((val)=> {
         () => {
         console.log('Completed');
     });
+  }else{
+    let toast = this.toastCtrl.create({
+        message: 'There are no products in the cart!',
+        duration: 3000,
+        position: 'bottom'
+       });
+
+      toast.onDidDismiss(() => {
+        console.log('Dismissed toast');
+        this.navCtrl.setRoot(HomePage); 
+      });
+
+      toast.present(toast);
+  }
+   
 
   }
  
@@ -192,5 +273,9 @@ this.storage.get('cartProducts').then((val)=> {
       this.loading.dismiss();
     }, 5000);
 
+  }
+
+  cancel(){
+    this.navCtrl.setRoot(HomePage);
   }
 }

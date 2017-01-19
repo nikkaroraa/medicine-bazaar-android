@@ -6,6 +6,7 @@ import { CheckoutPage } from '../checkout/checkout';
 import firebase from 'firebase';
 import { SendSms } from '../../providers/send-sms';
 import {AlertController,  LoadingController} from 'ionic-angular';
+import { HomePage} from '../home/home';
 /*
   Generated class for the Address page.
 
@@ -75,13 +76,29 @@ customerDescription: any = {};
 
     setTimeout(() => {
       that.loading.dismiss();
-     that.navCtrl.pop();
+     that.navCtrl.setRoot(HomePage);
     }, 1000);
 
     
     
     
-  }
+  }else{
+    that.storage.set('emailVerified', true);
+    //set Email Verified to true;
+   
+  that.user = firebase.auth().currentUser;
+  that.userUID = that.user.uid;
+ that.userProfile = firebase.database().ref('userProfile/' + that.userUID);
+    that.userProfile.on('value', function(snapshot) {
+     
+        console.log("Snapshot",snapshot.val());
+
+        if(snapshot.val().billing && snapshot.val().shipping && snapshot.val().customerDescription){
+          that.navCtrl.push(CheckoutPage);
+        }
+  
+});
+}
 
         } else {
           console.log("User doesn't exist");
@@ -93,8 +110,8 @@ customerDescription: any = {};
      
   });
 });
-    this.storage.get('userDetails').then((val)=>{
-      this.userDetails = val; 
+    that.storage.get('userDetails').then((val)=>{
+      that.userDetails = val; 
     });
         }
 genSms(phone)

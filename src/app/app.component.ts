@@ -12,7 +12,6 @@ import { TestPagePage } from '../pages/test-page/test-page';
 import { CartPage } from '../pages/cart/cart';
 import { ListPage } from '../pages/list/list';
 
-import { CheckoutPage } from '../pages/checkout/checkout';
 import { FbLoginPage } from '../pages/fb-login/fb-login';
 import { GoogleLoginPage } from '../pages/google-login/google-login';
 
@@ -88,14 +87,14 @@ firebase.auth().onAuthStateChanged((user) => {
       {title: 'Test2...', component: ItemDetailsPage},
       {title: 'Test3...', component: ListPage},
       {title: 'Cart', component: CartPage},
-      {title: 'Checkout', component: CheckoutPage},
+      
       {title: 'FbLogin', component: FbLoginPage},
       {title: 'GLogin', component: GoogleLoginPage},
       {title: 'Account', component: AccountPage},
       {title: 'Logout', component: LogoutPage},
       {title: 'My Account', component: MyAccountPage},
       {title: 'Login Test', component: LoginTestPage},
-      {title: 'Address', component: AddressPage}
+      {title: 'Checkout', component: AddressPage}
     ];
       
   }

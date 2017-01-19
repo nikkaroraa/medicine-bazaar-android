@@ -79,7 +79,8 @@ export class AccountPage {
           else{
             this.user = {};
            }
-          this.sendVerificationMail(); //verification mail sent
+          this.sendVerificationMail();
+           //verification mail sent
           /*this.storage.get('userDetails').then((val)=>{
 
             console.log("User Details are: ", val);

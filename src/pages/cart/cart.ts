@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import {  TabsPage } from '../tabs/tabs';
-import {CheckoutPage} from '../checkout/checkout';
+import {AddressPage} from '../address/address';
 /*
   Generated class for the Cart page.
 
@@ -86,7 +86,7 @@ this.cartItems.forEach(function(element, index){
  //go to checkout page
  goToCheckOut()
  {
-   this.navCtrl.push(CheckoutPage);
+   this.navCtrl.push(AddressPage);
  }
   increaseCount(product){
       var that = this;

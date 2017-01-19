@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar hideBackButton="true">
     <ion-title><p color="blank">Checkout</p></ion-title>
   </ion-navbar>
 
@@ -84,6 +84,8 @@
     
    </ion-list>
    <button text-center ion-button round block color="danger" (click)="placeOrder(shipping_address)">Place Order</button>
+   <button text-center ion-button outline round block color="danger" (click)="cancel()">Cancel</button>
+   
   </ion-card-content>
 </ion-card>
 </ion-content>
