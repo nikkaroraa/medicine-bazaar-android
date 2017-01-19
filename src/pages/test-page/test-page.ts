@@ -68,19 +68,6 @@ this.cartItems.forEach(function(element, index){
 
    // console.log("call get all orders ...");
     
-    this.mailSend.mailSending().subscribe(data=>{
-    this.data=data;
-    console.log(this.data);
-
-  },
-  err=> {
-    console.log(err);
-    this.mailSentAlert();
-  },
-  () => {
-    console.log('Completed');
-  this.mailSentAlert();
-    });
 
   }
 //sms sended

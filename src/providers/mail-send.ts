@@ -10,43 +10,47 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class MailSend {
-  public data={
-  "personalizations": [
-    {
-      "to": [
-        {
-          "email": "dalipkumar703@gmail.com"
-        }
-      ],
-      "subject": "Hello, World!"
-    }
-  ],
-  "from": {
-    "email": "dalipkumar703@gmail.com"
-  },
-  "content": [
-    {
-      "type": "text/plain",
-      "value": "Hello, World!"
-    }
-  ]
-};
+  public data:any={};
 
   constructor(public http: Http) {
     console.log('Hello MailSend Provider');
   }
-  mailSending()
+  mailSending(base64,imageData)
   {
-  	 let requestHeaders = new Headers({ "Authorization":"Bearer E54yXIgDR1aioHcReU1hlA",
+  	 let requestHeaders = new Headers({ 
   	 "Content-Type": "application/json"
   	 });
+     this.data={
+    "key": "raKKjF2xJOgZb17DN8XNPg",
+    "message": {
+        "html": "<p>Example HTML content</p>",
+        "text": "Example text content",
+        "subject": "example subject",
+        "from_email": "admin@medicinebazaar.in",
+        "from_name": "Example Name",
+        "to": [
+            {
+                "email":"dalipkumar703@gmail.com",
+                "name": "Recipient Name",
+                "type": "to"
+            }
+        ],
+         "images": [
+            {
+                "type": "image/jpeg",
+                "name": "nikhil",
+                "content": imageData
+            }
+        ]
+}
+};
 
      let options = new RequestOptions({
       headers: requestHeaders
     });    
      let body = JSON.stringify(this.data);
      console.log("stringify object",body);console.log("array data",this.data);
-        return this.http.post("https://api.sendgrid.com/v3/mail/send",body,options)
+        return this.http.post("https://mandrillapp.com/api/1.0/messages/send.json",body,options)
         .map(res => res.json());
     
   
