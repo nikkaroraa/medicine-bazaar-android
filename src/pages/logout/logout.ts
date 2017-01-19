@@ -28,6 +28,7 @@ loading: any;
 
 	this.authData.logoutUser().then((success)=>{
   		//this.storage.remove('userDetails');
+      this.storage.remove('userDetails');
       this.successLogout();
   		
   	}, (error)=>{
