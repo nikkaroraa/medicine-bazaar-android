@@ -33,6 +33,7 @@ export class MyApp {
   // make HelloIonicPage the root (or first) page
   rootPage: any = HomePage;
   pages: Array<{title: string, component: any}>;
+  account: Array<{title: string, component: any}>;
   zone: NgZone;
   constructor(
     public platform: Platform,
@@ -83,18 +84,22 @@ firebase.auth().onAuthStateChanged((user) => {
     this.pages = [
     
       {title: 'Search Products', component: SearchPage},
-      {title: 'Test1...', component: TestPagePage},
-      {title: 'Test2...', component: ItemDetailsPage},
-      {title: 'Test3...', component: ListPage},
+      
       {title: 'Cart', component: CartPage},
       
-      {title: 'FbLogin', component: FbLoginPage},
-      {title: 'GLogin', component: GoogleLoginPage},
+      
       {title: 'Account', component: AccountPage},
+      
+    ];
+
+    this.account = [
+
+
       {title: 'Logout', component: LogoutPage},
       {title: 'My Account', component: MyAccountPage},
-      {title: 'Login Test', component: LoginTestPage},
+      
       {title: 'Checkout', component: AddressPage}
+
     ];
       
   }
