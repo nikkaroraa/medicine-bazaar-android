@@ -14,5 +14,15 @@
 
 
 <ion-content padding>
+<ion-list no-lines>
+   <form [formGroup]="updatePasswordForm">
+ 
+        <ion-item>
+            <ion-label floating>Password</ion-label>
+            <ion-input formControlName="password" type="password"></ion-input>
+        </ion-item>
+    </form>    
+  </ion-list>     
+<button ion-button block (click)="updatePassword()">Update Password</button>  
 
 </ion-content>
