@@ -40,8 +40,26 @@ customerDescription: any = {};
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage,
   public alertCtrl:AlertController, public fetchProducts: FetchProducts, public sendSms:SendSms, public loadingCtrl: LoadingController) 
   {
-   this.zone = new NgZone({});
     var that = this;
+    if(!firebase.auth().currentUser){
+
+      that.loading = that.loadingCtrl.create({
+      spinner: 'hide',
+    
+      content: 'You need to login to access this page!'
+      
+    });
+    
+    that.loading.present();
+
+    setTimeout(() => {
+      that.loading.dismiss();
+     that.navCtrl.setRoot(HomePage);
+    }, 1000);
+
+    }else{
+   this.zone = new NgZone({});
+    
       const firebaseConfig = {
       apiKey: "AIzaSyByyA3R_KJMD2LF9G95eu7qM5xGA7evMGc",
       authDomain: "medicinebazaarandroid.firebaseapp.com",
@@ -113,6 +131,7 @@ customerDescription: any = {};
     that.storage.get('userDetails').then((val)=>{
       that.userDetails = val; 
     });
+  }
         }
 genSms(phone)
   {
