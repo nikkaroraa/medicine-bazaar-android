@@ -38,6 +38,7 @@ zone: NgZone;
 nZone: NgZone;
 customerDescription: any = {};
 userProfilium: any;
+count: number = 0;
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage,
   public alertCtrl:AlertController, public fetchProducts: FetchProducts, public sendSms:SendSms, public loadingCtrl: LoadingController) 
   {
@@ -101,7 +102,10 @@ userProfilium: any;
         }
 
         if(snapshot.val().billing && snapshot.val().shipping && snapshot.val().customerDescription){
-          that.navCtrl.push(CheckoutPage);
+          if(!this.count){
+            that.navCtrl.push(CheckoutPage);
+          }
+          
         }else{
 
 
@@ -295,6 +299,7 @@ genSms(phone)
   }
   createUserSuccessfull(){
       console.log("Inside createUserSuccessfull", this.customerData.last_order);
+      this.count++;
       this.navCtrl.push(CheckoutPage);
 
     }
