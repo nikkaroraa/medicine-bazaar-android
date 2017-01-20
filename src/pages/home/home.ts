@@ -202,21 +202,28 @@ openMenu() {
   
   */
    let filename = imageSrc.split('/').pop();
+   let namePath = imageSrc.substr(0, imageSrc.indexOf('?') + 1);
+   let newFileName=filename.substr(0,filename.indexOf('?') +1);
+   alert("filename"+filename);
+   alert("namePath"+namePath);
+   alert("newFileName"+newFileName);
     let options = {
       fileKey: "file",
-      fileName: filename,
+      fileName: newFileName,
       chunkedMode: false,
       mimeType: "image/jpg",
-      params: { 'title': "postTitle", 'description': "desc" },
-      upload_preset:"cmoxms3e"
+      params : {'fileName': newFileName} ,
+      headers :{
+          Connection: "close"
+        }
     };
  
  
     const fileTransfer = new Transfer();
  
-    fileTransfer.upload(imageSrc, 'https://api.cloudinary.com/v1_1/dtkd8f03m/image/upload',
+    fileTransfer.upload(imageSrc, 'https://medicinebazaar.in/upload.php',
       options,true).then((entry) => {
-             alert(entry);        
+             alert(JSON.stringify(entry));        
       }, (err) => {
         alert(JSON.stringify(err));
       });
