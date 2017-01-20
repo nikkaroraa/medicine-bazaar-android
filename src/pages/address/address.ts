@@ -128,19 +128,7 @@ userProfilium: any;
     that.storage.set('emailVerified', true);
     //set Email Verified to true;
    
- /* that.user = firebase.auth().currentUser;
-  that.userUID = that.user.uid;
- that.userProfile = firebase.database().ref('userProfile/' + that.userUID);
-    that.userProfile.on('value', function(snapshot) {
-     
-        console.log("Snapshot",snapshot.val());
-
-        if(snapshot.val().billing && snapshot.val().shipping && snapshot.val().customerDescription){
-          that.navCtrl.push(CheckoutPage);
-        }
-  
-});*/
-}
+ }
         }
           
                   
