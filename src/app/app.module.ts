@@ -30,7 +30,8 @@ import { SigninModalPage } from '../pages/signin-modal/signin-modal';
 // Import Providers
 
 import { AuthData } from '../providers/auth-data';
-
+import { CloudinaryModule, CloudinaryConfiguration } from '@cloudinary/angular';
+import { Cloudinary } from 'cloudinary-core';
 
 // YOUR SETTINGS GOES HERE!
 
@@ -71,7 +72,8 @@ export function provideStorage() {
 
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+     CloudinaryModule.forRoot({Cloudinary}, { cloud_name: 'dtkd8f03m' } as CloudinaryConfiguration)
     
   ],
   bootstrap: [IonicApp],

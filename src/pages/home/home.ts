@@ -11,15 +11,16 @@ import { Storage } from '@ionic/storage';
 import {CartPage} from '../cart/cart';     
 import { EmailComposer } from 'ionic-native';
 import {AlertController} from 'ionic-angular';
-import { File } from 'ionic-native';
+import { File,Transfer } from 'ionic-native';
+import { Cloudinary } from 'cloudinary-core';
 /*
   Generated class for the Home page.
 
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 */
-declare var cordova: any;
-const fs:string = cordova.file.dataDirectory;
+//declare var cordova: any;
+//const fs:string = cordova.file.dataDirectory;
 @Component({
 
   selector: 'page-home',
@@ -37,6 +38,7 @@ private imageSrc: string;
  public mailResponse:any;
  public file:any;
  public galleryError:any; 
+ public base64:any;
   constructor(public alertCtrl:AlertController,public mailSend:MailSend,public http: Http,public platform: Platform, public actionsheetCtrl: ActionSheetController, public navCtrl: NavController, public storage: Storage) {
       
     
@@ -68,6 +70,7 @@ private imageSrc: string;
 
   alertGalleryImageSend(base64,imageData)
   {
+    /*
     File.readAsDataURL(cordova.file.applicationDirectory,imageData).then(function(success){
      this.file=success;
      
@@ -75,8 +78,10 @@ private imageSrc: string;
     function(error)
     {
      this.galleryError=error;
-     this.alertGalleryerror(error); 
+     this.alertGalleryerror(error);
+      
     });
+    */
     let alert = this.alertCtrl.create({
     title: 'Gallery Alert',
     subTitle: this.file,
@@ -169,8 +174,15 @@ openMenu() {
   }
    //imageSrc from gallery image
   Camera.getPicture(cameraOptions)
-    .then(file_uri => {this.imageSrc = file_uri;
-        this.galleryImageSend(this.imageSrc,file_uri);
+    .then((file_uri) => {this.imageSrc = file_uri;
+           alert(this.imageSrc.split('/').pop());
+          alert("file location"+this.imageSrc);
+          this.fileTransfer(this.imageSrc);
+
+         
+          /*
+        this.galleryImageSend(this.imageSrc,);
+        */
     }, 
     err => console.log(err)); 
           }
@@ -180,6 +192,38 @@ openMenu() {
     });
     actionSheet.present();
 }
+ fileTransfer(imageSrc)
+ {
+   alert("file transfer working");
+   /*
+ Cloudinary.v2.uploader.unsigned_upload(imageSrc, "cmoxms3e", 
+    { cloud_name: "dtkd8f03m" }, 
+    function(error, result) {alert(result) });
+  
+  */
+   let filename = imageSrc.split('/').pop();
+    let options = {
+      fileKey: "file",
+      fileName: filename,
+      chunkedMode: false,
+      mimeType: "image/jpg",
+      params: { 'title': "postTitle", 'description': "desc" },
+      upload_preset:"cmoxms3e"
+    };
+ 
+ 
+    const fileTransfer = new Transfer();
+ 
+    fileTransfer.upload(imageSrc, 'https://api.cloudinary.com/v1_1/dtkd8f03m/image/upload',
+      options,true).then((entry) => {
+             alert(entry);        
+      }, (err) => {
+        alert(JSON.stringify(err));
+      });
+
+  alert("finish working");
+  }
+ 
 
 checkCart(){
     
