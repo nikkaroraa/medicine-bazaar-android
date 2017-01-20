@@ -20,7 +20,7 @@ loading: any;
     public loadingCtrl: LoadingController) {
 
   }
-
+ 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LogoutPage');
   }

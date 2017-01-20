@@ -38,12 +38,12 @@ zone: NgZone;
 nZone: NgZone;
 customerDescription: any = {};
 userProfilium: any;
-count: number = 0;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage,
   public alertCtrl:AlertController, public fetchProducts: FetchProducts, public sendSms:SendSms, public loadingCtrl: LoadingController) 
   {
     var that = this;
-
+    
     
     if(!firebase.auth().currentUser){
 
@@ -102,10 +102,7 @@ count: number = 0;
         }
 
         if(snapshot.val().billing && snapshot.val().shipping && snapshot.val().customerDescription){
-          if(!this.count){
-            that.navCtrl.push(CheckoutPage);
-          }
-          
+          that.navCtrl.push(CheckoutPage);
         }else{
 
 
@@ -121,11 +118,15 @@ count: number = 0;
     that.loading.present();
 
     setTimeout(() => {
-      that.loading.dismiss();
+     
      that.navCtrl.setRoot(HomePage);
     }, 1000);
 
-    
+     
+
+    setTimeout(() => {
+      that.loading.dismiss();
+    }, 2000);
     
     
   }else{
@@ -299,9 +300,9 @@ genSms(phone)
   }
   createUserSuccessfull(){
       console.log("Inside createUserSuccessfull", this.customerData.last_order);
-      this.count++;
-      this.navCtrl.push(CheckoutPage);
 
+      //this.navCtrl.push(CheckoutPage);
+      //Logic for this is done in the constructor zone.run method
     }
 
     saveToFirebase(){

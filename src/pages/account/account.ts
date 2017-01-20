@@ -177,7 +177,7 @@ export class AccountPage {
 
     setTimeout(() => {
       this.loading.dismiss();
-    }, 5000);
+    }, 1000);
 
   }
 

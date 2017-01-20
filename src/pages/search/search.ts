@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
  
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';  
@@ -19,7 +19,7 @@ import { ProductDetailPage} from '../product-detail/product-detail';
     providers: [ FetchProducts , SearchProduct ]
 })
 export class SearchPage {
-
+zone: NgZone;
    public products: Array<any> = [];
 public s_products: any;
 public searchQuery: any = '';
@@ -50,16 +50,22 @@ search(searchEvent) {
       
       // Get the searched users from github
 this.offset=0;
+var that = this;
+  this.zone = new NgZone({});
 console.log("Typed value is: " + this.searchQuery + "Offset Value is: " + this.offset);
-if (this.searchQuery.trim() !== '' || this.searchQuery.trim().length > 3) {
+if (this.searchQuery.trim() !== '' && this.searchQuery.trim().length > 1) {
       this.fetchProducts.searchProducts(this.searchQuery).subscribe(products => {
-        if(products.length){
+        that.zone.run( () => {
 
-          this.products=products;
-          console.log(this.products);
-        }else{
-          console.log("There isn't any listed with this name. Try with a different search.");
-        }
+          if(products.length){
+
+            that.products=products;
+            console.log(this.products);
+          }else{
+            console.log("There isn't any listed with this name. Try with a different search.");
+          }
+        });
+        
         
       });
     }if (this.searchQuery.trim() !== '' || this.searchQuery.trim().length > 3) {

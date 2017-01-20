@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { MyOrdersPage } from '../my-orders/my-orders';
 import { UpdateAccountInfoPage } from '../update-account-info/update-account-info';
-
+import { AuthData } from '../../providers/auth-data';
+import {HomePage} from '../home/home';
+import { Storage } from '@ionic/storage';
 /*
   Generated class for the MyAccount page.
 
@@ -14,8 +16,9 @@ import { UpdateAccountInfoPage } from '../update-account-info/update-account-inf
   templateUrl: 'my-account.html'
 })
 export class MyAccountPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+loading: any;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public authData: AuthData, public storage: Storage,
+    public loadingCtrl: LoadingController) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad MyAccountPage');
@@ -31,7 +34,32 @@ export class MyAccountPage {
   }
 
   logout(){
+      this.authData.logoutUser().then((success)=>{
+      //this.storage.remove('userDetails');
+      this.storage.remove('userDetails');
+      this.successLogout();
+      
+    }, (error)=>{
+      console.log('Error:', error);
+    });
 
+  }
+   successLogout(){
+
+    this.loading = this.loadingCtrl.create({
+      spinner: 'hide',
+      content: 'Logout Successfull! Please Wait...'
+    });
+
+    this.loading.present();
+
+    setTimeout(() => {
+     this.navCtrl.setRoot(HomePage);
+    }, 1000);
+
+    setTimeout(() => {
+      this.loading.dismiss();
+    }, 5000);
 
   }
 }
