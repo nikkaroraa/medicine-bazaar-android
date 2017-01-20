@@ -97,7 +97,7 @@ firebase.auth().onAuthStateChanged((user) => {
 
       {title: 'Logout', component: LogoutPage},
       {title: 'My Account', component: MyAccountPage},
-      
+      {title: 'Login Test', component: LoginTestPage},
       {title: 'Checkout', component: AddressPage}
 
     ];

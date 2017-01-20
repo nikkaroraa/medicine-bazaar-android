@@ -21,7 +21,7 @@
 	  
       		
 	  	<h2><ion-icon md="md-information" item-left></ion-icon>{{ myOrder.id }}</h2>
-    	<h3><ion-icon md="md-calendar" item-left></ion-icon>{{ myOrder.dateCreated | date: 'dd/MM/yyyy' }}</h3>
+    	<h3><ion-icon md="md-calendar" item-left></ion-icon>{{ myOrder.dateCreated | date: 'dd-MM-yyyy' }}</h3>
 		
 		<ion-list *ngFor="let orderProducts of myOrder.line_items">
     		<ion-item>

@@ -37,10 +37,13 @@ public emailID: any;
 zone: NgZone;
 nZone: NgZone;
 customerDescription: any = {};
+userProfilium: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage,
   public alertCtrl:AlertController, public fetchProducts: FetchProducts, public sendSms:SendSms, public loadingCtrl: LoadingController) 
   {
     var that = this;
+
+    
     if(!firebase.auth().currentUser){
 
       that.loading = that.loadingCtrl.create({
@@ -58,6 +61,8 @@ customerDescription: any = {};
     }, 1000);
 
     }else{
+
+
    this.zone = new NgZone({});
     
       const firebaseConfig = {
@@ -78,9 +83,28 @@ customerDescription: any = {};
         if (user) {
 
           // User is signed in and currentUser will no longer return null.
+           
            that.user = firebase.auth().currentUser;
+           that.userUID = that.user.uid;
+          
+    
+     that.userProfilium = firebase.database().ref('userProfile/' + that.userUID);
+          that.userProfilium.on('value', function(snapshot) {
+     
+        console.log("Snapshot",snapshot.val());
+
+        if(snapshot.val().fbLogin){
+          that.emailVerified = true;
+        }else{
           that.emailVerified = that.user.emailVerified;
           console.log("Email verified", that.emailVerified);
+        }
+
+        if(snapshot.val().billing && snapshot.val().shipping && snapshot.val().customerDescription){
+          that.navCtrl.push(CheckoutPage);
+        }else{
+
+
           if(!that.emailVerified){
 
       that.loading = that.loadingCtrl.create({
@@ -104,7 +128,7 @@ customerDescription: any = {};
     that.storage.set('emailVerified', true);
     //set Email Verified to true;
    
-  that.user = firebase.auth().currentUser;
+ /* that.user = firebase.auth().currentUser;
   that.userUID = that.user.uid;
  that.userProfile = firebase.database().ref('userProfile/' + that.userUID);
     that.userProfile.on('value', function(snapshot) {
@@ -115,8 +139,14 @@ customerDescription: any = {};
           that.navCtrl.push(CheckoutPage);
         }
   
-});
+});*/
 }
+        }
+          
+                  
+          
+        });
+  
 
         } else {
           console.log("User doesn't exist");

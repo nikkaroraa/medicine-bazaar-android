@@ -63,7 +63,7 @@ this.zone = new NgZone({});
           if(this.data[i].customer_id == this.customerID)
           {
             //this.orderSerial.push(i);
-            this.data[i].dateCreated = this.data[i].date_created.substr(0,9);
+            this.data[i].dateCreated = this.data[i].date_created.substr(0,10);
             this.myOrders.push(this.data[i]);
             console.log(this.data[i]);
 

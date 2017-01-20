@@ -1,5 +1,5 @@
+import { Component,NgZone } from '@angular/core';
 import { NavController, LoadingController, AlertController } from 'ionic-angular';
-import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthData } from '../../providers/auth-data';
 import { EmailValidator } from '../../validators/email';
@@ -30,6 +30,10 @@ export class AccountPage {
   user: any;
   Account: string = "login";    
   public userDetails: any = {};
+  public userFB: any;
+  public userFBUID: any;
+  public userProfiling: any;
+  zone: NgZone;
   constructor(public nav: NavController, public authData: AuthData, public formBuilder: FormBuilder,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, public storage: Storage) {
         this.signupForm = formBuilder.group({
@@ -196,7 +200,7 @@ export class AccountPage {
 
      this.Account = "signUp";
      console.log("Account changed to signUp");
-   } 
+   }   
 
    goToResetPassword(){
 
@@ -205,17 +209,43 @@ export class AccountPage {
 
    facebookLogin(){
     Facebook.login(['email']).then( (response) => {
+      
+      this.zone = new NgZone({});
+      var that = this;
       let facebookCredential = firebase.auth.FacebookAuthProvider
         .credential(response.authResponse.accessToken);
 
     firebase.auth().signInWithCredential(facebookCredential)
       .then((success) => {
-        console.log("Firebase success: " + JSON.stringify(success));
+        
+
+          console.log("Firebase success: " + JSON.stringify(success));
+
         this.userProfile = success;
-        this.userDetails = {email: this.userProfile.email};
+         this.userFB = firebase.auth().currentUser;
+          this.userFBUID = this.userFB.uid;
+
+          if(this.userFB){
+               //login for the second time or above      
+               this.userProfiling = firebase.database().ref('userProfile' + this.userFBUID);
+
+          }
+          else if(!this.userFB){
+            //login for the first time
+            this.userProfiling = firebase.database().ref('userProfile');
+             this.userProfiling.child(this.userFBUID).set({fbLogin: true, email: this.userProfile.email});        
+          }
+    
+     
+          this.userDetails = {email: this.userProfile.email, password: this.userFBUID};
           this.storage.set('userDetails',this.userDetails);
           console.log("this.userDetails", this.userDetails);
-          this.successLogin();
+        this.successLogin();
+       
+        
+          
+          
+          
     })
     .catch((error) => {
     console.log("Firebase failure: " + JSON.stringify(error));

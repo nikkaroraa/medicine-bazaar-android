@@ -60,7 +60,7 @@ public productsArray: Array<any> = [];
         console.log("that.userShipping", that.userShipping);
         that.customerDescription = that.userDetails.customerDescription;
         }
-       else if(that.emailVerified){
+       else {
           that.loading = that.loadingCtrl.create({
       spinner: 'hide',
     
@@ -74,21 +74,6 @@ public productsArray: Array<any> = [];
       that.loading.dismiss();
      that.navCtrl.push(AddressPage);
     }, 1000);
-        }else if(!that.emailVerified){
-           that.loading = that.loadingCtrl.create({
-      spinner: 'hide',
-    
-      content: 'You need to verify your E-mail first. Please Check your inbox!'
-      
-    });
-    
-    that.loading.present();
-
-    setTimeout(() => {
-      that.loading.dismiss();
-     that.navCtrl.push(HomePage);
-    }, 1000);
-
         }
         
       });
