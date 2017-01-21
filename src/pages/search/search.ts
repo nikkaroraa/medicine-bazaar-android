@@ -55,16 +55,16 @@ var that = this;
 console.log("Typed value is: " + this.searchQuery + "Offset Value is: " + this.offset);
 if (this.searchQuery.trim() !== '' && this.searchQuery.trim().length > 1) {
       this.fetchProducts.searchProducts(this.searchQuery).subscribe(products => {
-        that.zone.run( () => {
+        
 
           if(products.length){
 
             that.products=products;
-            console.log(this.products);
+            console.log(that.products);
           }else{
             console.log("There isn't any listed with this name. Try with a different search.");
           }
-        });
+        
         
         
       });

@@ -16,119 +16,91 @@
 <ion-content padding>
 
 	<h1 text-center>Billing Information</h1>
-<ion-list>
+<form [formGroup]="signUpForm" (ngSubmit)="signUp()">
     <ion-item>
       <ion-label>First Name</ion-label>
-      <ion-input type="text" [(ngModel)]="billing_address.first_name">  </ion-input>
+      <ion-input type="text" #bFirstName formControlName="bFirstName" (change)="elementChanged(bFirstName)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!signUpForm.controls.bFirstName.valid && (bFirstNameChanged || submitAttempt)">
+      <p>Only alphabets allowed</p>
     </ion-item>
     <ion-item>
       <ion-label>Last Name</ion-label>
-      <ion-input type="text" [(ngModel)]="billing_address.last_name">  </ion-input>
+      <ion-input type="text" #bLastName formControlName="bLastName" (change)="elementChanged(bLastName)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!signUpForm.controls.bLastName.valid && (bLastNameChanged || submitAttempt)">
+      <p>Only alphabets allowed</p>
     </ion-item>
     <ion-item>
       <ion-label>Address Line 1</ion-label>
-      <ion-input type="text" [(ngModel)]="billing_address.address1">  </ion-input>
+      <ion-input type="text" #bAddress1 formControlName="bAddress1" (change)="elementChanged(bAddress1)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!signUpForm.controls.bAddress1.valid && (bAddress1Changed || submitAttempt)">
+      <p>Only alphabets allowed</p>
     </ion-item>
     <ion-item>
       <ion-label>Address Line 2</ion-label>
-      <ion-input type="text" [(ngModel)]="billing_address.address2">  </ion-input>
+      <ion-input type="text" #bAddress2 formControlName="bAddress2" (change)="elementChanged(bAddress2)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!signUpForm.controls.bAddress2.valid && (bAddress2 || submitAttempt)">
+      <p>Only alphabets allowed</p>
     </ion-item>
     <ion-item>
-     <ion-label>Country</ion-label>
-     <ion-select [(ngModel)]="billing_address.country">
-      <ion-option value="I" selected="true">India</ion-option>
-      <ion-option value="U">US</ion-option>
-     </ion-select>
-    </ion-item>
+    <ion-label>Country</ion-label>
+     <ion-select formControlName="bCountry">
+    <ion-option value="India" selected="true">India</ion-option>
+    
+  </ion-select>
+</ion-item>
     <ion-item>
-     <ion-label>State</ion-label>
-     <ion-select [(ngModel)]="billing_address.state">
-      <ion-option value="I" selected="true">New Delhi</ion-option>
-      <ion-option value="U">Uttar Pradesh</ion-option>
-     </ion-select>
-    </ion-item>
-    <ion-item>
-     <ion-label>City</ion-label>
-     <ion-select [(ngModel)]="billing_address.city">
-      <ion-option value="I" selected="true">Delhi</ion-option>
-      <ion-option value="U">Banglore</ion-option>
-     </ion-select>
-    </ion-item>
-    <ion-item>
+      <ion-label>State</ion-label>
+     <ion-select formControlName="bState">
+    <ion-option value="Delhi" selected="true">Delhi</ion-option>
+    
+  </ion-select>
+</ion-item>
+<ion-item>
+<ion-label>City</ion-label>
+     <ion-select formControlName="bCity">
+    <ion-option value="New Delhi" selected="true">New Delhi</ion-option>
+   
+  </ion-select>
+</ion-item>
+<ion-item>
      <ion-label>Pin Code</ion-label>
-     <ion-input type="text" [(ngModel)]="billing_address.postcode">  </ion-input>
-    </ion-item>
-   <!-- 
-    <ion-item>
-     
-     <ion-label>Phone</ion-label>
-     <ion-input type="text" [(ngModel)]="billing_address.phone"> </ion-input><ion-icon *ngIf="phoneVerified" md="md-checkmark-circle"></ion-icon>
+     <ion-input type="text" #bPinCode formControlName="bPinCode" (change)="elementChanged(bPinCode)">  </ion-input>
      </ion-item>
-     <ion-item>
-    <button text-center ion-button round outline block color="danger" (click)="genSms(billing_address.phone)">Send OTP</button></ion-item>
+
+     <ion-item class="error-message" *ngIf="!signUpForm.controls.bPinCode.valid && (bPinCodeChanged || submitAttempt)">
+      <p>Enter six digit pincode</p>
+</ion-item>
+   
+   
+    <ion-item>
+
+     <ion-label>Phone</ion-label>
+     <ion-input type="text" #bPhone formControlName="bPhone" name="bPhone" (change)="elementChanged(bPhone)"> </ion-input><ion-icon *ngIf="phoneVerified" md="md-checkmark-circle"></ion-icon>
+     </ion-item>
+     <ion-item class="error-message" *ngIf="!signUpForm.controls.bPhone.valid && (bPhoneChanged || submitAttempt)">
+      <p>Enter ten digit mobile number</p>
+</ion-item> 
+    <ion-item>
+    <button text-center ion-button round outline block color="danger" type="button" (click)="genSms()">Send OTP</button> </ion-item>
      <ion-item>
      <ion-label>OTP</ion-label>
-     <ion-input type="text" [(ngModel)]="otp" (blur)="verifyOTP(otp,billing_address.phone)">  </ion-input>
-     </ion-item>
-    --> 
-   </ion-list>
 
-<ion-list>
-<ion-item>
-   <ion-label>Shipping Address is same</ion-label>
-   <ion-checkbox [(ngModel)]="BillingtoShipping" (ionChange)="switchBillingtoShipping()">
-   </ion-checkbox>
+     <ion-input type="text" formControlName="botp" (blur)="verifyOTP()"></ion-input>
 </ion-item>
-</ion-list>
-
-   <h2 [hidden]="BillingtoShipping">Shipping Information</h2>
-   <ion-list>
-    <ion-item [hidden]="BillingtoShipping">
-      <ion-label>First Name</ion-label>
-      <ion-input type="text" [(ngModel)]="shipping_address.first_name">  </ion-input>
-    </ion-item>
-    <ion-item [hidden]="BillingtoShipping">
-      <ion-label>Last Name</ion-label>
-      <ion-input type="text" [(ngModel)]="shipping_address.last_name">  </ion-input>
-    </ion-item>
-    <ion-item [hidden]="BillingtoShipping">
-      <ion-label>Address Line 1</ion-label>
-      <ion-input type="text" [(ngModel)]="shipping_address.address1">  </ion-input>
-    </ion-item>
-    <ion-item [hidden]="BillingtoShipping">
-      <ion-label>Address Line 2</ion-label>
-      <ion-input type="text" [(ngModel)]="shipping_address.address2">  </ion-input>
-    </ion-item>
-    <ion-item [hidden]="BillingtoShipping">
-     <ion-label>Country</ion-label>
-     <ion-select [(ngModel)]="shipping_address.country">
-      <ion-option value="I" selected="true">India</ion-option>
-      <ion-option value="U">US</ion-option>
-     </ion-select>
-    </ion-item>
-    <ion-item [hidden]="BillingtoShipping">
-     <ion-label>State</ion-label>
-     <ion-select [(ngModel)]="shipping_address.state">
-      <ion-option value="I" selected="true">New Delhi</ion-option>
-      <ion-option value="U">Uttar Pradesh</ion-option>
-     </ion-select>
-    </ion-item>
-    <ion-item [hidden]="BillingtoShipping">
-     <ion-label>City</ion-label>
-     <ion-select [(ngModel)]="shipping_address.city">
-      <ion-option value="I" selected="true">Delhi</ion-option>
-      <ion-option value="U">Bangalore</ion-option>
-     </ion-select>
-    </ion-item>
-    <ion-item [hidden]="BillingtoShipping">
-     <ion-label>Pin Code</ion-label>
-     <ion-input type="text" [(ngModel)]="shipping_address.postcode">  </ion-input>
-    </ion-item>
+     
     
-   </ion-list>
+   
+
+
+  <button text-center ion-button round outline block color="danger" type="submit">Sign Up</button>
+  </form>
     
       <button ion-button block round>Cancel</button>
      
-      <button text-center ion-button round outline block color="danger" (click)="createUser(billing_address, shipping_address)">Sign Up</button>
+     
     
 </ion-content>

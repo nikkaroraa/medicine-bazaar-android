@@ -7,6 +7,7 @@ import firebase from 'firebase';
 import { SendSms } from '../../providers/send-sms';
 import {AlertController,  LoadingController} from 'ionic-angular';
 import { HomePage} from '../home/home';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 /*
   Generated class for the Address page.
 
@@ -38,10 +39,28 @@ zone: NgZone;
 nZone: NgZone;
 customerDescription: any = {};
 userProfilium: any;
+public signUpForm: FormGroup;
+submitAttempt: boolean = false;
+billing: any;
+shipping: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public storage: Storage,
+  constructor(public formBuilder:FormBuilder,public navCtrl: NavController, public navParams: NavParams, public storage: Storage,
   public alertCtrl:AlertController, public fetchProducts: FetchProducts, public sendSms:SendSms, public loadingCtrl: LoadingController) 
   {
+    
+    this.signUpForm=this.formBuilder.group({
+          bFirstName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+          bLastName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+          bAddress1:['', Validators.compose([Validators.maxLength(70),  Validators.required])],
+          bAddress2:['', Validators.compose([Validators.maxLength(70)])],
+          bPinCode:['', Validators.compose([Validators.maxLength(6), Validators.pattern('[0-9 ]*'), Validators.required])],
+          bPhone:['', Validators.compose([Validators.maxLength(10), Validators.pattern('[0-9 ]*')])],
+          bCountry:['India',],
+          bState:['Delhi',],
+          bCity:['New Delhi',],
+          botp:['',],
+          
+}); 
     var that = this;
     
     
@@ -156,9 +175,16 @@ userProfilium: any;
     });
   }
         }
-genSms(phone)
+
+        elementChanged(input){
+    let field = input.inputControl.name;
+    this[field + "Changed"] = true;
+}
+
+genSms()
   {
-    this.sendSms.sendSMS(phone).subscribe(data => {
+    console.log("genSms method..",this.signUpForm.value.bPhone);
+    this.sendSms.sendSMS(this.signUpForm.value.bPhone).subscribe(data => {
         this.data = data;
         console.log(this.data);
       },
@@ -214,11 +240,11 @@ genSms(phone)
 
   //verify sms to user
 
-  verifyOTP(otp,phone)
+  verifyOTP()
   {
     this.verify.countryCode="91";
-    this.verify.mobileNumber=phone;
-    this.verify.oneTimePassword=otp;
+    this.verify.mobileNumber=this.signUpForm.value.bPhone;
+    this.verify.oneTimePassword=this.signUpForm.value.botp;
     this.sendSms.verifySms(this.verify).subscribe(verifyStatus => {
         this.verifyStatus = verifyStatus;
         console.log(this.verifyStatus);
@@ -238,49 +264,45 @@ genSms(phone)
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddressPage');
   }
-  switchBillingtoShipping(){
-  	this.shipping_address =  this.billing_address;
-  }
-
-
-
   
 
-  createUser(billing_address, shipping_address){
-  	 this.billing_address = billing_address;
-     this.shipping_address = shipping_address;
-     	this.userSend = {
+  signUp(){
+
+    this.submitAttempt=true;
+      console.log("signUp function");
+console.log("newUser: ", this.signUpForm);
+  this.userSend = {
   "email": this.userDetails.email,
   "password": this.userDetails.password,
-  "first_name": billing_address.first_name,
-  "last_name": billing_address.last_name,
+  "first_name": this.signUpForm.value.bFirstName,
+  "last_name": this.signUpForm.value.bLastName,
   "username": "",
   "billing": {
-    "first_name": billing_address.first_name,
-    "last_name": billing_address.last_name,
+    "first_name": this.signUpForm.value.bFirstName,
+    "last_name": this.signUpForm.value.bLastName,
     "company": "",
-    "address_1": billing_address.address1,
-    "address_2": billing_address.address2,
-    "city": billing_address.city,
-    "state": billing_address.state,
-    "postcode": billing_address.postcode,
-    "country": billing_address.country,
+    "address_1": this.signUpForm.value.bAddress1,
+    "address_2": this.signUpForm.value.bAddress2,
+    "city": this.signUpForm.value.bCity,
+    "state": this.signUpForm.value.bState,
+    "postcode": this.signUpForm.value.bPinCode,
+    "country": this.signUpForm.value.bCountry,
     "email": this.userDetails.email,
-    "phone": billing_address.phone
+    "phone": this.signUpForm.value.bPhone
   },
   "shipping": {
-    "first_name": shipping_address.first_name,
-    "last_name": shipping_address.last_name,
+    "first_name": this.signUpForm.value.bFirstName,
+    "last_name": this.signUpForm.value.bLastName,
     "company": "",
-    "address_1": shipping_address.address1,
-    "address_2": shipping_address.address2,
-    "city": shipping_address.city,
-    "state": shipping_address.state,
-    "postcode": shipping_address.postcode,
-    "country": shipping_address.country
+    "address_1": this.signUpForm.value.bAddress1,
+    "address_2": this.signUpForm.value.bAddress2,
+    "city": this.signUpForm.value.bCity,
+    "state": this.signUpForm.value.bState,
+    "postcode": this.signUpForm.value.bPinCode,
+    "country": this.signUpForm.value.bCountry
   }
-}
- console.log("call create User ...");
+  }
+  console.log("call create User ...");
       this.fetchProducts.createUser(this.userSend).subscribe(data => {
         // we've got back the raw data, now generate the core schedule data
         // and save the data for later reference
@@ -297,7 +319,11 @@ genSms(phone)
         () => {
         console.log('Completed');
     });
-  }
+}
+
+  
+
+  
   createUserSuccessfull(){
       console.log("Inside createUserSuccessfull", this.customerData.last_order);
 
@@ -311,10 +337,44 @@ genSms(phone)
     	this.userUID = this.user.uid;
       this.emailID = this.user.email;
       this.customerDescription = {email: this.userDetails.email, customerID: this.customerData.id };
+      this.billing = {
+
+        first_name: this.signUpForm.value.bFirstName,
+    last_name: this.signUpForm.value.bLastName,
+    
+    address1: this.signUpForm.value.bAddress1,
+    address2: this.signUpForm.value.bAddress2,
+    city: this.signUpForm.value.bCity,
+    state: this.signUpForm.value.bState,
+    postcode: this.signUpForm.value.bPinCode,
+    country: this.signUpForm.value.bCountry,
+    email: this.userDetails.email,
+    phone: this.signUpForm.value.bPhone
+      };
+
+      this.shipping = {
+        first_name: this.signUpForm.value.bFirstName,
+    last_name: this.signUpForm.value.bLastName,
+    
+    address1: this.signUpForm.value.bAddress1,
+    address2: this.signUpForm.value.bAddress2,
+    city: this.signUpForm.value.bCity,
+    state: this.signUpForm.value.bState,
+    postcode: this.signUpForm.value.bPinCode,
+    country: this.signUpForm.value.bCountry
+    
+
+      };
+
+      
       console.log(this.emailID);
+      console.log(this.customerDescription);
+      console.log(this.billing);
+      console.log(this.shipping);
       this.userProfile = firebase.database().ref('/userProfile');
 
-       this.userProfile.child(this.userUID).set({customerDescription: this.customerDescription, billing: this.billing_address, shipping: this.shipping_address});
+       this.userProfile.child(this.userUID).set({customerDescription: this.customerDescription,
+        billing: this.billing, shipping: this.shipping});
         console.log("Successfully stored inside the Firebase");
     }
 

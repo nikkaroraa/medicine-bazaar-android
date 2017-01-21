@@ -73,7 +73,7 @@ public productsArray: Array<any> = [];
     setTimeout(() => {
       that.loading.dismiss();
      that.navCtrl.push(AddressPage);
-    }, 1000);
+    }, 2000);
         }
         
       });
