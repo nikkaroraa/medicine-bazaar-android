@@ -108,7 +108,7 @@ shipping: any;
            that.user = firebase.auth().currentUser;
            that.userUID = that.user.uid;
           
-    
+     
      that.userProfilium = firebase.database().ref('userProfile/' + that.userUID);
           that.userProfilium.on('value', function(snapshot) {
      

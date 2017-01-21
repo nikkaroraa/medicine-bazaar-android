@@ -38,52 +38,71 @@
   <ion-card-content>
 
     <h3 text-center>Shipping Address</h3>
-   
-<ion-list>
+   <ion-list no-lines>  
+<form [formGroup]="orderForm" (ngSubmit)="placeOrder()">
     <ion-item>
-      <ion-label>First Name</ion-label>
-      <ion-input type="text" [(ngModel)]="shipping_address.first_name">  </ion-input>
+      <ion-label floating>First Name</ion-label>
+      <ion-input type="text" #sFirstName formControlName="sFirstName" (change)="elementChanged(sFirstName)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!orderForm.controls.sFirstName.valid && (sFirstNameChanged || submitAttempt)">
+      <p>Only alphabets allowed</p>
     </ion-item>
     <ion-item>
-      <ion-label>Last Name</ion-label>
-      <ion-input type="text" [(ngModel)]="shipping_address.last_name">  </ion-input>
+      <ion-label floating>Last Name</ion-label>
+      <ion-input type="text" #sLastName formControlName="sLastName" (change)="elementChanged(sLastName)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!orderForm.controls.sLastName.valid && (sLastNameChanged || submitAttempt)">
+      <p>Only alphabets allowed</p>
     </ion-item>
     <ion-item>
-      <ion-label>Address Line 1</ion-label>
-      <ion-input type="text" [(ngModel)]="shipping_address.address1">  </ion-input>
+      <ion-label floating>Address Line 1</ion-label>
+      <ion-input type="text" #sAddress1 formControlName="sAddress1" (change)="elementChanged(sAddress1)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!orderForm.controls.sAddress1.valid && (sAddress1Changed || submitAttempt)">
+      <p>Only alphabets allowed</p>
     </ion-item>
     <ion-item>
-      <ion-label>Address Line 2</ion-label>
-      <ion-input type="text" [(ngModel)]="shipping_address.address2">  </ion-input>
+      <ion-label floating>Address Line 2</ion-label>
+      <ion-input type="text" #sAddress2 formControlName="sAddress2" (change)="elementChanged(sAddress2)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!orderForm.controls.sAddress2.valid && (sAddress2 || submitAttempt)">
+      <p>Only alphabets and numerals are required</p>
     </ion-item>
     <ion-item>
-     <ion-label>Country</ion-label>
-     <ion-select [(ngModel)]="shipping_address.country">
-      <ion-option value="I" selected="true">India</ion-option>
-      <ion-option value="U">US</ion-option>
-     </ion-select>
-    </ion-item>
-    <ion-item>
-     <ion-label>State</ion-label>
-     <ion-select [(ngModel)]="shipping_address.state">
-      <ion-option value="I" selected="true">New Delhi</ion-option>
-      <ion-option value="U">Uttar Pradesh</ion-option>
-     </ion-select>
-    </ion-item>
-    <ion-item>
-     <ion-label>City</ion-label>
-     <ion-select [(ngModel)]="shipping_address.city">
-      <ion-option value="I" selected="true">Delhi</ion-option>
-      <ion-option value="U">Bangalore</ion-option>
-     </ion-select>
-    </ion-item>
-    <ion-item>
-     <ion-label>Pin Code</ion-label>
-     <ion-input type="text" [(ngModel)]="shipping_address.postcode">  </ion-input>
-    </ion-item>
+    <ion-label floating>Country</ion-label>
+     <ion-select formControlName="sCountry">
+    <ion-option value="India" selected="true">India</ion-option>
     
-   </ion-list>
-   <button text-center ion-button round block color="danger" (click)="placeOrder(shipping_address)">Place Order</button>
+  </ion-select>
+</ion-item>
+    <ion-item>
+      <ion-label floating>State</ion-label>
+     <ion-select formControlName="sState">
+    <ion-option value="Delhi" selected="true">Delhi</ion-option>
+    
+  </ion-select>
+</ion-item>
+<ion-item>
+<ion-label floating>City</ion-label>
+     <ion-select formControlName="sCity">
+    <ion-option value="New Delhi" selected="true">New Delhi</ion-option>
+   
+  </ion-select>
+</ion-item>
+<ion-item>
+     <ion-label floating>Pin Code</ion-label>
+     <ion-input type="text" #sPinCode formControlName="sPinCode" (change)="elementChanged(sPinCode)">  </ion-input>
+     </ion-item>
+
+     <ion-item class="error-message" *ngIf="!orderForm.controls.sPinCode.valid && (sPinCodeChanged || submitAttempt)">
+      <p>Enter six digit pincode</p>
+</ion-item>
+ <button text-center ion-button round outline block color="danger" type="submit">Place Order</button>
+  </form>
+  </ion-list>
+
+
+
    <button text-center ion-button outline round block color="danger" (click)="cancel()">Cancel</button>
    
   </ion-card-content>

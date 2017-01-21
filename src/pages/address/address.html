@@ -39,8 +39,8 @@
     <ion-item class="error-message" *ngIf="!signUpForm.controls.bAddress1.valid && (bAddress1Changed || submitAttempt)">
       <p>Only alphabets allowed</p>
     </ion-item>
-    <ion-item floating>
-      <ion-label>Address Line 2</ion-label>
+    <ion-item>
+      <ion-label floating>Address Line 2</ion-label>
       <ion-input type="text" #bAddress2 formControlName="bAddress2" (change)="elementChanged(bAddress2)"></ion-input>
     </ion-item>
     <ion-item class="error-message" *ngIf="!signUpForm.controls.bAddress2.valid && (bAddress2 || submitAttempt)">
@@ -103,5 +103,5 @@
       <button ion-button block round (click)="cancel()">Cancel</button>
      
      
-    
+     
 </ion-content>

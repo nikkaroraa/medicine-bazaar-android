@@ -7,6 +7,7 @@ import {LastOrderPage} from '../last-order/last-order';
 import {AddressPage} from '../address/address';
 import {HomePage} from '../home/home';
 import {SearchPage} from '../search/search';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'page-checkout',
@@ -22,6 +23,8 @@ public userDetails: any = {};
 public userBilling: any = {};
 public userShipping: any = {};
 zone: NgZone;
+public orderForm: FormGroup;
+submitAttempt: boolean = false;
 
 public newOrder: any = {};
 public productsArray: Array<any> = [];
@@ -33,14 +36,25 @@ public productsArray: Array<any> = [];
     loading: any;
     orderDataID: any;
     emailVerified: boolean = false;
- constructor(public navCtrl:NavController,public nav:NavParams,public fetchProducts:FetchProducts, public storage:Storage,
+ constructor(public formBuilder:FormBuilder,public navCtrl:NavController,public nav:NavParams,public fetchProducts:FetchProducts, public storage:Storage,
    public loadingCtrl: LoadingController, public toastCtrl: ToastController) 
     {
+      this.orderForm=this.formBuilder.group({
+          sFirstName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+          sLastName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
+          sAddress1:['', Validators.compose([Validators.maxLength(70),  Validators.required])],
+          sAddress2:['', Validators.compose([Validators.maxLength(70)])],
+          sPinCode:['', Validators.compose([Validators.maxLength(6), Validators.pattern('[0-9 ]*'), Validators.required])],
+          sCountry:['India',],
+          sState:['Delhi',],
+          sCity:['New Delhi',]
+          
+}); 
       this.zone = new NgZone({});
   this.user = firebase.auth().currentUser;
   this.userUID = this.user.uid;
   var that = this;
-
+ 
   
 
    //this.userProfile = firebase.database().ref('/userProfile/'+this.userUID+'/billing/address1');
@@ -99,6 +113,12 @@ this.storage.get('cartProducts').then((val)=> {
 
             });
       }
+      
+        elementChanged(input){
+    let field = input.inputControl.name;
+    this[field + "Changed"] = true;
+}
+
 
       placeOrderDefault(){
 
@@ -169,7 +189,11 @@ this.storage.get('cartProducts').then((val)=> {
   }
         
       }
-      placeOrder(shipping){
+      placeOrder(){
+            this.submitAttempt=true;
+      console.log("signUp function");
+console.log("newUser: ", this.orderForm);
+
     if(this.products){
        this.newOrder = {
       "payment_method": "COD",
@@ -188,14 +212,15 @@ this.storage.get('cartProducts').then((val)=> {
         "phone": this.userBilling.phone
       },
       "shipping": {
-        "first_name": shipping.first_name,
-        "last_name": shipping.last_name,
-        "address_1": shipping.address1,
-        "address_2": shipping.address2,
-        "city": shipping.city,
-        "state": shipping.state,
-        "postcode": shipping.postcode,
-        "country": shipping.country
+       "first_name": this.orderForm.value.sFirstName,
+    "last_name": this.orderForm.value.sLastName,
+    "company": "",
+    "address_1": this.orderForm.value.sAddress1,
+    "address_2": this.orderForm.value.sAddress2,
+    "city": this.orderForm.value.sCity,
+    "state": this.orderForm.value.sState,
+    "postcode": this.orderForm.value.sPinCode,
+    "country": this.orderForm.value.sCountry
       },
       "customer_id": this.customerDescription.customerID,
       "line_items": this.products
