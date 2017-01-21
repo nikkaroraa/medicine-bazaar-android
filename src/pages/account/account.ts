@@ -9,6 +9,7 @@ import { Facebook } from 'ionic-native';
 import firebase from 'firebase';
 import { Storage } from '@ionic/storage';
 import {AddressPage} from '../address/address';
+import {HomePage} from '../home/home';
 /*
   Generated class for the Account page.
 
@@ -36,6 +37,29 @@ export class AccountPage {
   zone: NgZone;
   constructor(public nav: NavController, public authData: AuthData, public formBuilder: FormBuilder,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, public storage: Storage) {
+       
+        this.storage.get('userDetails').then((val)=>{
+           if(val){
+
+             this.loading = this.loadingCtrl.create({
+           
+      
+              content: 'You are already logged in'
+            });
+
+            this.loading.present();
+
+            setTimeout(() => {
+             this.nav.setRoot(HomePage);
+            }, 1000);
+
+            setTimeout(() => {
+              this.loading.dismiss();
+            }, 2000);
+           }
+             
+        });
+
         this.signupForm = formBuilder.group({
               email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
               password: ['', Validators.compose([Validators.minLength(6), Validators.required])]

@@ -4,7 +4,7 @@ import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';  
 import {MailSend} from '../../providers/mail-send';
 import {Camera} from 'ionic-native';
-import { Platform, ActionSheetController } from 'ionic-angular';
+import { Platform, ActionSheetController,ToastController } from 'ionic-angular';
 import { NavController} from 'ionic-angular';
 import {SearchPage} from '../search/search'; 
 import { Storage } from '@ionic/storage';   
@@ -30,7 +30,8 @@ export class HomePage {
 private imageSrc: string;
  public productCount: any = 0;
  mailResponse: any;
-  constructor(public mailSend:MailSend,public http: Http,public platform: Platform, public actionsheetCtrl: ActionSheetController, public navCtrl: NavController, public storage: Storage) {
+  constructor(public mailSend:MailSend,public http: Http,public platform: Platform, public actionsheetCtrl: ActionSheetController, 
+    public navCtrl: NavController, public storage: Storage, public toastCtrl: ToastController) {
       
       this.storage.get('productCount').then((val)=>{
         if(!val){
@@ -41,12 +42,13 @@ private imageSrc: string;
             console.log('this.ProductCoitasd', this.productCount);
             this.productCount = val;
         }
+
             
          
       });
-    
-  
-  }
+      
+      
+    }
 
 navSearch(){
     
@@ -93,8 +95,8 @@ openMenu() {
 
   Camera.getPicture(cameraOptions)
    .then((file_uri) => {this.imageSrc = file_uri;
-           alert(this.imageSrc.split('/').pop());
-          alert("file location"+this.imageSrc);
+          // alert(this.imageSrc.split('/').pop());
+         // alert("file location"+this.imageSrc);
           this.fileTransfer(this.imageSrc);
 
          
@@ -112,7 +114,7 @@ openMenu() {
 }
 fileTransfer(imageSrc)
  {
-   alert("file transfer working");
+ //  alert("file transfer working");
    /*
  Cloudinary.v2.uploader.unsigned_upload(imageSrc, "cmoxms3e", 
     { cloud_name: "dtkd8f03m" }, 
@@ -122,15 +124,15 @@ fileTransfer(imageSrc)
    let filename = imageSrc.split('/').pop();
    let namePath = imageSrc.substr(0, imageSrc.indexOf('?'));
    let newFileName=filename.substr(0,filename.indexOf('?'));
-   alert("filename"+filename);
-   alert("namePath"+namePath);
-   alert("newFileName"+newFileName);
+  // alert("filename"+filename);
+  // alert("namePath"+namePath);
+  // alert("newFileName"+newFileName);
     let options = {
       fileKey: "file",
       fileName: newFileName,
       chunkedMode: false,
       mimeType: "image/jpg",
-      params : {'fileName': newFileName} ,
+      params : {'fileName': newFileName, 'email': ""},  
       headers :{
           Connection: "close"
         }
@@ -141,12 +143,36 @@ fileTransfer(imageSrc)
  
     fileTransfer.upload(imageSrc, 'https://medicinebazaar.in/upload.php',
       options,true).then((entry) => {
-             alert(JSON.stringify(entry));        
-      }, (err) => {
-        alert(JSON.stringify(err));
+          //   alert(JSON.stringify(entry)); 
+          let toast = this.toastCtrl.create({
+        message: 'Successfully Uploaded!',
+        duration: 3000,
+        position: 'bottom'
+       });
+
+      toast.onDidDismiss(() => {
+        console.log('Dismissed toast');
+         
       });
 
-  alert("finish working");
+      toast.present(toast);
+
+      }, (err) => {
+        
+               // alert(JSON.stringify(err));
+                let toast = this.toastCtrl.create({
+        message: 'There was an error encountered while uploading. Please try again...',
+        duration: 3000,
+        position: 'bottom'
+       });
+
+      toast.onDidDismiss(() => {
+        console.log('Dismissed toast');
+         
+      });
+      });
+
+  //alert("finish working");
 }
 
 
@@ -176,9 +202,35 @@ ionViewDidEnter(){
       this.mailSend.mailSending(base64,imageData).subscribe(mailResponse => {
         this.mailResponse = mailResponse;
         console.log(this.mailResponse);
+         let toast = this.toastCtrl.create({
+        message: 'Successfully Uploaded!',
+        duration: 3000,
+        position: 'bottom'
+       });
+
+      toast.onDidDismiss(() => {
+        console.log('Dismissed toast');
+         
+      });
+
+      toast.present(toast);
+
       },
         err => {
         console.log(err);
+         let toast = this.toastCtrl.create({
+        message: 'There was an error encountered while uploading. Please try again...',
+        duration: 3000,
+        position: 'bottom'
+       });
+
+      toast.onDidDismiss(() => {
+        console.log('Dismissed toast');
+         
+      });
+
+      toast.present(toast);
+
     },
         () => {
         console.log('Completed');

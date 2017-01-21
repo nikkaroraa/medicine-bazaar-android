@@ -95,7 +95,7 @@ firebase.auth().onAuthStateChanged((user) => {
     this.account = [
 
 
-      {title: 'Logout', component: LogoutPage},
+      
       {title: 'My Account', component: MyAccountPage},
       {title: 'Login Test', component: LoginTestPage},
       {title: 'Checkout', component: AddressPage}
