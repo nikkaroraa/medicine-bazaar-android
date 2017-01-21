@@ -43,7 +43,7 @@ public signUpForm: FormGroup;
 submitAttempt: boolean = false;
 billing: any;
 shipping: any;
-
+ 
   constructor(public formBuilder:FormBuilder,public navCtrl: NavController, public navParams: NavParams, public storage: Storage,
   public alertCtrl:AlertController, public fetchProducts: FetchProducts, public sendSms:SendSms, public loadingCtrl: LoadingController) 
   {
@@ -54,6 +54,7 @@ shipping: any;
           bAddress1:['', Validators.compose([Validators.maxLength(70),  Validators.required])],
           bAddress2:['', Validators.compose([Validators.maxLength(70)])],
           bPinCode:['', Validators.compose([Validators.maxLength(6), Validators.pattern('[0-9 ]*'), Validators.required])],
+        //bPhone:['', Validators.compose([Validators.maxLength(10), Validators.pattern('[0-9 ]*'), Validators.required])],
           bPhone:['', Validators.compose([Validators.maxLength(10), Validators.pattern('[0-9 ]*')])],
           bCountry:['India',],
           bState:['Delhi',],
@@ -377,5 +378,7 @@ console.log("newUser: ", this.signUpForm);
         billing: this.billing, shipping: this.shipping});
         console.log("Successfully stored inside the Firebase");
     }
-
+    cancel(){
+      this.navCtrl.setRoot(HomePage);
+    }
 }

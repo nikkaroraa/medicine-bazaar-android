@@ -16,29 +16,30 @@
 <ion-content padding>
 
 	<h1 text-center>Billing Information</h1>
+<ion-list no-lines>  
 <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
     <ion-item>
-      <ion-label>First Name</ion-label>
+      <ion-label floating>First Name</ion-label>
       <ion-input type="text" #bFirstName formControlName="bFirstName" (change)="elementChanged(bFirstName)"></ion-input>
     </ion-item>
     <ion-item class="error-message" *ngIf="!signUpForm.controls.bFirstName.valid && (bFirstNameChanged || submitAttempt)">
       <p>Only alphabets allowed</p>
     </ion-item>
     <ion-item>
-      <ion-label>Last Name</ion-label>
+      <ion-label floating>Last Name</ion-label>
       <ion-input type="text" #bLastName formControlName="bLastName" (change)="elementChanged(bLastName)"></ion-input>
     </ion-item>
     <ion-item class="error-message" *ngIf="!signUpForm.controls.bLastName.valid && (bLastNameChanged || submitAttempt)">
       <p>Only alphabets allowed</p>
     </ion-item>
     <ion-item>
-      <ion-label>Address Line 1</ion-label>
+      <ion-label floating>Address Line 1</ion-label>
       <ion-input type="text" #bAddress1 formControlName="bAddress1" (change)="elementChanged(bAddress1)"></ion-input>
     </ion-item>
     <ion-item class="error-message" *ngIf="!signUpForm.controls.bAddress1.valid && (bAddress1Changed || submitAttempt)">
       <p>Only alphabets allowed</p>
     </ion-item>
-    <ion-item>
+    <ion-item floating>
       <ion-label>Address Line 2</ion-label>
       <ion-input type="text" #bAddress2 formControlName="bAddress2" (change)="elementChanged(bAddress2)"></ion-input>
     </ion-item>
@@ -46,28 +47,28 @@
       <p>Only alphabets allowed</p>
     </ion-item>
     <ion-item>
-    <ion-label>Country</ion-label>
+    <ion-label floating>Country</ion-label>
      <ion-select formControlName="bCountry">
     <ion-option value="India" selected="true">India</ion-option>
     
   </ion-select>
 </ion-item>
     <ion-item>
-      <ion-label>State</ion-label>
+      <ion-label floating>State</ion-label>
      <ion-select formControlName="bState">
     <ion-option value="Delhi" selected="true">Delhi</ion-option>
     
   </ion-select>
 </ion-item>
 <ion-item>
-<ion-label>City</ion-label>
+<ion-label floating>City</ion-label>
      <ion-select formControlName="bCity">
     <ion-option value="New Delhi" selected="true">New Delhi</ion-option>
    
   </ion-select>
 </ion-item>
 <ion-item>
-     <ion-label>Pin Code</ion-label>
+     <ion-label floating>Pin Code</ion-label>
      <ion-input type="text" #bPinCode formControlName="bPinCode" (change)="elementChanged(bPinCode)">  </ion-input>
      </ion-item>
 
@@ -75,10 +76,10 @@
       <p>Enter six digit pincode</p>
 </ion-item>
    
-   
+   <!--
     <ion-item>
 
-     <ion-label>Phone</ion-label>
+     <ion-label floating>Phone</ion-label>
      <ion-input type="text" #bPhone formControlName="bPhone" name="bPhone" (change)="elementChanged(bPhone)"> </ion-input><ion-icon *ngIf="phoneVerified" md="md-checkmark-circle"></ion-icon>
      </ion-item>
      <ion-item class="error-message" *ngIf="!signUpForm.controls.bPhone.valid && (bPhoneChanged || submitAttempt)">
@@ -87,19 +88,19 @@
     <ion-item>
     <button text-center ion-button round outline block color="danger" type="button" (click)="genSms()">Send OTP</button> </ion-item>
      <ion-item>
-     <ion-label>OTP</ion-label>
+     <ion-label floating>OTP</ion-label>
 
      <ion-input type="text" formControlName="botp" (blur)="verifyOTP()"></ion-input>
 </ion-item>
-     
+     -->
     
    
 
 
   <button text-center ion-button round outline block color="danger" type="submit">Sign Up</button>
   </form>
-    
-      <button ion-button block round>Cancel</button>
+  </ion-list>  
+      <button ion-button block round (click)="cancel()">Cancel</button>
      
      
     
