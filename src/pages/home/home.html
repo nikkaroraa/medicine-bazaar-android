@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-navbar class="bar bar-positive">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+      <ion-title><p color="blank">Medicine Bazaa&#8377;</p></ion-title>
+  <!--    <ion-buttons (click)="navSearch()" end> <ion-icon name="search" color="dark" style="font-size:2.3em;"></ion-icon> </ion-buttons>-->
+  <!--    <ion-buttons (click)="checkCart()" end> <ion-icon name="cart" color="dark" style="font-size:2.3em;"></ion-icon><ion-badge color="danger">{{productCount}}</ion-badge> </ion-buttons>-->
+<!--<button ion-button icon-only outline (click)="checkCart()" end>-->
+<ion-buttons end>
+    <button ion-button icon-only clear (click)="navSearch()" end>
+  <ion-icon name="search" color="blank" style="font-size:1.5em;"></ion-icon>
+  
+    </button>
+    <button ion-button icon-only clear (click)="checkCart()" end>
+  <ion-icon name="cart" color="blank" style="font-size:2em;"></ion-icon>
+  <ion-badge color="danger">{{productCount}}</ion-badge>
+    </button>
+</ion-buttons>
+<!--</button>-->
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+<ion-img src="http://loremflickr.com/400/300/medicine"></ion-img>
+
+<button ion-button block round  icon-right  color="primary" (click)="openMenu()">
+    Upload Prescription &nbsp;<ion-icon style="font-size:2em;" name="md-clipboard" color="blank"></ion-icon>
+</button>
+
+<div text-center>OR</div>
+
+<button ion-button block round  icon-right color="primary" (click)="navSearch()">Search &nbsp;<ion-icon style="font-size:2em;" name="md-search" color="blank"></ion-icon></button>
+<ion-card *ngIf="base64Image">
+  <ion-card-header>
+    Captured (for Testing)
+  </ion-card-header>
+  <ion-card-content>
+    <img [src]="base64Image"/>
+  </ion-card-content>
+</ion-card>
+<ion-card *ngIf="imageSrc">
+  <ion-card-header>
+    Gallery (for Testing)
+  </ion-card-header>
+  <ion-card-content>
+    <img [src]="imageSrc" /> 
+
+  </ion-card-content>
+</ion-card>
+      
+</ion-content>

@@ -1,0 +1,57 @@
+<!--
+  Generated template for the Cart page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title><p color="blank">Cart</p></ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+<ion-card *ngFor="let item of cartItems"> <!-- Because the object comes up inside an array-->
+
+  <ion-card-header>
+
+    {{item.name}}
+  </ion-card-header>
+
+
+  <ion-card-content>
+
+      
+<div>
+<span class="heading">Description:</span><div style="" [innerHTML]="item.description"></div>
+      </div> 
+
+
+<div><button ion-button icon-only clear (click)="decreaseCount(item)"><ion-icon md="md-remove-circle"></ion-icon></button>
+     {{item.count}}  <button ion-button icon-only clear (click)="increaseCount(item)"><ion-icon md="md-add-circle"></ion-icon></button>
+      </div>
+      <div><span class="heading">Individual Price:</span> <span class="value">&#x20b9; {{item.price}}</span></div>
+      <!--<div><span class="heading">Total Price:</span> <span class="value">&#x20b9; {{item.price*item.count}}</span></div>-->
+
+<div>&nbsp;</div>
+ <button ion-button icon-only clear (click)="deleteItem(item)"><ion-icon md="md-trash"></ion-icon></button>
+  </ion-card-content>
+</ion-card>
+<ion-card>
+    <ion-card-header>
+    
+
+Total Price
+</ion-card-header>
+<ion-card-content>
+<div> <span class="value">&#x20b9; {{costSumString}}</span></div>
+<div>&nbsp;</div>
+ <button ion-button block color="danger" (click)="goToCheckOut()">Checkout</button> 
+</ion-card-content>
+
+</ion-card>
+      
+</ion-content>

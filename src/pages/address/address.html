@@ -1,0 +1,107 @@
+<!--
+  Generated template for the Address page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Address</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+	<h1 text-center>Billing Information</h1>
+<ion-list no-lines>  
+<form [formGroup]="signUpForm" (ngSubmit)="signUp()">
+    <ion-item>
+      <ion-label floating>First Name</ion-label>
+      <ion-input type="text" #bFirstName formControlName="bFirstName" (change)="elementChanged(bFirstName)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!signUpForm.controls.bFirstName.valid && (bFirstNameChanged || submitAttempt)">
+      <p>Only alphabets allowed</p>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Last Name</ion-label>
+      <ion-input type="text" #bLastName formControlName="bLastName" (change)="elementChanged(bLastName)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!signUpForm.controls.bLastName.valid && (bLastNameChanged || submitAttempt)">
+      <p>Only alphabets allowed</p>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Address Line 1</ion-label>
+      <ion-input type="text" #bAddress1 formControlName="bAddress1" (change)="elementChanged(bAddress1)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!signUpForm.controls.bAddress1.valid && (bAddress1Changed || submitAttempt)">
+      <p>Only alphabets allowed</p>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Address Line 2</ion-label>
+      <ion-input type="text" #bAddress2 formControlName="bAddress2" (change)="elementChanged(bAddress2)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!signUpForm.controls.bAddress2.valid && (bAddress2 || submitAttempt)">
+      <p>Only alphabets allowed</p>
+    </ion-item>
+    <ion-item>
+    <ion-label floating>Country</ion-label>
+     <ion-select formControlName="bCountry">
+    <ion-option value="India" selected="true">India</ion-option>
+    
+  </ion-select>
+</ion-item>
+    <ion-item>
+      <ion-label floating>State</ion-label>
+     <ion-select formControlName="bState">
+    <ion-option value="Delhi" selected="true">Delhi</ion-option>
+    
+  </ion-select>
+</ion-item>
+<ion-item>
+<ion-label floating>City</ion-label>
+     <ion-select formControlName="bCity">
+    <ion-option value="New Delhi" selected="true">New Delhi</ion-option>
+   
+  </ion-select>
+</ion-item>
+<ion-item>
+     <ion-label floating>Pin Code</ion-label>
+     <ion-input type="text" #bPinCode formControlName="bPinCode" (change)="elementChanged(bPinCode)">  </ion-input>
+     </ion-item>
+
+     <ion-item class="error-message" *ngIf="!signUpForm.controls.bPinCode.valid && (bPinCodeChanged || submitAttempt)">
+      <p>Enter six digit pincode</p>
+</ion-item>
+   
+   <!--
+    <ion-item>
+
+     <ion-label floating>Phone</ion-label>
+     <ion-input type="text" #bPhone formControlName="bPhone" name="bPhone" (change)="elementChanged(bPhone)"> </ion-input><ion-icon *ngIf="phoneVerified" md="md-checkmark-circle"></ion-icon>
+     </ion-item>
+     <ion-item class="error-message" *ngIf="!signUpForm.controls.bPhone.valid && (bPhoneChanged || submitAttempt)">
+      <p>Enter ten digit mobile number</p>
+</ion-item> 
+    <ion-item>
+    <button text-center ion-button round outline block color="danger" type="button" (click)="genSms()">Send OTP</button> </ion-item>
+     <ion-item>
+     <ion-label floating>OTP</ion-label>
+
+     <ion-input type="text" formControlName="botp" (blur)="verifyOTP()"></ion-input>
+</ion-item>
+     -->
+    
+   
+
+
+  <button text-center ion-button round outline block color="danger" type="submit">Sign Up</button>
+  </form>
+  </ion-list>  
+      <button ion-button block round (click)="cancel()">Cancel</button>
+     
+     
+     
+</ion-content>

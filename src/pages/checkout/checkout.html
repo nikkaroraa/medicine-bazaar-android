@@ -1,0 +1,110 @@
+<!--
+  Generated template for the Checkout page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar hideBackButton="true">
+    <ion-title><p color="blank">Checkout</p></ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+    <ion-card>
+  <ion-card-header text-center>
+    Use stored address
+  </ion-card-header>
+  <ion-card-content>
+ 
+   <h3 text-center>Shipping Address</h3>
+    <p>First Name: {{userShipping.first_name}}</p>
+    <p>Last Name: {{userShipping.last_name}}</p>
+    
+    <p>Address 1: {{userShipping.address1}}</p>
+    <p>Address 2: {{userShipping.address2}}</p>
+    <button ion-button (click)="placeOrderDefault()">Place Order</button> 
+  </ion-card-content>
+</ion-card>
+<h2 text-center> OR </h2>
+<ion-card>
+  <ion-card-header text-center>
+    Use a New Delivery Address
+  </ion-card-header>
+  <ion-card-content>
+
+    <h3 text-center>Shipping Address</h3>
+   <ion-list no-lines>  
+<form [formGroup]="orderForm" (ngSubmit)="placeOrder()">
+    <ion-item>
+      <ion-label floating>First Name</ion-label>
+      <ion-input type="text" #sFirstName formControlName="sFirstName" (change)="elementChanged(sFirstName)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!orderForm.controls.sFirstName.valid && (sFirstNameChanged || submitAttempt)">
+      <p>Only alphabets allowed</p>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Last Name</ion-label>
+      <ion-input type="text" #sLastName formControlName="sLastName" (change)="elementChanged(sLastName)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!orderForm.controls.sLastName.valid && (sLastNameChanged || submitAttempt)">
+      <p>Only alphabets allowed</p>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Address Line 1</ion-label>
+      <ion-input type="text" #sAddress1 formControlName="sAddress1" (change)="elementChanged(sAddress1)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!orderForm.controls.sAddress1.valid && (sAddress1Changed || submitAttempt)">
+      <p>Only alphabets allowed</p>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Address Line 2</ion-label>
+      <ion-input type="text" #sAddress2 formControlName="sAddress2" (change)="elementChanged(sAddress2)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!orderForm.controls.sAddress2.valid && (sAddress2 || submitAttempt)">
+      <p>Only alphabets and numerals are required</p>
+    </ion-item>
+    <ion-item>
+    <ion-label floating>Country</ion-label>
+     <ion-select formControlName="sCountry">
+    <ion-option value="India" selected="true">India</ion-option>
+    
+  </ion-select>
+</ion-item>
+    <ion-item>
+      <ion-label floating>State</ion-label>
+     <ion-select formControlName="sState">
+    <ion-option value="Delhi" selected="true">Delhi</ion-option>
+    
+  </ion-select>
+</ion-item>
+<ion-item>
+<ion-label floating>City</ion-label>
+     <ion-select formControlName="sCity">
+    <ion-option value="New Delhi" selected="true">New Delhi</ion-option>
+   
+  </ion-select>
+</ion-item>
+<ion-item>
+     <ion-label floating>Pin Code</ion-label>
+     <ion-input type="text" #sPinCode formControlName="sPinCode" (change)="elementChanged(sPinCode)">  </ion-input>
+     </ion-item>
+
+     <ion-item class="error-message" *ngIf="!orderForm.controls.sPinCode.valid && (sPinCodeChanged || submitAttempt)">
+      <p>Enter six digit pincode</p>
+</ion-item>
+ <button text-center ion-button round outline block color="danger" type="submit">Place Order</button>
+  </form>
+  </ion-list>
+
+
+
+   <button text-center ion-button outline round block color="danger" (click)="cancel()">Cancel</button>
+   
+  </ion-card-content>
+</ion-card>
+</ion-content>

@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title><p color="blank">Item Details</p></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+   
+  <ion-list no-lines>
+   <form [formGroup]="updatePasswordForm">
+ 
+        <ion-item>
+            <ion-label floating>Password</ion-label>
+            <ion-input formControlName="password" type="password"></ion-input>
+        </ion-item>
+    </form>    
+  </ion-list>      
+  
+  <h1> Email Verified: {{emailVerified}} </h1>
+  <button ion-button block (click)="updatePassword()">Update Password</button>  
+  <button ion-button block (click)="sendVerificationMail()" color="secondary">Send Verification Email</button>
+</ion-content>
+ 

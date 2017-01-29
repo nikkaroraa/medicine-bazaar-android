@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-navbar no-border-bottom>
+    <ion-title>
+      Account
+    </ion-title>
+  </ion-navbar>
+
+  <ion-toolbar no-border-top>
+    <ion-segment [(ngModel)]="Account">
+      <ion-segment-button value="login">
+        Login
+      </ion-segment-button>
+      <ion-segment-button value="signUp">
+        Sign Up
+      </ion-segment-button>
+      
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <div [ngSwitch]="Account">
+    <div *ngSwitchCase="'login'">
+     <img src="http://placehold.it/300x100">
+
+  <form [formGroup]="loginForm" (submit)="loginUser()" novalidate>
+
+    <ion-item>
+      <ion-label stacked>Email</ion-label>
+      <ion-input #email formControlName="email" type="email" (change)="elementChanged(email)"
+        placeholder="Your email address"
+        [class.invalid]="!loginForm.controls.email.valid && (emailChanged || submitAttempt)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!loginForm.controls.email.valid  && (emailChanged || submitAttempt)">
+      <p>Please enter a valid email.</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Password</ion-label>
+      <ion-input #password formControlName="password" type="password" (change)="elementChanged(password)"
+        placeholder="Your password"
+        [class.invalid]="!loginForm.controls.password.valid && (passwordChanged || submitAttempt)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!loginForm.controls.password.valid  && (passwordChanged || submitAttempt)">
+      <p>Your password needs more than 6 characters.</p>
+    </ion-item>
+
+    <button ion-button block type="submit">
+      Login
+    </button>
+
+  </form>
+
+  <button ion-button block clear (click)="goToSignup()">
+    Create a new account
+  </button>
+
+  <button ion-button block clear (click)="goToResetPassword()">
+    I forgot my password
+  </button> 
+
+  
+    <button ion-button block icon-right (click)="facebookLogin()" id="facebook">Sign in with Facebook <ion-icon id="fbLogo" name="logo-facebook" style="font-size:2.5em;"></ion-icon>
+</button>
+    
+</div>
+    <div *ngSwitchCase="'signUp'">
+     <img src="http://placehold.it/300x100">
+  <form [formGroup]="signupForm" (submit)="signupUser()" novalidate>
+
+    <ion-item>
+      <ion-label stacked>Email</ion-label>
+      <ion-input #email formControlName="email" type="email" (change)="elementChanged(email)"
+        placeholder="Your email address"
+        [class.invalid]="!signupForm.controls.email.valid && (emailChanged || submitAttempt)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!signupForm.controls.email.valid  && (emailChanged || submitAttempt)">
+      <p>Please enter a valid email.</p>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Password</ion-label>
+      <ion-input #password formControlName="password" type="password" (change)="elementChanged(password)"
+        placeholder="Your password"
+        [class.invalid]="!signupForm.controls.password.valid && (passwordChanged || submitAttempt)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!signupForm.controls.password.valid  && (passwordChanged || submitAttempt)">
+      <p>Your password needs more than 6 characters.</p>
+    </ion-item>
+
+    <button ion-button block type="submit">
+      Create an Account
+    </button>
+
+  </form>
+
+  <h3 text-center>OR</h3>
+   <button ion-button block icon-right (click)="facebookLogin()" id="facebook">Sign in with Facebook <ion-icon id="fbLogo" name="logo-facebook" style="font-size:2.5em;"></ion-icon>
+</button>
+    </div>
+
+   
+</div>
+</ion-content>

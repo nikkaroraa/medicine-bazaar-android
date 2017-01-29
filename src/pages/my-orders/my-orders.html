@@ -1,0 +1,39 @@
+<!--
+  Generated template for the MyOrders page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>MyOrders</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+
+  <ion-list>
+	  <button ion-item *ngFor="let myOrder of myOrders" (click)="orderSelected(myOrder)">
+	  
+      		
+	  	<h2><ion-icon md="md-information" item-left></ion-icon>{{ myOrder.id }}</h2>
+    	<h3><ion-icon md="md-calendar" item-left></ion-icon>{{ myOrder.dateCreated | date: 'dd-MM-yyyy' }}</h3>
+		
+		<ion-list *ngFor="let orderProducts of myOrder.line_items">
+    		<ion-item>
+    			<h2><ion-icon md="md-checkmark-circle-outline" item-left></ion-icon>{{ orderProducts.name }}</h2>
+	  		</ion-item>
+	  	</ion-list>
+	  </button> 
+  </ion-list>
+
+
+
+
+	
+</ion-content>
+

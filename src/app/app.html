@@ -1,0 +1,31 @@
+<ion-menu [content]="content">
+
+  <ion-header class="royal">
+    <ion-toolbar>
+      <ion-title>Welcome User</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content color="primary" padding>
+    <img src="assets/images/user.png"/>     
+
+    <ion-list>
+     <ion-item-divider>
+        Products
+     </ion-item-divider> 
+      <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
+        {{p.title}}
+      </button>
+      <ion-item-divider>
+        Your Account
+     </ion-item-divider>
+    <button ion-item *ngFor="let a of account" (click)="openPage(a)">
+        {{a.title}}
+      </button>
+    </ion-list>
+
+  </ion-content>
+
+</ion-menu>
+
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

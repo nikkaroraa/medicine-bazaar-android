@@ -1,0 +1,34 @@
+<!--
+  Generated template for the User page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>User</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+<ion-item>
+    <ion-label>Full Name: {{user.name}} </ion-label>
+  </ion-item>
+  <ion-item>
+    <ion-label>Email: {{user.email}} </ion-label><br>
+  </ion-item>
+  <ion-item>
+    <ion-label>Profile picture:</ion-label>
+  </ion-item>
+  <ion-item>
+    <img [src]="user.picture">
+  </ion-item>
+  <ion-row>
+    <ion-col>
+      <button ion-button block (click)="doGoogleLogout()">Logout</button>
+    </ion-col>
+</ion-row>
+</ion-content>

@@ -1,0 +1,72 @@
+<!--
+  Generated template for the ProductDetail page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title><p color="blank">Product Detail</p></ion-title>
+    
+      <ion-buttons end>
+    <button ion-button icon-only clear (click)="navSearch()" end>
+  <ion-icon name="search" color="dark" style="font-size:2em;"></ion-icon>
+  
+    </button>
+    <button ion-button icon-only clear (click)="checkCart()" end>
+  <ion-icon name="cart" color="dark" style="font-size:2em;"></ion-icon>
+  <ion-badge color="danger">{{productCount}}</ion-badge>
+    </button>
+</ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+<button ion-button (click)="clearKey()" color="danger">Clear Key</button>
+<button ion-button (click)="clearAnother()" color="danger">Clear Storage Initialised Key</button>
+<ion-card *ngFor="let product of s_products"> <!-- Because the object comes up inside an array-->
+
+  <ion-card-header>
+
+    {{product.name}}
+  </ion-card-header>
+
+
+  <ion-card-content>
+      <span class="heading">Description:</span><div style="" [innerHTML]="product.description"></div>
+      
+
+      <span class="heading">Price:</span> <span class="value">&#x20b9; {{product.price}}</span>
+<div>&nbsp;</div>
+<div>
+    <button ion-button icon-only clear (click)="decreaseCount(product)"><ion-icon md="md-remove-circle"></ion-icon></button>
+         {{product.count}}  
+    <button ion-button icon-only clear (click)="increaseCount(product)"><ion-icon md="md-add-circle"></ion-icon></button>
+</div>
+<button text-center ion-button round outline block color="danger" (click)="showToast('bottom',product)">Add to Cart</button>
+  </ion-card-content>
+</ion-card>
+
+<ion-card *ngFor="let substitute of substitutes">
+
+  <ion-card-header>
+
+    Check out the Substitutes
+  </ion-card-header>
+
+
+  <ion-card-content>
+      <span class="heading">Name:</span> <span class="value"> {{substitute.name}}</span>
+
+      <span class="heading">Description:</span><div style="" [innerHTML]="substitute.description"></div>
+      
+
+      <span class="heading">Price:</span> <span class="value">&#x20b9; {{substitute.price}}</span>
+<div>&nbsp;</div>
+<button text-center ion-button round outline block color="danger" (click)="showToast('bottom', substitute)">Add to Cart</button>
+  </ion-card-content>
+</ion-card>
+</ion-content>
