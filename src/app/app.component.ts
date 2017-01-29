@@ -23,7 +23,7 @@ import { MyAccountPage } from '../pages/my-account/my-account';
 
 import {AddressPage} from '../pages/address/address';
 import { LoginTestPage } from '../pages/login-test/login-test';
-
+import { Storage } from '@ionic/storage';   
 @Component({
   templateUrl: 'app.html'
 })
@@ -35,9 +35,12 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
   account: Array<{title: string, component: any}>;
   zone: NgZone;
+  nZone: NgZone;
+  loggedIn : boolean = false;
   constructor(
     public platform: Platform,
-    public menu: MenuController
+    public menu: MenuController,
+    public storage: Storage
   ) {
 
    const firebaseConfig = {
@@ -50,6 +53,7 @@ export class MyApp {
     
     firebase.initializeApp(firebaseConfig); 
     this.zone = new NgZone({});
+
 firebase.auth().onAuthStateChanged((user) => {
   this.zone.run( () => {
     if (!user) {
@@ -112,5 +116,25 @@ firebase.auth().onAuthStateChanged((user) => {
     // navigate to the new page if it is not the current page
     //this.nav.setRoot(page.component);
       this.nav.push(page.component);
+  }
+  menuOpen(){
+     this.nZone = new NgZone({});
+
+    var that = this;
+    this.storage.get('userDetails').then((val)=>{
+       this.nZone.run(()=>{
+
+console.log(val);
+          if(val){
+          that.loggedIn = true;
+        }else{
+          that.loggedIn = false;
+        }
+    
+       console.log('logged: ? ',this.loggedIn);
+
+       });
+         
+    });
   }
 }

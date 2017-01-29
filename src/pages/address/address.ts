@@ -311,6 +311,8 @@ console.log("newUser: ", this.signUpForm);
         console.log(this.customerData);
         this.storage.set('customerID', this.customerData.id);
          //customerId set here
+          this.storage.set('customerContact',this.customerData.billing.phone);
+          this.storage.set('customerEmail', this.userDetails.email);
        this.saveToFirebase();
         this.createUserSuccessfull();
       },

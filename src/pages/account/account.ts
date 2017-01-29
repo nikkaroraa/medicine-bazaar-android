@@ -35,6 +35,11 @@ export class AccountPage {
   public userFBUID: any;
   public userProfiling: any;
   zone: NgZone;
+  nZone: NgZone;
+  currentUser: any;
+  userUID: any;
+  userBilling: any;
+  customerDescription: any;
   constructor(public nav: NavController, public authData: AuthData, public formBuilder: FormBuilder,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, public storage: Storage) {
        
@@ -154,8 +159,29 @@ export class AccountPage {
 
   successLogin(){
 
+    this.nZone = new NgZone({});
+  this.currentUser = firebase.auth().currentUser;
+  this.userUID = this.currentUser.uid;
+  var that = this;
+    this.userProfile = firebase.database().ref('userProfile/' + this.userUID);
+    this.userProfile.on('value', function(snapshot) {
+      that.nZone.run( () => {
+        if(snapshot.val().billing && snapshot.val().shipping && snapshot.val().customerDescription){
+          that.userDetails = snapshot.val();
+          console.log("this.userDetails", that.userDetails);
+          that.userBilling = that.userDetails.billing;
+          console.log("userBilling Login:", that.userBilling);
+          that.customerDescription = that.userDetails.customerDescription;
+          
+          console.log("customerDescription Login:", that.customerDescription);
+          this.storage.set('customerContact', that.userBilling.phone);
+          this.storage.set('customerEmail', that.customerDescription.email);
+        }
+      });
+});
+     
     this.loading = this.loadingCtrl.create({
-      spinner: 'hide',
+     
       content: 'Login Successfull! Please Wait...'
     });
 
