@@ -174,8 +174,8 @@ export class AccountPage {
           that.customerDescription = that.userDetails.customerDescription;
           
           console.log("customerDescription Login:", that.customerDescription);
-          this.storage.set('customerContact', that.userBilling.phone);
-          this.storage.set('customerEmail', that.customerDescription.email);
+          that.storage.set('customerContact', that.userBilling.phone);
+          that.storage.set('customerEmail', that.customerDescription.email);
         }
       });
 });

@@ -1,4 +1,4 @@
-import { Component, ViewChild,NgZone } from '@angular/core';
+import { Component, ViewChild,NgZone,ChangeDetectorRef } from '@angular/core';
 
 import { Platform, MenuController, Nav } from 'ionic-angular';
 
@@ -30,6 +30,7 @@ import { Storage } from '@ionic/storage';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
+
   // make HelloIonicPage the root (or first) page
   rootPage: any = HomePage;
   pages: Array<{title: string, component: any}>;
@@ -37,6 +38,7 @@ export class MyApp {
   zone: NgZone;
   nZone: NgZone;
   loggedIn : boolean = false;
+  changeDetectorRefs:ChangeDetectorRef[] = [];
   constructor(
     public platform: Platform,
     public menu: MenuController,
@@ -117,11 +119,16 @@ firebase.auth().onAuthStateChanged((user) => {
     //this.nav.setRoot(page.component);
       this.nav.push(page.component);
   }
+  tick() {
+    this.changeDetectorRefs
+      .forEach((ref) => ref.detectChanges());
+  }
   menuOpen(){
      this.nZone = new NgZone({});
 
     var that = this;
     this.storage.get('userDetails').then((val)=>{
+      
        this.nZone.run(()=>{
 
 console.log(val);
@@ -131,7 +138,7 @@ console.log(val);
           that.loggedIn = false;
         }
     
-       console.log('logged: ? ',this.loggedIn);
+       console.log('logged: ',that.loggedIn);
 
        });
          
