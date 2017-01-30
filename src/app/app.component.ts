@@ -1,4 +1,4 @@
-import { Component, ViewChild,NgZone,ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild,NgZone } from '@angular/core';
 
 import { Platform, MenuController, Nav } from 'ionic-angular';
 
@@ -23,26 +23,21 @@ import { MyAccountPage } from '../pages/my-account/my-account';
 
 import {AddressPage} from '../pages/address/address';
 import { LoginTestPage } from '../pages/login-test/login-test';
-import { Storage } from '@ionic/storage';   
+
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-
   // make HelloIonicPage the root (or first) page
   rootPage: any = HomePage;
   pages: Array<{title: string, component: any}>;
   account: Array<{title: string, component: any}>;
   zone: NgZone;
-  nZone: NgZone;
-  loggedIn : boolean = false;
-  changeDetectorRefs:ChangeDetectorRef[] = [];
   constructor(
     public platform: Platform,
-    public menu: MenuController,
-    public storage: Storage
+    public menu: MenuController
   ) {
 
    const firebaseConfig = {
@@ -55,7 +50,6 @@ export class MyApp {
     
     firebase.initializeApp(firebaseConfig); 
     this.zone = new NgZone({});
-
 firebase.auth().onAuthStateChanged((user) => {
   this.zone.run( () => {
     if (!user) {
@@ -101,7 +95,7 @@ firebase.auth().onAuthStateChanged((user) => {
     this.account = [
 
 
-      
+      {title: 'Logout', component: LogoutPage},
       {title: 'My Account', component: MyAccountPage},
       {title: 'Login Test', component: LoginTestPage},
       {title: 'Checkout', component: AddressPage}
@@ -118,30 +112,5 @@ firebase.auth().onAuthStateChanged((user) => {
     // navigate to the new page if it is not the current page
     //this.nav.setRoot(page.component);
       this.nav.push(page.component);
-  }
-  tick() {
-    this.changeDetectorRefs
-      .forEach((ref) => ref.detectChanges());
-  }
-  menuOpen(){
-     this.nZone = new NgZone({});
-
-    var that = this;
-    this.storage.get('userDetails').then((val)=>{
-      
-       this.nZone.run(()=>{
-
-console.log(val);
-          if(val){
-          that.loggedIn = true;
-        }else{
-          that.loggedIn = false;
-        }
-    
-       console.log('logged: ',that.loggedIn);
-
-       });
-         
-    });
   }
 }

@@ -6,7 +6,7 @@ import { Storage } from '@ionic/storage';
 import {LastOrderPage} from '../last-order/last-order';
 import {AddressPage} from '../address/address';
 import {HomePage} from '../home/home';
-
+import {SearchPage} from '../search/search';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({

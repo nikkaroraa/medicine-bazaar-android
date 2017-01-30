@@ -14,22 +14,22 @@ export class MailSend {
   constructor(public http: Http) {
     console.log('Hello MailSend Provider');
   }
-  mailSending(base64,imageData,CustomerEmail,CustomerContact)
+  mailSending(base64,imageData)
   {
-     let requestHeaders = new Headers({ 
-     "Content-Type": "application/json"
-     });
+  	 let requestHeaders = new Headers({ 
+  	 "Content-Type": "application/json"
+  	 });
      this.data={
     "key": "raKKjF2xJOgZb17DN8XNPg",
     "message": {
-        "html": "<p> Customer E-mail ID: "+ CustomerEmail + "</p><p> Customer Contact Information " + CustomerContact+"</p>",
-        "text": "Testing123",
-        "subject": "New User Prescription",
+        "html": "<p>Example HTML content</p>",
+        "text": "Example text content",
+        "subject": "example subject",
         "from_email": "admin@medicinebazaar.in",
         "from_name": "Example Name",
         "to": [
             {
-                "email":"genithub@gmail.com",
+                "email":"dalipkumar703@gmail.com",
                 "name": "Recipient Name",
                 "type": "to"
             }
