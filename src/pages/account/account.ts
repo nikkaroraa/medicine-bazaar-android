@@ -107,7 +107,11 @@ export class AccountPage {
   }
 
   loginUser(){
-
+    if(firebase.app()){
+    console.log("Firebase.app() exists");
+  }else{
+    console.log("Firebase.app() doesn't exist");
+  }
     this.submitAttempt = true;
 
     if (!this.loginForm.valid){
@@ -121,6 +125,7 @@ export class AccountPage {
 
         this.successLogin();
       }, error => {
+        console.log("ERROR: ", error);
         this.failureLogin();
       });
 
