@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
  
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';  
-
+import {MailSend} from '../../providers/mail-send';
 import {Camera} from 'ionic-native';
 import { Platform, ActionSheetController } from 'ionic-angular';
 import { NavController} from 'ionic-angular';
 import {SearchPage} from '../search/search'; 
 import { Storage } from '@ionic/storage';   
-import {CartPage} from '../cart/cart';     
+import {CartPage} from '../cart/cart';
+import { File,Transfer } from 'ionic-native';  
 /*
   Generated class for the Home page.
 
@@ -19,6 +20,7 @@ import {CartPage} from '../cart/cart';
 
   selector: 'page-home',
   templateUrl: 'home.html',
+  providers:[MailSend]
     
 })
 export class HomePage {
@@ -27,7 +29,8 @@ export class HomePage {
     public base64Image: string;
 private imageSrc: string;
  public productCount: any = 0;
-  constructor(public http: Http,public platform: Platform, public actionsheetCtrl: ActionSheetController, public navCtrl: NavController, public storage: Storage) {
+ mailResponse: any;
+  constructor(public mailSend:MailSend,public http: Http,public platform: Platform, public actionsheetCtrl: ActionSheetController, public navCtrl: NavController, public storage: Storage) {
       
       this.storage.get('productCount').then((val)=>{
         if(!val){
@@ -67,6 +70,7 @@ openMenu() {
     }).then((imageData) => {
       // imageData is a base64 encoded string
         this.base64Image = "data:image/jpeg;base64," + imageData;
+        this.cameraImageSend(this.base64Image,imageData);
     }, (err) => {
         console.log(err);
     });
@@ -88,7 +92,16 @@ openMenu() {
   }
 
   Camera.getPicture(cameraOptions)
-    .then(file_uri => this.imageSrc = file_uri, 
+   .then((file_uri) => {this.imageSrc = file_uri;
+           alert(this.imageSrc.split('/').pop());
+          alert("file location"+this.imageSrc);
+          this.fileTransfer(this.imageSrc);
+
+         
+          /*
+        this.galleryImageSend(this.imageSrc,);
+        */
+},
     err => console.log(err)); 
           }
         }
@@ -97,6 +110,45 @@ openMenu() {
     });
     actionSheet.present();
 }
+fileTransfer(imageSrc)
+ {
+   alert("file transfer working");
+   /*
+ Cloudinary.v2.uploader.unsigned_upload(imageSrc, "cmoxms3e", 
+    { cloud_name: "dtkd8f03m" }, 
+    function(error, result) {alert(result) });
+  
+  */
+   let filename = imageSrc.split('/').pop();
+   let namePath = imageSrc.substr(0, imageSrc.indexOf('?'));
+   let newFileName=filename.substr(0,filename.indexOf('?'));
+   alert("filename"+filename);
+   alert("namePath"+namePath);
+   alert("newFileName"+newFileName);
+    let options = {
+      fileKey: "file",
+      fileName: newFileName,
+      chunkedMode: false,
+      mimeType: "image/jpg",
+      params : {'fileName': newFileName} ,
+      headers :{
+          Connection: "close"
+        }
+    };
+ 
+ 
+    const fileTransfer = new Transfer();
+ 
+    fileTransfer.upload(imageSrc, 'https://medicinebazaar.in/upload.php',
+      options,true).then((entry) => {
+             alert(JSON.stringify(entry));        
+      }, (err) => {
+        alert(JSON.stringify(err));
+      });
+
+  alert("finish working");
+}
+
 
 checkCart(){
     
@@ -116,6 +168,36 @@ ionViewDidEnter(){
             
          
       });
+}
+ //camera image send
+  cameraImageSend(base64,imageData)
+  {
+     
+      this.mailSend.mailSending(base64,imageData).subscribe(mailResponse => {
+        this.mailResponse = mailResponse;
+        console.log(this.mailResponse);
+      },
+        err => {
+        console.log(err);
+    },
+        () => {
+        console.log('Completed');
+    });
+  }
+  //camera image send
+  galleryImageSend(imageSrc,file_uri)
+  {
+     
+      this.mailSend.mailSending(imageSrc,file_uri).subscribe(mailResponse => {
+        this.mailResponse = mailResponse;
+        console.log(this.mailResponse);
+      },
+        err => {
+        console.log(err);
+    },
+        () => {
+        console.log('Completed');
+    });
 }
 
 }
