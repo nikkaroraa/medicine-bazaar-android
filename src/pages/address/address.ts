@@ -86,24 +86,16 @@ shipping: any;
 
    this.zone = new NgZone({});
     
-        
-      firebase.app().delete().then(function() {
-   that.zone.run( () => {
-  const firebaseConfig = {
+      const firebaseConfig = {
       apiKey: "AIzaSyByyA3R_KJMD2LF9G95eu7qM5xGA7evMGc",
       authDomain: "medicinebazaarandroid.firebaseapp.com",
       databaseURL: "https://medicinebazaarandroid.firebaseio.com",
       storageBucket: "medicinebazaarandroid.appspot.com",
       messagingSenderId: "420052832956"
-    };  
-
+    };    
+      firebase.app().delete().then(function() {
+    that.zone.run( () => {
   firebase.initializeApp(firebaseConfig);
-
-  if(firebase.app()){
-    console.log("Firebase.app() exists");
-  }else{
-    console.log("Firebase.app() doesn't exist");
-  }
   console.log("Initialised again");
   
 
@@ -319,6 +311,8 @@ console.log("newUser: ", this.signUpForm);
         console.log(this.customerData);
         this.storage.set('customerID', this.customerData.id);
          //customerId set here
+          this.storage.set('customerContact',this.customerData.billing.phone);
+          this.storage.set('customerEmail', this.userDetails.email);
        this.saveToFirebase();
         this.createUserSuccessfull();
       },
