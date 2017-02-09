@@ -47,7 +47,7 @@ loading: any;
    successLogout(){
 
     this.loading = this.loadingCtrl.create({
-      spinner: 'hide',
+      
       content: 'Logout Successfull! Please Wait...'
     });
 

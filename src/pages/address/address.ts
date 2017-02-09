@@ -43,7 +43,7 @@ public signUpForm: FormGroup;
 submitAttempt: boolean = false;
 billing: any;
 shipping: any;
- 
+ count: number = 0;
   constructor(public formBuilder:FormBuilder,public navCtrl: NavController, public navParams: NavParams, public storage: Storage,
   public alertCtrl:AlertController, public fetchProducts: FetchProducts, public sendSms:SendSms, public loadingCtrl: LoadingController) 
   {
@@ -84,7 +84,7 @@ shipping: any;
     }else{
 
 
-   this.zone = new NgZone({});
+  // this.zone = new NgZone({});
     
       const firebaseConfig = {
       apiKey: "AIzaSyByyA3R_KJMD2LF9G95eu7qM5xGA7evMGc",
@@ -94,7 +94,7 @@ shipping: any;
       messagingSenderId: "420052832956"
     };    
       firebase.app().delete().then(function() {
-    that.zone.run( () => {
+    
   firebase.initializeApp(firebaseConfig);
   console.log("Initialised again");
   
@@ -102,14 +102,17 @@ shipping: any;
     firebase.auth().onAuthStateChanged(function(user) {
       
         if (user) {
+         if(that.count < 1){
 
+           that.count++;
+           console.log("The value of count is:", that.count);
           // User is signed in and currentUser will no longer return null.
            
            that.user = firebase.auth().currentUser;
            that.userUID = that.user.uid;
           
      
-     that.userProfilium = firebase.database().ref('userProfile/' + that.userUID);
+    that.userProfilium = firebase.database().ref('userProfile/' + that.userUID);
           that.userProfilium.on('value', function(snapshot) {
      
         console.log("Snapshot",snapshot.val());
@@ -126,10 +129,10 @@ shipping: any;
         }else{
 
 
-          if(!that.emailVerified){
+        if(!that.emailVerified){
 
       that.loading = that.loadingCtrl.create({
-      spinner: 'hide',
+      
     
       content: 'You need to verify your E-mail first. Check your inbox!'
       
@@ -148,28 +151,34 @@ shipping: any;
       that.loading.dismiss();
     }, 2000);
     
+    console.log("Email is not verified yet!");
     
   }else{
     that.storage.set('emailVerified', true);
     //set Email Verified to true;
-   
+   console.log("Email verified storage set to true");
  }
         }
           
                   
           
         });
+         }
+
+          
   
 
         } else {
           console.log("User doesn't exist");
           // No user is signed in.
         }
-      
-});
+
+       
   
-     
-  });
+
+});
+ 
+ 
 });
     that.storage.get('userDetails').then((val)=>{
       that.userDetails = val; 

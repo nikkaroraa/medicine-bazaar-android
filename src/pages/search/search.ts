@@ -53,7 +53,8 @@ this.offset=0;
 var that = this;
   this.zone = new NgZone({});
 console.log("Typed value is: " + this.searchQuery + "Offset Value is: " + this.offset);
-if (this.searchQuery.trim() !== '' && this.searchQuery.trim().length > 1) {
+//trim function removes the spaces that exist in the searchQuery
+if (this.searchQuery.trim() !== '' && this.searchQuery.trim().length > 2) {
       this.fetchProducts.searchProducts(this.searchQuery).subscribe(products => {
         
 

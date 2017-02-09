@@ -13,16 +13,20 @@ export class AuthData {
     this.userProfile = firebase.database().ref('/userProfile');
   }
 
+  initiate(){
+     this.fireAuth = firebase.auth(); // We are creating an auth reference.
+    // This declares a database reference for the userProfile/ node.
+    this.userProfile = firebase.database().ref('/userProfile');
+  }
   /**
    * [loginUser We'll take an email and password and log the user into the firebase app]
    * @param  {string} email    [User's email address]
    * @param  {string} password [User's password]
    */
+   //Copy pasted constructor into every function
   loginUser(email: string, password: string): any {
-    this.fireAuth = firebase.auth(); // We are creating an auth reference.
-    // This declares a database reference for the userProfile/ node.
-    this.userProfile = firebase.database().ref('/userProfile');
-    return this.fireAuth.signInWithEmailAndPassword(email, password);
+   //this.initiate();
+    return firebase.auth().signInWithEmailAndPassword(email, password);
   }
 
   /**
@@ -34,10 +38,9 @@ export class AuthData {
    * @param  {string} password [User's password]
    */
   signupUser(email: string, password: string): any {
-     this.fireAuth = firebase.auth(); // We are creating an auth reference.
-    // This declares a database reference for the userProfile/ node.
-    this.userProfile = firebase.database().ref('/userProfile');
-    return this.fireAuth.createUserWithEmailAndPassword(email, password).then((newUser) => {
+       // this.initiate();
+
+    return firebase.auth().createUserWithEmailAndPassword(email, password).then((newUser) => {
       this.userProfile.child(newUser.uid).set({
           email: email
       });
@@ -52,20 +55,18 @@ export class AuthData {
    * @param  {string} email    [User's email address]
    */
   resetPassword(email: string): any {
-     this.fireAuth = firebase.auth(); // We are creating an auth reference.
-    // This declares a database reference for the userProfile/ node.
-    this.userProfile = firebase.database().ref('/userProfile');
-    return this.fireAuth.sendPasswordResetEmail(email);
+       // this.initiate();
+
+    return firebase.auth().sendPasswordResetEmail(email);
   }
 
   /**
    * This function doesn't take any params, it just logs the current user out of the app.
    */
   logoutUser(): any {
-     this.fireAuth = firebase.auth(); // We are creating an auth reference.
-    // This declares a database reference for the userProfile/ node.
-    this.userProfile = firebase.database().ref('/userProfile');
-    return this.fireAuth.signOut();
+        //this.initiate();
+
+    return firebase.auth().signOut();
   }
 
 }

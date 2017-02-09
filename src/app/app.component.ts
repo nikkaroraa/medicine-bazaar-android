@@ -93,21 +93,20 @@ firebase.auth().onAuthStateChanged((user) => {
       
       {title: 'Cart', component: CartPage},
       
-      
-      {title: 'Account', component: AccountPage},
-      
-    ];
-
-    this.account = [
-
-
-      
-      {title: 'My Account', component: MyAccountPage},
       {title: 'Login Test', component: LoginTestPage},
-      {title: 'Checkout', component: AddressPage}
+      {title: 'Checkout', component: AddressPage},
+      {title: 'Account', component: MyAccountPage}
 
-    ];
+     
       
+    ];
+
+   /* this.account = [
+
+
+        {title: 'Account', component: AccountPage}      
+    ];
+     */ 
   }
 
 
@@ -118,6 +117,17 @@ firebase.auth().onAuthStateChanged((user) => {
     // navigate to the new page if it is not the current page
     //this.nav.setRoot(page.component);
       this.nav.push(page.component);
+  }
+  openAccount() {
+    // close the menu when clicking a link from the menu
+    this.menu.close();
+    // navigate to the new page if it is not the current page
+    //this.nav.setRoot(page.component);
+    if(this.loggedIn){
+      this.nav.push(MyAccountPage);
+    }else{
+      this.nav.push(AccountPage);
+    }
   }
   tick() {
     this.changeDetectorRefs

@@ -9,7 +9,6 @@ import { Facebook } from 'ionic-native';
 import firebase from 'firebase';
 import { Storage } from '@ionic/storage';
 import {AddressPage} from '../address/address';
-import {HomePage} from '../home/home';
 /*
   Generated class for the Account page.
 
@@ -35,36 +34,8 @@ export class AccountPage {
   public userFBUID: any;
   public userProfiling: any;
   zone: NgZone;
-  nZone: NgZone;
-  currentUser: any;
-  userUID: any;
-  userBilling: any;
-  customerDescription: any;
   constructor(public nav: NavController, public authData: AuthData, public formBuilder: FormBuilder,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, public storage: Storage) {
-       
-        this.storage.get('userDetails').then((val)=>{
-           if(val){
-
-             this.loading = this.loadingCtrl.create({
-           
-      
-              content: 'You are already logged in'
-            });
-
-            this.loading.present();
-
-            setTimeout(() => {
-             this.nav.setRoot(HomePage);
-            }, 1000);
-
-            setTimeout(() => {
-              this.loading.dismiss();
-            }, 2000);
-           }
-             
-        });
-
         this.signupForm = formBuilder.group({
               email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
               password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
@@ -142,14 +113,16 @@ export class AccountPage {
     if (!this.loginForm.valid){
       console.log(this.loginForm.value);
     } else {
+      
       this.authData.loginUser(this.loginForm.value.email, this.loginForm.value.password).then( authData => {
-        //this.nav.setRoot(HomePage);
+        
         this.userDetails = {email: this.loginForm.value.email, password:this.loginForm.value.password};
           this.storage.set('userDetails',this.userDetails);
           console.log("this.userDetails", this.userDetails);
 
         this.successLogin();
       }, error => {
+        console.log("ERROR: ", error);
         this.failureLogin();
       });
 
@@ -159,29 +132,8 @@ export class AccountPage {
 
   successLogin(){
 
-    this.nZone = new NgZone({});
-  this.currentUser = firebase.auth().currentUser;
-  this.userUID = this.currentUser.uid;
-  var that = this;
-    this.userProfile = firebase.database().ref('userProfile/' + this.userUID);
-    this.userProfile.on('value', function(snapshot) {
-      that.nZone.run( () => {
-        if(snapshot.val().billing && snapshot.val().shipping && snapshot.val().customerDescription){
-          that.userDetails = snapshot.val();
-          console.log("this.userDetails", that.userDetails);
-          that.userBilling = that.userDetails.billing;
-          console.log("userBilling Login:", that.userBilling);
-          that.customerDescription = that.userDetails.customerDescription;
-          
-          console.log("customerDescription Login:", that.customerDescription);
-          that.storage.set('customerContact', that.userBilling.phone);
-          that.storage.set('customerEmail', that.customerDescription.email);
-        }
-      });
-});
-     
     this.loading = this.loadingCtrl.create({
-     
+      spinner: 'hide',
       content: 'Login Successfull! Please Wait...'
     });
 
@@ -270,7 +222,7 @@ export class AccountPage {
         
 
           console.log("Firebase success: " + JSON.stringify(success));
-
+          alert("Success: "+ success);
         this.userProfile = success;
          this.userFB = firebase.auth().currentUser;
           this.userFBUID = this.userFB.uid;
@@ -298,7 +250,9 @@ export class AccountPage {
           
     })
     .catch((error) => {
+      alert("error: "+ error);
     console.log("Firebase failure: " + JSON.stringify(error));
+
   });
 
     }).catch((error) => { console.log(error) });
