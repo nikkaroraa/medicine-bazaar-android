@@ -44,6 +44,7 @@ submitAttempt: boolean = false;
 billing: any;
 shipping: any;
  count: number = 0;
+ customerContact: any = {};
   constructor(public formBuilder:FormBuilder,public navCtrl: NavController, public navParams: NavParams, public storage: Storage,
   public alertCtrl:AlertController, public fetchProducts: FetchProducts, public sendSms:SendSms, public loadingCtrl: LoadingController) 
   {
@@ -118,6 +119,7 @@ shipping: any;
         console.log("Snapshot",snapshot.val());
 
         if(snapshot.val().fbLogin){
+          // alert("Security check");
           that.emailVerified = true;
         }else{
           that.emailVerified = that.user.emailVerified;
@@ -154,9 +156,9 @@ shipping: any;
     console.log("Email is not verified yet!");
     
   }else{
-    that.storage.set('emailVerified', true);
+  //  that.storage.set('emailVerified', true);
     //set Email Verified to true;
-   console.log("Email verified storage set to true");
+   //console.log("Email verified storage set to true");
  }
         }
           
@@ -320,8 +322,8 @@ console.log("newUser: ", this.signUpForm);
         console.log(this.customerData);
         this.storage.set('customerID', this.customerData.id);
          //customerId set here
-          this.storage.set('customerContact',this.customerData.billing.phone);
-          this.storage.set('customerEmail', this.userDetails.email);
+         this.customerContact = {customerContact: this.customerData.billing.phone, customerEmail: this.userDetails.email};
+          this.storage.set('customerContact',this.customerContact);
        this.saveToFirebase();
         this.createUserSuccessfull();
       },

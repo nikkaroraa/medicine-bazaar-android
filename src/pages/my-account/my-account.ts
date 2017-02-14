@@ -37,7 +37,10 @@ loading: any;
       this.authData.logoutUser().then((success)=>{
       //this.storage.remove('userDetails');
       this.storage.remove('userDetails');
+      this.storage.remove('customerContact');
+      this.storage.remove('emailVerified');
       this.successLogout();
+
       
     }, (error)=>{
       console.log('Error:', error);

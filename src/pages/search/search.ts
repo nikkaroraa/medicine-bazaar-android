@@ -55,8 +55,9 @@ var that = this;
 console.log("Typed value is: " + this.searchQuery + "Offset Value is: " + this.offset);
 //trim function removes the spaces that exist in the searchQuery
 if (this.searchQuery.trim() !== '' && this.searchQuery.trim().length > 2) {
+      
       this.fetchProducts.searchProducts(this.searchQuery).subscribe(products => {
-        
+        that.zone.run( () => {  
 
           if(products.length){
 
@@ -66,7 +67,7 @@ if (this.searchQuery.trim() !== '' && this.searchQuery.trim().length > 2) {
             console.log("There isn't any listed with this name. Try with a different search.");
           }
         
-        
+        });
         
       });
     }if (this.searchQuery.trim() !== '' || this.searchQuery.trim().length > 3) {

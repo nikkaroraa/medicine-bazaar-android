@@ -56,8 +56,9 @@ navSearch(){
 }
 openMenu() {
        //check  if user exist
-     this.storage.get('customerEmail').then((value)=>{
-       console.log("Mobile:", value);
+     this.storage.get('customerContact').then((value)=>{
+       console.log("customerContact: ", value);
+
         if(!value){
             let toast = this.toastCtrl.create({
         message: 'You need to login first OR Fill up the details!',
@@ -73,11 +74,11 @@ openMenu() {
       toast.present(toast);
         }
         else{
-          this.CustomerEmail=value;
-          this.storage.get('customerContact').then((val)=>{
-              if(val){
+          this.CustomerEmail=value.customerEmail;
+          this.CustomerContact = value.customerContact;
+          
 
-                this.CustomerContact = val;
+                
                  let actionSheet = this.actionsheetCtrl.create({
       title: 'Choose an option to upload',
       cssClass: 'action-sheets-basic-page',
@@ -136,8 +137,8 @@ openMenu() {
       ]
     });
     actionSheet.present();   
-              }
-            });
+              
+            
            
         }
       });

@@ -95,18 +95,13 @@ firebase.auth().onAuthStateChanged((user) => {
       
       {title: 'Login Test', component: LoginTestPage},
       {title: 'Checkout', component: AddressPage},
-      {title: 'Account', component: MyAccountPage}
+     
 
      
       
     ];
 
-   /* this.account = [
-
-
-        {title: 'Account', component: AccountPage}      
-    ];
-     */ 
+   
   }
 
 

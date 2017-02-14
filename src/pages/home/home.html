@@ -24,15 +24,15 @@
 
 <ion-content padding>
 
-<ion-img src="http://loremflickr.com/400/300/medicine"></ion-img>
+<ion-img src="http://loremflickr.com/400/200/medicine"></ion-img>
 
-<button ion-button block round  icon-right  color="primary" (click)="openMenu()">
+<button ion-button block icon-right  color="primary" (click)="openMenu()">
     Upload Prescription &nbsp;<ion-icon style="font-size:2em;" name="md-clipboard" color="blank"></ion-icon>
 </button>
 
 <div text-center>OR</div>
 
-<button ion-button block round  icon-right color="primary" (click)="navSearch()">Search &nbsp;<ion-icon style="font-size:2em;" name="md-search" color="blank"></ion-icon></button>
+<button ion-button block  icon-right color="primary" (click)="navSearch()">Search &nbsp;<ion-icon style="font-size:2em;" name="md-search" color="blank"></ion-icon></button>
 <ion-card *ngIf="base64Image">
   <ion-card-header>
     Captured (for Testing)
