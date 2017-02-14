@@ -119,8 +119,8 @@ shipping: any;
         console.log("Snapshot",snapshot.val());
 
         if(snapshot.val().fbLogin){
-          // alert("Security check");
           that.emailVerified = true;
+          
         }else{
           that.emailVerified = that.user.emailVerified;
           console.log("Email verified", that.emailVerified);
