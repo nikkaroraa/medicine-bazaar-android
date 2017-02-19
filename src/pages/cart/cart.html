@@ -19,6 +19,7 @@
   <ion-card-header>
 
     {{item.name}}
+     
   </ion-card-header>
 
 
@@ -26,18 +27,26 @@
 
       
 <div>
-<span class="heading">Description:</span><div style="" [innerHTML]="item.description"></div>
+<span class="heading">Description:</span><div style="display:inline;" [innerHTML]="item.description"></div>
       </div> 
 
 
-<div><button ion-button icon-only clear (click)="decreaseCount(item)"><ion-icon md="md-remove-circle"></ion-icon></button>
-     {{item.count}}  <button ion-button icon-only clear (click)="increaseCount(item)"><ion-icon md="md-add-circle"></ion-icon></button>
-      </div>
+
       <div><span class="heading">Individual Price:</span> <span class="value">&#x20b9; {{item.price}}</span></div>
       <!--<div><span class="heading">Total Price:</span> <span class="value">&#x20b9; {{item.price*item.count}}</span></div>-->
 
 <div>&nbsp;</div>
- <button ion-button icon-only clear (click)="deleteItem(item)"><ion-icon md="md-trash"></ion-icon></button>
+ 
+  <div>
+  <button ion-button icon-only clear (click)="decreaseCount(item)"><ion-icon style="font-size:2em;" md="md-remove-circle" color="secondary" ></ion-icon></button>
+     <span style="font-size:2em;">{{item.count}}</span>  <button ion-button icon-only clear (click)="increaseCount(item)"><ion-icon color="secondary" style="font-size:2em;" md="md-add-circle"></ion-icon></button>
+   <ion-buttons end style="display:inline;">
+     <button ion-button icon-only clear (click)="deleteItem(item)" end>
+  <ion-icon md="md-trash" color="danger" style="font-size:1.5em;"></ion-icon>
+  
+    </button>
+    </ion-buttons>
+      </div>
   </ion-card-content>
 </ion-card>
 <ion-card>

@@ -2,16 +2,18 @@
 
   <ion-header>
     <ion-toolbar>
-      <ion-title>
-      <span color="blank">Menu</span></ion-title>
+      <ion-title text-center>
+        <span color="blank">Menu</span>
+      </ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-content padding-vertical>
-    <img src="assets/images/user.png"/>     
-
+  <div text-center>
+    <img src="assets/images/medical_treatment.png"/>     
+  </div>  
     <ion-list>
-     <ion-item-divider>
+     <ion-item-divider text-center>
         Products
      </ion-item-divider> 
       <button ion-item *ngFor="let p of pages" (click)="openPage(p)">
@@ -20,10 +22,10 @@
     
       
       
-      <ion-item-divider>
+      <ion-item-divider text-center>
         Your Account
-     </ion-item-divider>
-    <button ion-item (click)="openAccount()">
+      </ion-item-divider>
+      <button ion-item (click)="openAccount()">
         Account
       </button>
       
