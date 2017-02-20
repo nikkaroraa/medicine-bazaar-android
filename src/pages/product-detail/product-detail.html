@@ -28,43 +28,48 @@
 
 <ion-card *ngFor="let product of s_products"> <!-- Because the object comes up inside an array-->
 
-  <ion-card-header>
+  <ion-card-header text-center>
 
     {{product.name}}
   </ion-card-header>
 
 
-  <ion-card-content>
-      <span class="heading">Description:</span><div style="" [innerHTML]="product.description"></div>
+  <ion-card-content text-center>
+      <div style="" [innerHTML]="product.description"></div>
       
 
-      <span class="heading">Price:</span> <span class="value">&#x20b9; {{product.price}}</span>
+      <span class="value">&#x20b9; {{product.price}}</span>
 <div>&nbsp;</div>
 <div>
-    <button ion-button icon-only clear (click)="decreaseCount(product)"><ion-icon md="md-remove-circle"></ion-icon></button>
-         {{product.count}}  
-    <button ion-button icon-only clear (click)="increaseCount(product)"><ion-icon md="md-add-circle"></ion-icon></button>
+    <button ion-button icon-only clear (click)="decreaseCount(product)"><ion-icon style="font-size:2em;" md="md-remove-circle" color="secondary"></ion-icon></button>
+        <span style="font-size:2em;"> {{product.count}}  </span>
+    <button ion-button icon-only clear (click)="increaseCount(product)"><ion-icon style="font-size:2em;" md="md-add-circle" color="secondary"style="font-size:2em;" ></ion-icon></button>
 </div>
 <button text-center ion-button round outline block color="danger" (click)="showToast('bottom',product)">Add to Cart</button>
   </ion-card-content>
 </ion-card>
 
-<ion-card *ngFor="let substitute of substitutes">
+<ion-card >
 
-  <ion-card-header>
+  <ion-card-header text-center>
 
-    Check out the Substitutes
+    Check out the Substitutes too
   </ion-card-header>
 
 
-  <ion-card-content>
-      <span class="heading">Name:</span> <span class="value"> {{substitute.name}}</span>
+  <ion-card-content text-center *ngFor="let substitute of substitutes">
+       <span class="value"> {{substitute.name}}</span>
 
-      <span class="heading">Description:</span><div style="" [innerHTML]="substitute.description"></div>
+      <div style="" [innerHTML]="substitute.description"></div>
       
 
-      <span class="heading">Price:</span> <span class="value">&#x20b9; {{substitute.price}}</span>
+      <span class="value">&#x20b9; <span class="number">{{substitute.price}}</span></span>
 <div>&nbsp;</div>
+<div>
+    <button ion-button icon-only clear (click)="decreaseCount(substitute)"><ion-icon style="font-size:2em;" md="md-remove-circle" color="secondary"></ion-icon></button>
+       <span style="font-size:2em;">  {{substitute.count}} </span>  
+    <button ion-button icon-only clear (click)="increaseCount(substitute)"><ion-icon style="font-size:2em;" md="md-add-circle" color="secondary"style="font-size:2em;" ></ion-icon></button>
+</div>
 <button text-center ion-button round outline block color="danger" (click)="showToast('bottom', substitute)">Add to Cart</button>
   </ion-card-content>
 </ion-card>

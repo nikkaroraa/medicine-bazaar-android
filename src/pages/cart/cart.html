@@ -16,7 +16,7 @@
 <ion-content padding>
 <ion-card *ngFor="let item of cartItems"> <!-- Because the object comes up inside an array-->
 
-  <ion-card-header>
+  <ion-card-header text-center>
 
     {{item.name}}
      
@@ -26,38 +26,53 @@
   <ion-card-content>
 
       
-<div>
-<span class="heading">Description:</span><div style="display:inline;" [innerHTML]="item.description"></div>
-      </div> 
+<div text-center>
+  # <div style="display: inline-block;" class="number" [innerHTML]="item.description"></div>
+  </div>
+  <div text-center>      
+    <span class="value" style="">&#x20b9; <span class="number">{{item.price}}</span></span>
+  </div>      
+     
 
 
 
-      <div><span class="heading">Individual Price:</span> <span class="value">&#x20b9; {{item.price}}</span></div>
+    
       <!--<div><span class="heading">Total Price:</span> <span class="value">&#x20b9; {{item.price*item.count}}</span></div>-->
 
 <div>&nbsp;</div>
  
   <div>
-  <button ion-button icon-only clear (click)="decreaseCount(item)"><ion-icon style="font-size:2em;" md="md-remove-circle" color="secondary" ></ion-icon></button>
-     <span style="font-size:2em;">{{item.count}}</span>  <button ion-button icon-only clear (click)="increaseCount(item)"><ion-icon color="secondary" style="font-size:2em;" md="md-add-circle"></ion-icon></button>
+  <ion-row>
+  <ion-col width-80>
+  <button ion-button icon-only clear (click)="decreaseCount(item)">
+    <ion-icon style="font-size:2em;" md="md-remove-circle" color="secondary" ></ion-icon>
+  </button>
+  <span style="font-size:2em;">{{item.count}}</span>  
+  <button ion-button icon-only clear (click)="increaseCount(item)">
+    <ion-icon color="secondary" style="font-size:2em;" md="md-add-circle"></ion-icon>
+  </button>
+  </ion-col>
+  
+  <ion-col width-20>
+
    <ion-buttons end style="display:inline;">
      <button ion-button icon-only clear (click)="deleteItem(item)" end>
-  <ion-icon md="md-trash" color="danger" style="font-size:1.5em;"></ion-icon>
-  
-    </button>
-    </ion-buttons>
-      </div>
+        <ion-icon md="md-trash" color="danger" style="font-size:1.5em;"></ion-icon>
+     </button>
+   </ion-buttons>
+  </ion-col>
+  </ion-row>
+  </div>
   </ion-card-content>
 </ion-card>
 <ion-card>
-    <ion-card-header>
+    <ion-card-header text-center>
     
 
-Total Price
+Total Price:  
+<span class="number">&#x20b9;{{costSumString}}</span>
 </ion-card-header>
 <ion-card-content>
-<div> <span class="value">&#x20b9; {{costSumString}}</span></div>
-<div>&nbsp;</div>
  <button ion-button block color="danger" (click)="goToCheckOut()">Checkout</button> 
 </ion-card-content>
 
