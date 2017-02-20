@@ -41,9 +41,7 @@
       <span class="value">&#x20b9; {{product.price}}</span>
 <div>&nbsp;</div>
 <div>
-    <button ion-button icon-only clear (click)="decreaseCount(product)"><ion-icon style="font-size:2em;" md="md-remove-circle" color="secondary"></ion-icon></button>
-        <span style="font-size:2em;"> {{product.count}}  </span>
-    <button ion-button icon-only clear (click)="increaseCount(product)"><ion-icon style="font-size:2em;" md="md-add-circle" color="secondary"style="font-size:2em;" ></ion-icon></button>
+    <button ion-button icon-only clear (click)="decreaseCount(product)"><ion-icon style="font-size:2em;" md="md-remove-circle" color="secondary"></ion-icon></button><span style="font-size:2em;">{{product.count}}</span><button ion-button icon-only clear (click)="increaseCount(product)"><ion-icon style="font-size:2em;" md="md-add-circle" color="secondary" style="font-size:2em;" ></ion-icon></button>
 </div>
 <button text-center ion-button round outline block color="danger" (click)="showToast('bottom',product)">Add to Cart</button>
   </ion-card-content>
@@ -66,9 +64,7 @@
       <span class="value">&#x20b9; <span class="number">{{substitute.price}}</span></span>
 <div>&nbsp;</div>
 <div>
-    <button ion-button icon-only clear (click)="decreaseCount(substitute)"><ion-icon style="font-size:2em;" md="md-remove-circle" color="secondary"></ion-icon></button>
-       <span style="font-size:2em;">  {{substitute.count}} </span>  
-    <button ion-button icon-only clear (click)="increaseCount(substitute)"><ion-icon style="font-size:2em;" md="md-add-circle" color="secondary"style="font-size:2em;" ></ion-icon></button>
+    <button ion-button icon-only clear (click)="decreaseCount(substitute)"><ion-icon style="font-size:2em;" md="md-remove-circle" color="secondary"></ion-icon></button><span style="font-size:2em;">{{substitute.count}}</span><button ion-button icon-only clear (click)="increaseCount(substitute)"><ion-icon style="font-size:2em;" md="md-add-circle" color="secondary" style="font-size:2em;" ></ion-icon></button>
 </div>
 <button text-center ion-button round outline block color="danger" (click)="showToast('bottom', substitute)">Add to Cart</button>
   </ion-card-content>

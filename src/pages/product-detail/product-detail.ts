@@ -118,6 +118,52 @@ export class ProductDetailPage {
                 console.log("Value of "+ j + data);
                 this.substitutes.push(data);
                 console.log(this.substitutes);
+
+                this.storage.get('cartProducts').then((val)=> {
+
+              if(val){
+
+               var that = this;
+               console.log('Inside the showToast: ', val);
+               this.cartProducts = [];
+
+               for(var i = 0; i < val.length ; i++){
+                    this.cartProducts.push(val[i]);
+               }
+               this.cartProducts.forEach(function (item, index){
+                console.log("This is forEach", item);
+
+                for(var q=0; q<that.substitutes.length; q++){
+
+                   if(item.id == that.substitutes[q].id){
+                   console.log(item.id + "==" + that.substitutes[q].id);
+                   that.substitutes[q].count  = item.count;
+                   console.log("Count changed");
+                   
+               }
+                } 
+              
+               
+
+               });
+              }
+              
+            
+
+        
+           
+
+        });
+                for(var q=0; q<this.substitutes.length; q++){
+                  if(!this.substitutes[q].count){
+      console.log("Count is 0");
+      this.substitutes[q].count = 0;
+      console.log("After", this.substitutes[q]);
+    }else{
+
+    }
+                }
+                
             });
     }
   }
