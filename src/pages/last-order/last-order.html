@@ -11,7 +11,7 @@
   </ion-navbar>
 
 </ion-header>
-
+ 
 
 <ion-content padding>
 <ion-card>
@@ -23,27 +23,33 @@
    <h3 text-center>Products</h3>
     <p></p>
     <ion-list *ngFor="let order of orderDetails.line_items">
-		<ion-item>
-			Name: {{order.name}}
+		<ion-item text-center>
+			<span style="font-size:1.2em">{{order.name}}</span>
 		</ion-item>    	
-		<ion-item>
-			Individual Price: &#8377;{{order.price}}
+		<ion-item text-center>
+			Unit Cost: &#8377;<span style="font-size:1.5em;">{{order.price}}</span>
 		</ion-item>
-		<ion-item>
-			Quantity: #{{order.quantity}}
+		<ion-item text-center>
+			Quantity: #<span style="font-size:1.5em;">{{order.quantity}}</span>
 		</ion-item>
-		<ion-item>
-			SubTotal: &#8377;{{order.subtotal}}
+		<ion-item text-center>
+			Sub-total: &#8377;<span style="font-size:1.5em;">{{order.subtotal}}</span>
 		</ion-item>
     </ion-list>
-    	Total: &#8377;{{orderDetails.total}}
-
-    	<h4>Shipped To:</h4>
-    	<p>{{orderShipping.first_name}}</p>
-    	<p>{{orderShipping.last_name}}</p>
-    	<p>{{orderShipping.address_1}}</p>
-    	<p>{{orderShipping.address_2}}</p>
-    	<p>{{orderShipping.postcode}}</p>
+    	Total: <span style="font-size:1.5em;">&#8377;{{orderDetails.total}}</span>
+</ion-card-content>
+</ion-card>
+<ion-card>
+<ion-card-header text-center>
+   Shipping Details
+  </ion-card-header>
+  <ion-card-content text-center>
+    	
+    	<p style="font-size:1.2em;">{{orderShipping.first_name}} {{orderShipping.last_name}}</p>
+    	
+    	<p style="font-size:1.2em;">{{orderShipping.address_1}}</p>
+    	<p style="font-size:1.2em;">{{orderShipping.address_2}}</p>
+    	<p style="font-size:1.2em;">{{orderShipping.postcode}}</p>
     	
   </ion-card-content>
 
