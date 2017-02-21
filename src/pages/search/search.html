@@ -18,7 +18,7 @@
 
 
 <ion-content padding>
-<ion-searchbar (ionInput)="search($event)"></ion-searchbar>
+<ion-searchbar (ionInput)="search($event)" ></ion-searchbar>
 <ion-list [virtualScroll]="products" approxItemHeight="50px;">
   <ion-item *virtualItem="let product" (click)="itemTapped($event, product)">
     {{ product.name }}
