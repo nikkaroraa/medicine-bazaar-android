@@ -24,6 +24,7 @@ export class ProductDetailPage {
     public cartInitialised: any = false;
     public countIncreased = false;
     public productCount:any = 0;
+    substitutesExist: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct,public toastCtrl: ToastController,public storage: Storage) {
       
 
@@ -117,6 +118,10 @@ export class ProductDetailPage {
     
                 console.log("Value of "+ j + data);
                 this.substitutes.push(data);
+
+                if(data){
+                  this.substitutesExist  = true;
+                }
                 console.log(this.substitutes);
 
                 this.storage.get('cartProducts').then((val)=> {

@@ -21,7 +21,9 @@
 <ion-content padding>
   <div [ngSwitch]="Account">
     <div *ngSwitchCase="'login'">
-     <img src="http://placehold.it/300x100">
+     <div text-center>
+    <img src="assets/images/login.png"/>     
+  </div>  
 
   <form [formGroup]="loginForm" (submit)="loginUser()" novalidate>
 
@@ -65,7 +67,10 @@
     
 </div>
     <div *ngSwitchCase="'signUp'">
-     <img src="http://placehold.it/300x100">
+<div text-center>
+    <img src="assets/images/signup.png"/>     
+  </div>  
+
   <form [formGroup]="signupForm" (submit)="signupUser()" novalidate>
 
     <ion-item>

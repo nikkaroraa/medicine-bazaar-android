@@ -148,7 +148,7 @@ export class AccountPage {
         that.customerContact = {customerContact: that.userBilling.phone, customerEmail: that.userBilling.email};
           that.storage.set('customerContact',that.customerContact);
           console.log('Customer Contact: ', that.customerContact);
-        }else{
+        }else{   
           //User has not been created in the WooCommerce and hence no contact details.
            let toast = this.toastCtrl.create({
         message: 'You need to fill up the details!',
@@ -177,8 +177,8 @@ export class AccountPage {
   successLogin(){
 
     this.loading = this.loadingCtrl.create({
-      spinner: 'hide',
-      content: 'Login Successfull! Please Wait...'
+      
+      content: 'Logging in...'
     });
 
     this.loading.present();

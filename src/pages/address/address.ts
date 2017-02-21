@@ -392,6 +392,6 @@ console.log("newUser: ", this.signUpForm);
         console.log("Successfully stored inside the Firebase");
     }
     cancel(){
-      this.navCtrl.setRoot(HomePage);
+      this.navCtrl.popToRoot();
     }
 }

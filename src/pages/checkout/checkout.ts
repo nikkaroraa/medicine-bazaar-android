@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage';
 import {LastOrderPage} from '../last-order/last-order';
 import {AddressPage} from '../address/address';
 import {HomePage} from '../home/home';
+import { App } from 'ionic-angular';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -37,7 +38,7 @@ public productsArray: Array<any> = [];
     orderDataID: any;
     emailVerified: boolean = false;
  constructor(public formBuilder:FormBuilder,public navCtrl:NavController,public nav:NavParams,public fetchProducts:FetchProducts, public storage:Storage,
-   public loadingCtrl: LoadingController, public toastCtrl: ToastController) 
+   public loadingCtrl: LoadingController, public toastCtrl: ToastController, private app: App) 
     {
       this.orderForm=this.formBuilder.group({
           sFirstName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
@@ -78,7 +79,7 @@ public productsArray: Array<any> = [];
           that.loading = that.loadingCtrl.create({
       spinner: 'hide',
     
-      content: 'You need to fill up the address at first!'
+      content: 'Add your address...'
       
     });
     
@@ -174,7 +175,7 @@ this.storage.get('cartProducts').then((val)=> {
     });
   }else{
      let toast = this.toastCtrl.create({
-        message: 'There are no products in the cart!',
+        message: 'Cart is empty',
         duration: 3000,
         position: 'bottom'
        });
@@ -248,7 +249,7 @@ console.log("newUser: ", this.orderForm);
     });
   }else{
     let toast = this.toastCtrl.create({
-        message: 'There are no products in the cart!',
+        message: 'Cart is empty',
         duration: 3000,
         position: 'bottom'
        });
@@ -268,7 +269,7 @@ console.log("newUser: ", this.orderForm);
 
     this.loading = this.loadingCtrl.create({
       
-      content: 'Congratulations!!! Your order has been placed with Medicine Bazaar'
+      content: 'Your order is being placed'
     });
 
     this.loading.present();
@@ -286,6 +287,9 @@ console.log("newUser: ", this.orderForm);
   }
 
   cancel(){
-    this.navCtrl.setRoot(HomePage);
+   
+     this.navCtrl.popToRoot();
+    
   }
+
 }

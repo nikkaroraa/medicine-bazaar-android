@@ -19,7 +19,7 @@ import { ProductDetailPage} from '../product-detail/product-detail';
     providers: [ FetchProducts , SearchProduct ]
 })
 export class SearchPage {
-zone: NgZone;
+public newZone: NgZone;
    public products: Array<any> = [];
 public s_products: any;
 public searchQuery: any = '';
@@ -30,11 +30,10 @@ public start: number =1;
 public offset: any = 0;
 public canLoadMore : any = true;
 
+
   constructor(public http: Http, public fetchProducts: FetchProducts, public searchProduct : SearchProduct, public navCtrl: NavController, public navParams: NavParams) {
-      
-   // this.loadProducts();
- // this.searchProducts();
-//this.initializeItems(); //for hiding the products at the time of page loading
+  this.newZone = new NgZone({});    
+   
   }
 
  itemTapped(event, product) {
@@ -46,23 +45,23 @@ console.log("itemTapped:" + product);
 search(searchEvent) {
     this.searchQuery = searchEvent.target.value;
     // We will only perform the search if we have 3 or more characters
-   // if (term.trim() === '' || term.trim().length < 3) {
+   
       
-      // Get the searched users from github
-this.offset=0;
+      
 var that = this;
-  this.zone = new NgZone({});
-console.log("Typed value is: " + this.searchQuery + "Offset Value is: " + this.offset);
+  
+
 //trim function removes the spaces that exist in the searchQuery
 if (this.searchQuery.trim() !== '' && this.searchQuery.trim().length > 2) {
       
       this.fetchProducts.searchProducts(this.searchQuery).subscribe(products => {
-        that.zone.run( () => {  
+        that.newZone.run( () => {  
 
           if(products.length){
 
             that.products=products;
             console.log(that.products);
+                      
           }else{
             console.log("There isn't any listed with this name. Try with a different search.");
           }
@@ -70,12 +69,12 @@ if (this.searchQuery.trim() !== '' && this.searchQuery.trim().length > 2) {
         });
         
       });
-    }if (this.searchQuery.trim() !== '' || this.searchQuery.trim().length > 3) {
-
-  }
+    }
 }
 
  
+
+
 
 
 }
