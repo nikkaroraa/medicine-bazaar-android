@@ -3,7 +3,7 @@ import { NavController, LoadingController, AlertController } from 'ionic-angular
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthData } from '../../providers/auth-data';
 import { EmailValidator } from '../../validators/email';
-import { CheckoutPage } from '../checkout/checkout';
+
 import { ResetPasswordPage } from '../reset-password/reset-password';
 import { Facebook } from 'ionic-native';
 import firebase from 'firebase';

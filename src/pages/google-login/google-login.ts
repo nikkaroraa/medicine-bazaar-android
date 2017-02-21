@@ -8,7 +8,6 @@ import {GooglePlus} from 'ionic-native';
 
 import { CheckoutPage } from '../checkout/checkout';
 import {ListPage} from '../list/list';
-import firebase from 'firebase';
 
 /*
   Generated class for the GoogleLogin page.

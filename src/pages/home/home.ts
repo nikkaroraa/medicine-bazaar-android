@@ -9,7 +9,7 @@ import { NavController} from 'ionic-angular';
 import {SearchPage} from '../search/search'; 
 import { Storage } from '@ionic/storage';   
 import {CartPage} from '../cart/cart';
-import { File,Transfer } from 'ionic-native';  
+import { Transfer } from 'ionic-native';  
 import {AddressPage} from '../address/address';
 /*
   Generated class for the Home page.
@@ -154,7 +154,7 @@ fileTransfer(imageSrc,CustomerEmail, CustomerContact)
   
   */
    let filename = imageSrc.split('/').pop();
-   let namePath = imageSrc.substr(0, imageSrc.indexOf('?'));
+//   let namePath = imageSrc.substr(0, imageSrc.indexOf('?'));
    let newFileName=filename.substr(0,filename.indexOf('?'));
   // alert("filename"+filename);
   // alert("namePath"+namePath);
