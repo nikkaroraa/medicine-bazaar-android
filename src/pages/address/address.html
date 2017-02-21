@@ -85,22 +85,26 @@
      <ion-item class="error-message" *ngIf="!signUpForm.controls.bPhone.valid && (bPhoneChanged || submitAttempt)">
       <p>Enter ten digit mobile number</p>
 </ion-item> 
-    <ion-item>
-    <button text-center ion-button round outline block color="danger" type="button" (click)="genSms()">Send OTP</button> </ion-item>
-     <ion-item>
-     <ion-label floating>OTP</ion-label>
-
-     <ion-input type="text" formControlName="botp" (blur)="verifyOTP()"></ion-input>
-</ion-item>
-     
     
+    <button text-center ion-button round block color="danger" type="button" (click)="genSms()">Send OTP</button> 
+     <ion-item>
+     
+  
+     <ion-label floating>OTP</ion-label>
+ 
+     <ion-input type="text" formControlName="botp"></ion-input>
+</ion-item>   
+   
+      <button ion-button block color="danger" (click)="verifyOTP()">Verify OTP</button> 
+   
+     
    
 
 
-  <button text-center ion-button round outline block color="danger" type="submit">Sign Up</button>
+  <button text-center ion-button round block color="secondary" type="submit">Sign Up</button>
   </form>
   </ion-list>  
-      <button ion-button block round (click)="cancel()">Cancel</button>
+      <button text-center ion-button block round color="danger" (click)="cancel()">Cancel</button>
      
      
      

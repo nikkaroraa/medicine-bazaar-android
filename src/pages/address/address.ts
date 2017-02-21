@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import {FetchProducts} from '../../providers/fetch-products.service';
 import { CheckoutPage } from '../checkout/checkout';
@@ -46,7 +46,8 @@ shipping: any;
  count: number = 0;
  customerContact: any = {};
   constructor(public formBuilder:FormBuilder,public navCtrl: NavController, public navParams: NavParams, public storage: Storage,
-  public alertCtrl:AlertController, public fetchProducts: FetchProducts, public sendSms:SendSms, public loadingCtrl: LoadingController) 
+  public alertCtrl:AlertController, public fetchProducts: FetchProducts, public sendSms:SendSms, public loadingCtrl: LoadingController,
+  public toastCtrl: ToastController) 
   {
     
     this.signUpForm=this.formBuilder.group({
@@ -60,7 +61,7 @@ shipping: any;
           bCountry:['India',],
           bState:['Delhi',],
           bCity:['New Delhi',],
-          botp:['',],
+          botp:['', Validators.required],
           
 }); 
     var that = this;
@@ -211,8 +212,8 @@ genSms()
 //sms sended
  sentSmsAlert()  {
   let alert = this.alertCtrl.create({
-    title: 'OTP Send',
-    subTitle: 'OTP send succesfully!',
+    title: 'OTP Sent',
+    subTitle: 'OTP sent succesfully!',
     buttons: ['Dismiss']
   });
   alert.present();
@@ -268,7 +269,7 @@ genSms()
     },
         () => {
         console.log('Completed');
-        this.phoneVerified=true;
+        this.phoneVerified = true;
         this.presentAlert();
     });
   }
@@ -279,6 +280,8 @@ genSms()
   
 
   signUp(){
+
+if(this.phoneVerified){
 
     this.submitAttempt=true;
       console.log("signUp function");
@@ -333,6 +336,22 @@ console.log("newUser: ", this.signUpForm);
         () => {
         console.log('Completed');
     });
+}else{
+
+  let toast = this.toastCtrl.create({
+        message: 'OTP is not verified yet!',
+        duration: 2000,
+        position: 'bottom'
+       });
+
+      toast.onDidDismiss(() => {
+        console.log('Dismissed toast');
+        
+      });
+
+      toast.present(toast);
+}
+  
 }
 
   
