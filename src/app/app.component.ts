@@ -7,17 +7,15 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { HomePage } from '../pages/home/home';
 import { SearchPage } from '../pages/search/search';
-import { ItemDetailsPage } from '../pages/item-details/item-details';
-import { TestPagePage } from '../pages/test-page/test-page';
-import { CartPage } from '../pages/cart/cart';
-import { ListPage } from '../pages/list/list';
 
-import { FbLoginPage } from '../pages/fb-login/fb-login';
-import { GoogleLoginPage } from '../pages/google-login/google-login';
+import { CartPage } from '../pages/cart/cart';
+
+
+
 
 import { AccountPage } from '../pages/account/account';
 import firebase from 'firebase';
-import { LogoutPage } from '../pages/logout/logout';
+
 import { MyAccountPage } from '../pages/my-account/my-account';
 
 
