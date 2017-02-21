@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import {  TabsPage } from '../tabs/tabs';
+
 import {AddressPage} from '../address/address';
 /*
   Generated class for the Cart page.
@@ -78,11 +78,7 @@ this.cartItems.forEach(function(element, index){
       
   }
  //login or signup page 
- gotologin()
- {
-     console.log("login");
-  this.navCtrl.push(TabsPage);   
- }
+ 
  //go to checkout page
  goToCheckOut()
  {

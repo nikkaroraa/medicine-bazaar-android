@@ -1,7 +1,7 @@
 import { Component,NgZone } from '@angular/core';
 import { NavController, NavParams, LoadingController,ToastController } from 'ionic-angular';
 import {FetchProducts } from '../../providers/fetch-products.service';
-import firebase from 'firebase';
+
 import { Storage } from '@ionic/storage';
 import {LastOrderPage} from '../last-order/last-order';
 import {AddressPage} from '../address/address';
@@ -9,6 +9,7 @@ import {HomePage} from '../home/home';
 import { App } from 'ionic-angular';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import firebase from 'firebase';
 
 @Component({
   selector: 'page-checkout',
