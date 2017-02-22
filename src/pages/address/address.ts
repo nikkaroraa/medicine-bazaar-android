@@ -117,14 +117,50 @@ shipping: any;
     that.userProfilium = firebase.database().ref('userProfile/' + that.userUID);
           that.userProfilium.on('value', function(snapshot) {
      
-        console.log("Snapshot",snapshot.val());
+        if(!snapshot.val()){
+          
+          that.emailVerified = that.user.emailVerified;
 
-        if(snapshot.val().fbLogin){
+          console.log("Email verified", that.emailVerified); 
+
+              if(!that.emailVerified){
+
+      that.loading = that.loadingCtrl.create({
+      
+    
+      content: 'Email not verified. Check your mail...'
+      
+    });
+    
+    that.loading.present();
+
+    setTimeout(() => {
+     
+     that.navCtrl.setRoot(HomePage);
+    }, 1000);
+
+     
+
+    setTimeout(() => {
+      that.loading.dismiss();
+    }, 2000);
+    
+    console.log("Email is not verified yet!");
+    
+  }else{
+  //  that.storage.set('emailVerified', true);
+    //set Email Verified to true;
+   //console.log("Email verified storage set to true");
+ }
+
+        }else{
+
+
+          if(snapshot.val().fbLogin){
           that.emailVerified = true;
           
         }else{
-          that.emailVerified = that.user.emailVerified;
-          console.log("Email verified", that.emailVerified);
+         
         }
 
         if(snapshot.val().billing && snapshot.val().shipping && snapshot.val().customerDescription){
@@ -163,9 +199,13 @@ shipping: any;
  }
         }
           
+        }
+
+        
                   
           
         });
+
          }
 
           
