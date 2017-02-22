@@ -23,7 +23,7 @@ import { OrderDescriptionPage } from '../pages/order-description/order-descripti
 import { LastOrderPage } from '../pages/last-order/last-order';
 import { LoginTestPage } from '../pages/login-test/login-test';
 import { SigninModalPage } from '../pages/signin-modal/signin-modal';
-
+import { OtpVerifyPage } from '../pages/otp-verify/otp-verify';
 import { AddressPage } from '../pages/address/address';
 // Import Providers
 
@@ -62,7 +62,8 @@ export function provideStorage() {
     LoginTestPage,
     SigninModalPage,
     
-    AddressPage
+    AddressPage,
+    OtpVerifyPage
 
   ],
   imports: [
@@ -91,7 +92,8 @@ export function provideStorage() {
     LoginTestPage,
     SigninModalPage,
    
-    AddressPage
+    AddressPage,
+    OtpVerifyPage
       
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, LocalDB, Storage, AuthData]

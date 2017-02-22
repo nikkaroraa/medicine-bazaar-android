@@ -57,7 +57,7 @@ loading: any;
     this.loading.present();
 
     setTimeout(() => {
-     this.navCtrl.setRoot(HomePage);
+     this.navCtrl.popToRoot(HomePage);
     }, 1000);
 
     setTimeout(() => {

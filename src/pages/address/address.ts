@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import {FetchProducts} from '../../providers/fetch-products.service';
 import { CheckoutPage } from '../checkout/checkout';
@@ -8,6 +8,7 @@ import { SendSms } from '../../providers/send-sms';
 import {AlertController,  LoadingController} from 'ionic-angular';
 import { HomePage} from '../home/home';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {OtpVerifyPage} from '../otp-verify/otp-verify';
 /*
   Generated class for the Address page.
 
@@ -47,7 +48,7 @@ shipping: any;
  customerContact: any = {};
   constructor(public formBuilder:FormBuilder,public navCtrl: NavController, public navParams: NavParams, public storage: Storage,
   public alertCtrl:AlertController, public fetchProducts: FetchProducts, public sendSms:SendSms, public loadingCtrl: LoadingController,
-  public toastCtrl: ToastController) 
+  public toastCtrl: ToastController, public modalCtrl: ModalController) 
   {
     
     this.signUpForm=this.formBuilder.group({
@@ -61,8 +62,7 @@ shipping: any;
           bCountry:['India',],
           bState:['Delhi',],
           bCity:['New Delhi',],
-          botp:['', Validators.required],
-          
+         
 }); 
     var that = this;
     
@@ -196,10 +196,15 @@ shipping: any;
 
 genSms()
   {
-    console.log("genSms method..",this.signUpForm.value.bPhone);
+    if(this.signUpForm.valid){
+      console.log('valid......;');
+      console.log("genSms method..",this.signUpForm.value.bPhone);
     this.sendSms.sendSMS(this.signUpForm.value.bPhone).subscribe(data => {
         this.data = data;
         console.log(this.data);
+        this.phoneVerified = true;
+       let otpVerifyModal = this.modalCtrl.create(OtpVerifyPage, { mobile: this.signUpForm.value.bPhone });
+   otpVerifyModal.present();
       },
         err => {
         console.log(err);
@@ -208,7 +213,16 @@ genSms()
         () => {
        this.sentSmsAlert();
     });
+    }else{
+      console.log('not valid......;');
+    }
+    
   }
+ 
+   
+ 
+
+
 //sms sended
  sentSmsAlert()  {
   let alert = this.alertCtrl.create({
@@ -229,7 +243,7 @@ genSms()
   alert.present();
 } 
 
-
+ 
 //successfully alert verify otp
  presentAlert()  {
   let alert = this.alertCtrl.create({
@@ -252,7 +266,7 @@ genSms()
   
 
   //verify sms to user
-
+/*
   verifyOTP()
   {
     this.verify.countryCode="91";
@@ -273,7 +287,7 @@ genSms()
         this.presentAlert();
     });
   }
-
+*/
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddressPage');
   }
@@ -410,7 +424,10 @@ console.log("newUser: ", this.signUpForm);
         billing: this.billing, shipping: this.shipping});
         console.log("Successfully stored inside the Firebase");
     }
+    
+
     cancel(){
       this.navCtrl.popToRoot();
+      console.log("Pop to root");
     }
 }
