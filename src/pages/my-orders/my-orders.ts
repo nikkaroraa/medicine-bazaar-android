@@ -26,6 +26,8 @@ export class MyOrdersPage {
 userDetails: any;
 customerDescription: any;
 customerID: any;
+nZone: NgZone;
+orderExists: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public fetchProducts:FetchProducts){ 
 this.zone = new NgZone({});
    console.log("Call get all orders ...");
@@ -57,20 +59,30 @@ this.zone = new NgZone({});
     // Orders for a particular customer
     
     this.fetchProducts.getAllOrders().subscribe(data => {
-        this.data = data;
-        for(var i=0;i<this.data.length;i++)
-        {
-          if(this.data[i].customer_id == this.customerID)
-          {
-            //this.orderSerial.push(i);
-            this.data[i].dateCreated = this.data[i].date_created.substr(0,10);
-            this.myOrders.push(this.data[i]);
-            console.log(this.data[i]);
+        this.nZone = new NgZone({});
+        var that = this;
+      that.nZone.run( () => {
 
+        console.log(data);
+        that.data = data;
+        for(var i=0;i<that.data.length;i++)
+        {
+          if(that.data[i].customer_id == that.customerID)
+          {
+            //that.orderSerial.push(i);
+            that.data[i].dateCreated = that.data[i].date_created.substr(0,10);
+            that.myOrders.push(that.data[i]);
+            console.log(that.data[i]);
+            this.orderExists = true;
+            
           }
 
         }
-        //console.log(this.data);
+        //console.log(that.data);
+      });
+        
+      
+
       },
         err => {
         console.log(err);

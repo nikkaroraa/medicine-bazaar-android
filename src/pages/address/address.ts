@@ -237,7 +237,7 @@ genSms()
  errorSmsSentAlert()  {
   let alert = this.alertCtrl.create({
     title: 'Error',
-    subTitle: 'Message not Sent',
+    subTitle: 'OTP not sent. Please check your number',
     buttons: ['Dismiss']
   });
   alert.present();
@@ -428,6 +428,6 @@ console.log("newUser: ", this.signUpForm);
 
     cancel(){
       this.navCtrl.popToRoot();
-      console.log("Pop to root");
+      console.log("Pop to root");                                                                                                                                                                                                  
     }
 }
