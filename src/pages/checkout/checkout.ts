@@ -78,7 +78,7 @@ public productsArray: Array<any> = [];
         }
        else {
           that.loading = that.loadingCtrl.create({
-      spinner: 'hide',
+      
     
       content: 'Add your address...'
       
@@ -270,7 +270,7 @@ console.log("newUser: ", this.orderForm);
 
     this.loading = this.loadingCtrl.create({
       
-      content: 'Your order is being placed'
+      content: 'Your order is being placed...'
     });
 
     this.loading.present();

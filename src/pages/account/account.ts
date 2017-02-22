@@ -198,8 +198,8 @@ export class AccountPage {
 
 
    let alert = this.alertCtrl.create({
-      title: 'Login Unsuccessfull!',
-      subTitle: 'Login Unsuccessfull! Please check your username and password.',
+      title: 'Login unsuccessfull!',
+      subTitle: 'Please check your username and password!',
       buttons: ['OK']
     });
     alert.present();
@@ -211,8 +211,8 @@ export class AccountPage {
   successSignUp(){
 
     this.loading = this.loadingCtrl.create({
-      spinner: 'hide',
-      content: 'SignUp Successfull! Please Wait...'
+      
+      content: 'Signing up...'
     });
 
     this.loading.present();
@@ -232,7 +232,7 @@ export class AccountPage {
 
 
    let alert = this.alertCtrl.create({
-      title: 'Sign Up Unsuccessfull!',
+      title: 'Sign up unsuccessfull!',
       subTitle: 'Please try again with different credentials...',
       buttons: ['OK']
     });

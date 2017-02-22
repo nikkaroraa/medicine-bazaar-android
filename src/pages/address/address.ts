@@ -70,9 +70,9 @@ shipping: any;
     if(!firebase.auth().currentUser){
 
       that.loading = that.loadingCtrl.create({
-      spinner: 'hide',
+     
     
-      content: 'You need to login to access this page!'
+      content: 'Not logged in...'
       
     });
     
@@ -137,7 +137,7 @@ shipping: any;
       that.loading = that.loadingCtrl.create({
       
     
-      content: 'You need to verify your E-mail first. Check your inbox!'
+      content: 'Email not verified. Check your mail...'
       
     });
     
@@ -264,30 +264,6 @@ genSms()
   alert.present();
 }
   
-
-  //verify sms to user
-/*
-  verifyOTP()
-  {
-    this.verify.countryCode="91";
-    this.verify.mobileNumber=this.signUpForm.value.bPhone;
-    this.verify.oneTimePassword=this.signUpForm.value.botp;
-    this.sendSms.verifySms(this.verify).subscribe(verifyStatus => {
-        this.verifyStatus = verifyStatus;
-        console.log(this.verifyStatus);
-        
-      },
-        err => {
-        console.log(err);
-        this.errorAlert();
-    },
-        () => {
-        console.log('Completed');
-        this.phoneVerified = true;
-        this.presentAlert();
-    });
-  }
-*/
   ionViewDidLoad() {
     console.log('ionViewDidLoad AddressPage');
   }

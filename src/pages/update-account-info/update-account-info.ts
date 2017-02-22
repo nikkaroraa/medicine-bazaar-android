@@ -60,7 +60,7 @@ export class UpdateAccountInfoPage {
   				   that.loading = that.loadingCtrl.create({
 				      
 				    
-				      content: 'Password Updated Successfully!'
+				      content: 'Password updated successfully!'
 				      
 				    });
 				    

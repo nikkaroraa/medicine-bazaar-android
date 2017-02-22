@@ -22,7 +22,7 @@
 </ion-content>
 
 <ion-content padding *ngIf="orderExists">
-<ion-card *ngFor="let myOrder of myOrders">
+<ion-card padding *ngFor="let myOrder of myOrders">
   <ion-card-content>
   <ion-list>
     <button ion-item (click)="orderSelected(myOrder)">

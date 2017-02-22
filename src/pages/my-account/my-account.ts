@@ -51,7 +51,7 @@ loading: any;
 
     this.loading = this.loadingCtrl.create({
       
-      content: 'Logout Successfull! Please Wait...'
+      content: 'Logging out...'
     });
 
     this.loading.present();

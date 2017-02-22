@@ -70,7 +70,7 @@ this.zone = new NgZone({});
           if(that.data[i].customer_id == that.customerID)
           {
             //that.orderSerial.push(i);
-            that.data[i].dateCreated = that.data[i].date_created.substr(0,10);
+            that.data[i].dateCreated = that.data[i].date_paid.substr(0,10);
             that.myOrders.push(that.data[i]);
             console.log(that.data[i]);
             this.orderExists = true;

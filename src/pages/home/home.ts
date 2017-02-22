@@ -177,7 +177,7 @@ fileTransfer(imageSrc,CustomerEmail, CustomerContact)
       options,true).then((entry) => {
       //  alert(JSON.stringify(entry)); 
         let toast = this.toastCtrl.create({
-        message: 'Upload Successfull!!! You will soon be contacted from our customer representative.',
+        message: 'Upload successfull! You will soon be contacted.',
         duration: 3000,
         position: 'bottom'
        });
@@ -191,7 +191,7 @@ fileTransfer(imageSrc,CustomerEmail, CustomerContact)
 
       }, (err) => {
         let toast = this.toastCtrl.create({
-        message: 'An error was encountered while uploading, please try again! If the problem persists, please write out a review on our playstore space.',
+        message: 'An error occurred! Please try again.',
         duration: 3000,
         position: 'bottom'
        });
@@ -236,7 +236,7 @@ ionViewDidEnter(){
         this.mailResponse = mailResponse;
         console.log(this.mailResponse);
           let toast = this.toastCtrl.create({
-        message: 'Upload Successfull!!! You will soon be contacted from our customer representative.',
+        message: 'Upload successfull! You will soon be contacted.',
         duration: 3000,
         position: 'bottom'
        });
@@ -252,7 +252,7 @@ ionViewDidEnter(){
         err => {
         console.log(err);
          let toast = this.toastCtrl.create({
-        message: 'An error was encountered while uploading, please try again! If the problem persists, please write out a review on our playstore space.',
+        message: 'An error occurred! Please try again.',
         duration: 3000,
         position: 'bottom'
        });
@@ -268,21 +268,5 @@ ionViewDidEnter(){
         console.log('Completed');
     });
   }
-  /*
-  //camera image send
-  galleryImageSend(imageSrc,file_uri)
-  {
-     
-      this.mailSend.mailSending(imageSrc,file_uri).subscribe(mailResponse => {
-        this.mailResponse = mailResponse;
-        console.log(this.mailResponse);
-      },
-        err => {
-        console.log(err);
-    },
-        () => {
-        console.log('Completed');
-    });
-}
-*/
+  
 }
