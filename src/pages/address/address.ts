@@ -8,7 +8,7 @@ import { SendSms } from '../../providers/send-sms';
 import {AlertController,  LoadingController} from 'ionic-angular';
 import { HomePage} from '../home/home';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {OtpVerifyPage} from '../otp-verify/otp-verify';
+
 /*
   Generated class for the Address page.
 
