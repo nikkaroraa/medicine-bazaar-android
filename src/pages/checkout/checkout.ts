@@ -192,7 +192,9 @@ this.storage.get('cartProducts').then((val)=> {
         
       }
       placeOrder(){
-            this.submitAttempt=true;
+        if(this.orderForm.valid){
+
+           this.submitAttempt=true;
       console.log("signUp function");
 console.log("newUser: ", this.orderForm);
 
@@ -263,6 +265,23 @@ console.log("newUser: ", this.orderForm);
       toast.present(toast);
   }
    
+        }else{
+          let toast = this.toastCtrl.create({
+        message: 'Please fill up all the fields!',
+        duration: 2000,
+        position: 'bottom'
+       });
+
+      toast.onDidDismiss(() => {
+        console.log('Dismissed toast');
+        
+      });
+
+      toast.present(toast);
+
+
+        }
+           
 
   }
  

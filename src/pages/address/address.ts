@@ -253,6 +253,19 @@ genSms()
     });
     }else{
       console.log('not valid......;');
+let toast = this.toastCtrl.create({
+        message: 'Please fill up all the fields correctly!',
+        duration: 2000,
+        position: 'bottom'
+       });
+
+      toast.onDidDismiss(() => {
+        console.log('Dismissed toast');
+        
+      });
+
+      toast.present(toast);
+
 
     }
     
@@ -262,14 +275,14 @@ genSms()
   verifyOTP()
   {
     if(this.signUpForm.valid){
-      this.phoneVerified=true;
+      
       this.verify.countryCode="91";
     this.verify.mobileNumber=this.signUpForm.value.bPhone;
     this.verify.oneTimePassword=this.signUpForm.value.botp;
     this.sendSms.verifySms(this.verify).subscribe(verifyStatus => {
         this.verifyStatus = verifyStatus;
         console.log(this.verifyStatus);
-        
+        this.phoneVerified=true;  
       },
         err => {
         console.log(err);
@@ -281,6 +294,22 @@ genSms()
         
         this.presentAlert();
     });
+    }else{
+      console.log('not valid......;');
+let toast = this.toastCtrl.create({
+        message: 'Please fill up all the fields correctly!',
+        duration: 2000,
+        position: 'bottom'
+       });
+
+      toast.onDidDismiss(() => {
+        console.log('Dismissed toast');
+        
+      });
+
+      toast.present(toast);
+
+
     }
     
 }
@@ -334,8 +363,9 @@ genSms()
   
 
   signUp(){
+if(this.signUpForm.valid){
 
-if(this.phoneVerified){
+  if(this.phoneVerified){
 
     this.submitAttempt=true;
       console.log("signUp function");
@@ -407,6 +437,25 @@ console.log("newUser: ", this.signUpForm);
       toast.present(toast);
 }
   
+}else
+
+{
+  let toast = this.toastCtrl.create({
+        message: 'Please fill up all the fields',
+        duration: 2000,
+        position: 'bottom'
+       });
+
+      toast.onDidDismiss(() => {
+        console.log('Dismissed toast');
+        
+      });
+
+      toast.present(toast);
+
+
+}
+
 }
 
   
