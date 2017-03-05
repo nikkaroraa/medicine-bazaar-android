@@ -62,7 +62,7 @@ shipping: any;
           bCountry:['India',],
           bState:['Delhi',],
           bCity:['New Delhi',],
-         
+          botp: ['',]
 }); 
     var that = this;
     
@@ -242,9 +242,7 @@ genSms()
     this.sendSms.sendSMS(this.signUpForm.value.bPhone).subscribe(data => {
         this.data = data;
         console.log(this.data);
-        this.phoneVerified = true;
-       let otpVerifyModal = this.modalCtrl.create(OtpVerifyPage, { mobile: this.signUpForm.value.bPhone });
-   otpVerifyModal.present();
+       
       },
         err => {
         console.log(err);
@@ -255,15 +253,41 @@ genSms()
     });
     }else{
       console.log('not valid......;');
+
     }
     
   }
  
    
+  verifyOTP()
+  {
+    if(this.signUpForm.valid){
+      this.phoneVerified=true;
+      this.verify.countryCode="91";
+    this.verify.mobileNumber=this.signUpForm.value.bPhone;
+    this.verify.oneTimePassword=this.signUpForm.value.botp;
+    this.sendSms.verifySms(this.verify).subscribe(verifyStatus => {
+        this.verifyStatus = verifyStatus;
+        console.log(this.verifyStatus);
+        
+      },
+        err => {
+        console.log(err);
+        this.phoneVerified=false;
+        this.errorAlert();
+    },
+        () => {
+        console.log('Completed');
+        
+        this.presentAlert();
+    });
+    }
+    
+}
  
 
 
-//sms sended
+//sms sent
  sentSmsAlert()  {
   let alert = this.alertCtrl.create({
     title: 'OTP Sent',
@@ -367,6 +391,7 @@ console.log("newUser: ", this.signUpForm);
         console.log('Completed');
     });
 }else{
+
 
   let toast = this.toastCtrl.create({
         message: 'OTP is not verified yet!',

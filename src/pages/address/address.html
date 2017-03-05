@@ -86,19 +86,27 @@
     <ion-item>
 
      <ion-label floating>Phone</ion-label>
-     <ion-input type="text" #bPhone formControlName="bPhone" name="bPhone" (change)="elementChanged(bPhone)" (blur)="genSms()"> </ion-input><ion-icon *ngIf="phoneVerified" md="md-checkmark-circle"></ion-icon>
+     <ion-input type="text" #bPhone formControlName="bPhone" name="bPhone" (change)="elementChanged(bPhone)"> </ion-input><ion-icon *ngIf="phoneVerified" md="md-checkmark-circle"></ion-icon>
      </ion-item>
      <ion-item class="error-message" *ngIf="!signUpForm.controls.bPhone.valid && (bPhoneChanged || submitAttempt)">
       <p>Enter ten digit mobile number</p>
 </ion-item> 
-    
+<ion-item>
+    <button text-center ion-button outline block color="danger" type="button" (click)="genSms()">Send OTP</button> </ion-item>
+
+
+<ion-item>
+     <ion-label floating>OTP</ion-label>
+
+     <ion-input type="text" formControlName="botp" (blur)="verifyOTP()"></ion-input>
+</ion-item>    
    <!-- <button text-center ion-button round block color="danger" type="button" (click)="genSms()">Send OTP</button> 
      --> 
    
      
    <div>&nbsp;</div>
 <div>
-  <button text-center ion-button block color="secondary" type="submit">Sign Up</button>
+  <button text-center ion-button block color="secondary" type="submit" [disabled]="!phoneVerified">Sign Up</button>
 </div>
 
   </form>
