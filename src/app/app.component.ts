@@ -17,9 +17,9 @@ import { AccountPage } from '../pages/account/account';
 import firebase from 'firebase';
 
 import { MyAccountPage } from '../pages/my-account/my-account';
+import { CheckoutPage } from '../pages/checkout/checkout';
 
-
-import {AddressPage} from '../pages/address/address';
+import { AddressPage } from '../pages/address/address';
 import { LoginTestPage } from '../pages/login-test/login-test';
 import { Storage } from '@ionic/storage';   
 @Component({
@@ -36,7 +36,11 @@ export class MyApp {
   zone: NgZone;
   nZone: NgZone;
   loggedIn : boolean = false;
+  billingExists: boolean= false;
   changeDetectorRefs:ChangeDetectorRef[] = [];
+  userUID: any;
+user: any;
+userProfilium: any;
   constructor(
     public platform: Platform,
     public menu: MenuController,
@@ -91,8 +95,8 @@ firebase.auth().onAuthStateChanged((user) => {
       
       {title: 'Cart', component: CartPage},
       
-      {title: 'Login Test', component: LoginTestPage},
-      {title: 'Checkout', component: AddressPage},
+      {title: 'Login Test', component: LoginTestPage}
+      
      
 
      
@@ -122,6 +126,17 @@ firebase.auth().onAuthStateChanged((user) => {
       this.nav.push(AccountPage);
     }
   }
+   openCheckout() {
+    // close the menu when clicking a link from the menu
+    this.menu.close();
+    // navigate to the new page if it is not the current page
+    //this.nav.setRoot(page.component);
+    if(this.billingExists){
+      this.nav.push(CheckoutPage);
+    }else{
+      this.nav.push(AddressPage);
+    }
+  }
   tick() {
     this.changeDetectorRefs
       .forEach((ref) => ref.detectChanges());
@@ -137,6 +152,32 @@ firebase.auth().onAuthStateChanged((user) => {
 console.log(val);
           if(val){
           that.loggedIn = true;
+          if(firebase.auth().currentUser){
+            //alert('User Exists');
+            //alert("User" + firebase.auth().currentUser);
+             
+            that.user = firebase.auth().currentUser;
+           that.userUID = that.user.uid;
+          
+     
+    that.userProfilium = firebase.database().ref('userProfile/' + that.userUID);
+          that.userProfilium.on('value', function(snapshot) {
+
+            if(snapshot.val().billing && snapshot.val().shipping && snapshot.val().customerDescription){
+             // alert("Snapshot exists");
+               that.billingExists = true;
+               console.log('Billing Exists');
+            }else{
+             // alert("Snapshot doesnt exist");
+               that.billingExists = false;
+               console.log('Billing does not exist');
+            }
+
+          });
+          }else if(!firebase.auth().currentUser){
+            console.log('User doesn\'t exist');
+          }
+
         }else{
           that.loggedIn = false;
         }
