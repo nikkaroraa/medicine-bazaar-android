@@ -3,6 +3,8 @@ import { NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import {AddressPage} from '../address/address';
+import { CheckoutPage } from '../checkout/checkout';
+import firebase from 'firebase';
 /*
   Generated class for the Cart page.
 
@@ -19,6 +21,10 @@ public cartItems: Array<any> = [];
 public cartArray: Array<any> = [];
 public costSum = 0;
 public costSumString;
+billingExists: boolean= false;
+userUID: any;
+user: any;
+userProfilium: any;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public storage: Storage) {
@@ -48,6 +54,32 @@ this.cartItems.forEach(function(element, index){
 }
               });
 
+
+if(firebase.auth().currentUser){
+            //alert('User Exists');
+            //alert("User" + firebase.auth().currentUser);
+             
+            that.user = firebase.auth().currentUser;
+           that.userUID = that.user.uid;
+          
+     
+    that.userProfilium = firebase.database().ref('userProfile/' + that.userUID);
+          that.userProfilium.on('value', function(snapshot) {
+
+            if(snapshot.val().billing && snapshot.val().shipping && snapshot.val().customerDescription){
+             // alert("Snapshot exists");
+               that.billingExists = true;
+               console.log('Billing Exists');
+            }else{
+             // alert("Snapshot doesnt exist");
+               that.billingExists = false;
+               console.log('Billing does not exist');
+            }
+
+          });
+          }else if(!firebase.auth().currentUser){
+            console.log('User doesn\'t exist');
+          }
   }
   
 
@@ -82,7 +114,9 @@ this.cartItems.forEach(function(element, index){
  //go to checkout page
  goToCheckOut()
  {
-   this.navCtrl.push(AddressPage);
+   if(this.billingExists){this.navCtrl.push(CheckoutPage);}
+     else{this.navCtrl.push(AddressPage);}
+   
  }
   increaseCount(product){
       var that = this;
