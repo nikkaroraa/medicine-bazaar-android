@@ -38,6 +38,8 @@ public productsArray: Array<any> = [];
     loading: any;
     orderDataID: any;
     emailVerified: boolean = false;
+    orderPlacedDefault: boolean = false;
+    orderPlaced: boolean = false;
  constructor(public formBuilder:FormBuilder,public navCtrl:NavController,public nav:NavParams,public fetchProducts:FetchProducts, public storage:Storage,
    public loadingCtrl: LoadingController, public toastCtrl: ToastController, private app: App) 
     {
@@ -123,8 +125,9 @@ this.storage.get('cartProducts').then((val)=> {
 
 
       placeOrderDefault(){
-
+        
         if(this.products){
+          this.orderPlacedDefault = true;
           this.newOrder = {
       "payment_method": "COD",
       "payment_method_title": "Cash On Delivery",
@@ -199,6 +202,7 @@ this.storage.get('cartProducts').then((val)=> {
 console.log("newUser: ", this.orderForm);
 
     if(this.products){
+      this.orderPlaced = true;
        this.newOrder = {
       "payment_method": "COD",
       "payment_method_title": "Cash On Delivery",
@@ -295,14 +299,14 @@ console.log("newUser: ", this.orderForm);
     this.loading.present();
 
     setTimeout(() => {
-     this.navCtrl.push(LastOrderPage, {
+     this.navCtrl.setRoot(LastOrderPage, {
        response: this.orderDataID
      });
-    }, 1000);
+    }, 500);
 
     setTimeout(() => {
       this.loading.dismiss();
-    }, 5000);
+    }, 1000);
 
   }
 

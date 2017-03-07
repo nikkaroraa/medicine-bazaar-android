@@ -40,7 +40,7 @@ public orderShipping: any = {};
   }
 
   goToHome(){
-    this.navCtrl.popToRoot(HomePage);
+    this.navCtrl.setRoot(HomePage);
   }
 
 }

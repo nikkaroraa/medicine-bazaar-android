@@ -246,19 +246,24 @@ export class ProductDetailPage {
 
        let toast = this.toastCtrl.create({
         message: 'Check your Cart',
-        duration: 3000,
-        position: 'bottom'
+        
+        position: 'bottom',
+        showCloseButton: true,
+        closeButtonText: 'Cart'
        });
-
+      let closedByTimeout = false;
+      let timeoutHandle = setTimeout(() => { closedByTimeout = true; toast.dismiss(); }, 4000);
       toast.onDidDismiss(() => {
-        console.log('Dismissed toast');
-        this.storage.get('cartProducts').then((val) => {
-           console.log('The Products in the cart are: ', val);
-        }); 
+        if (closedByTimeout) {this.navCtrl.pop(); return;}
+        clearTimeout(timeoutHandle);
+        // Dismiss manually
+        this.navCtrl.push(CartPage);
+        console.log('dismiss manually');
       });
+      
 
       toast.present(toast);
-      this.navCtrl.pop();
+      
     }else{
 
       //product.count set to 0
