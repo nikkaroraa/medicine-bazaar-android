@@ -9,6 +9,7 @@ import { Facebook } from 'ionic-native';
 import firebase from 'firebase';
 import { Storage } from '@ionic/storage';
 import {AddressPage} from '../address/address';
+import {CheckoutPage} from '../checkout/checkout';
 /*
   Generated class for the Account page.
 
@@ -28,7 +29,7 @@ export class AccountPage {
   userProfile: any = null;
   public loginForm;
   user: any;
-  Account: string = "login";    
+  Account: string = "signUp";    
   public userDetails: any = {};
   public userFB: any;
   public userFBUID: any;
@@ -44,6 +45,10 @@ export class AccountPage {
   userProfiler: any;
   FBCustomerContact: any;
   userProfilingID: any;
+  databaseExists: boolean = false;
+  loggingIn: boolean = false;
+  signingIn: boolean = false;
+  fbLoggingIn: boolean =false;
   constructor(public nav: NavController, public authData: AuthData, public formBuilder: FormBuilder,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, public storage: Storage) {
         this.signupForm = formBuilder.group({
@@ -79,6 +84,7 @@ export class AccountPage {
     } 
     else 
     {
+      this.signingIn = true;
       this.authData.signupUser(this.signupForm.value.email, this.signupForm.value.password).then(() => {
         //this.nav.setRoot(HomePage);
           console.log("Successfully Signed Up");
@@ -123,6 +129,7 @@ export class AccountPage {
     if (!this.loginForm.valid){
       console.log(this.loginForm.value);
     } else {
+      this.loggingIn = true;
    var that = this;   
       this.authData.loginUser(this.loginForm.value.email, this.loginForm.value.password).then( authData => {
         
@@ -148,6 +155,7 @@ export class AccountPage {
         that.customerContact = {customerContact: that.userBilling.phone, customerEmail: that.userBilling.email};
           that.storage.set('customerContact',that.customerContact);
           console.log('Customer Contact: ', that.customerContact);
+          that.databaseExists = true;
         }else{   
           //User has not been created in the WooCommerce and hence no contact details.
            let toast = this.toastCtrl.create({
@@ -184,12 +192,15 @@ export class AccountPage {
     this.loading.present();
 
     setTimeout(() => {
-     this.nav.push(AddressPage);
+      if(this.databaseExists){
+        this.nav.push(CheckoutPage);
+      }else{this.nav.push(AddressPage);}
+     
     }, 1000);
 
     setTimeout(() => {
       this.loading.dismiss();
-    }, 5000);
+    }, 3000);
 
   }
 
@@ -257,6 +268,7 @@ export class AccountPage {
     Facebook.login(['email']).then( (response) => {
       
       this.zone = new NgZone({});
+      this.fbLoggingIn = true;
       var that = this;
       let facebookCredential = firebase.auth.FacebookAuthProvider
         .credential(response.authResponse.accessToken);
@@ -299,6 +311,7 @@ export class AccountPage {
         that.FBCustomerContact = {customerContact: that.FBUserBilling.phone, customerEmail: that.FBUserBilling.email};
           that.storage.set('customerContact',that.FBCustomerContact);
           console.log('FB Customer Contact: ', that.FBCustomerContact);
+           that.databaseExists = true;
       //  alert('gone'); 
       }else{
         //user has not been created in Woocommerce yet!
