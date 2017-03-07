@@ -269,7 +269,7 @@ export class ProductDetailPage {
       //product.count set to 0
 
       let toast = this.toastCtrl.create({
-        message: 'Increase the quantity to 1',
+        message: 'Increase the quantity to atleast 1',
         duration: 2000,
         position: 'bottom'
        });      

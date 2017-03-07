@@ -18,12 +18,20 @@
 
 
 <ion-content padding>
-<ion-searchbar (ionInput)="search($event)" ></ion-searchbar>
+<div text-center>* <span color="danger">Search with a minimum of 3 alphabets</span></div>
+<ion-searchbar (ionInput)="search($event)" placeholder="Search..."></ion-searchbar>
 <ion-list [virtualScroll]="products" approxItemHeight="50px;">
   <ion-item *virtualItem="let product" (click)="itemTapped($event, product)">
     {{ product.name }}
   </ion-item>
 
+
+</ion-list>
+<ion-list>
+  <ion-item *ngIf="noProducts" text-center>
+  Search returned nothing!<br />
+  Please with a different keyword...
+  </ion-item>
 </ion-list>
 <!--
   <div *ngIf="{{products.length}}">

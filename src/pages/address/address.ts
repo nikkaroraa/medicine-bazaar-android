@@ -416,6 +416,13 @@ console.log("newUser: ", this.signUpForm);
       },
         err => {
         console.log(err);
+         let alert = this.alertCtrl.create({
+      title: 'Login unsuccessfull!',
+      subTitle: 'Try with different credentials',
+      buttons: ['OK']
+    });
+    alert.present();
+
     },
         () => {
         console.log('Completed');

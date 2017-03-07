@@ -29,6 +29,7 @@ public productDetail: any;
 public start: number =1;
 public offset: any = 0;
 public canLoadMore : any = true;
+public noProducts: boolean= false;
 
 
   constructor(public http: Http, public fetchProducts: FetchProducts, public searchProduct : SearchProduct, public navCtrl: NavController, public navParams: NavParams) {
@@ -58,17 +59,24 @@ if (this.searchQuery.trim() !== '' && this.searchQuery.trim().length > 2) {
         that.newZone.run( () => {  
 
           if(products.length){
-
+            this.noProducts = false;
             that.products=products;
             console.log(that.products);
                       
           }else{
-            console.log("There isn't any listed with this name. Try with a different search.");
+            this.noProducts = true;
           }
         
         });
         
-      });
+      },
+        err => {
+        console.log(err);
+        
+    },
+        () => {
+        console.log('Completed');
+    });
     }
 }
 
