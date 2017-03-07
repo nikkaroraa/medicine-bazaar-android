@@ -105,7 +105,7 @@ shipping: any;
       
         if (user) {
          if(that.count < 1){
-
+      //     alert("In email verification");
            that.count++;
            console.log("The value of count is:", that.count);
           // User is signed in and currentUser will no longer return null.
@@ -113,17 +113,17 @@ shipping: any;
            that.user = firebase.auth().currentUser;
            that.userUID = that.user.uid;
           
-     
+    // alert("Just before" + that.userUID);
     that.userProfilium = firebase.database().ref('userProfile/' + that.userUID);
           that.userProfilium.on('value', function(snapshot) {
-     
+  //   alert("Just after");
         if(!snapshot.val()){
           
           that.emailVerified = that.user.emailVerified;
 
           console.log("Email verified", that.emailVerified); 
-
-              if(!that.emailVerified){
+         // alert('emailVerified' + that.user.emailVerified);
+              if(!that.user.emailVerified){
 
       that.loading = that.loadingCtrl.create({
       
@@ -151,6 +151,7 @@ shipping: any;
   //  that.storage.set('emailVerified', true);
     //set Email Verified to true;
    //console.log("Email verified storage set to true");
+ //  alert("Email is verified");
  }
 
         }else{

@@ -62,7 +62,7 @@ loading: any;
 
     setTimeout(() => {
       this.loading.dismiss();
-    }, 5000);
+    }, 3000);
 
   }
 }

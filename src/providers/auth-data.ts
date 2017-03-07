@@ -41,9 +41,9 @@ export class AuthData {
        // this.initiate();
 
     return firebase.auth().createUserWithEmailAndPassword(email, password).then((newUser) => {
-      this.userProfile.child(newUser.uid).set({
-          email: email
-      });
+      //this.userProfile.child(newUser.uid).set({
+       //   email: email
+     // });
     });
   }
 

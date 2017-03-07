@@ -299,7 +299,7 @@ console.log("newUser: ", this.orderForm);
     this.loading.present();
 
     setTimeout(() => {
-     this.navCtrl.setRoot(LastOrderPage, {
+     this.navCtrl.push(LastOrderPage, {
        response: this.orderDataID
      });
     }, 500);

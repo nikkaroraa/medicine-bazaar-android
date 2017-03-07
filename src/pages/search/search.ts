@@ -33,7 +33,7 @@ public noProducts: boolean= false;
 
 
   constructor(public http: Http, public fetchProducts: FetchProducts, public searchProduct : SearchProduct, public navCtrl: NavController, public navParams: NavParams) {
-  this.newZone = new NgZone({});    
+     
    
   }
 
@@ -51,10 +51,10 @@ search(searchEvent) {
       
 var that = this;
   
-
+this.newZone = new NgZone({}); 
 //trim function removes the spaces that exist in the searchQuery
 if (this.searchQuery.trim() !== '' && this.searchQuery.trim().length > 2) {
-      
+        
       this.fetchProducts.searchProducts(this.searchQuery).subscribe(products => {
         that.newZone.run( () => {  
 
