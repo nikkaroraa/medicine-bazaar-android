@@ -38,7 +38,7 @@ public productsArray: Array<any> = [];
     loading: any;
     orderDataID: any;
     emailVerified: boolean = false;
-    orderPlacedDefault: boolean = false;
+    
     orderPlaced: boolean = false;
  constructor(public formBuilder:FormBuilder,public navCtrl:NavController,public nav:NavParams,public fetchProducts:FetchProducts, public storage:Storage,
    public loadingCtrl: LoadingController, public toastCtrl: ToastController, private app: App) 
@@ -127,7 +127,7 @@ this.storage.get('cartProducts').then((val)=> {
       placeOrderDefault(){
         
         if(this.products){
-          this.orderPlacedDefault = true;
+          this.orderPlaced = true;
           this.newOrder = {
       "payment_method": "COD",
       "payment_method_title": "Cash On Delivery",

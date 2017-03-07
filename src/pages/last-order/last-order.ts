@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { FetchProducts } from '../../providers/fetch-products.service';
-import {HomePage} from '../home/home';
+
 /*
   Generated class for the LastOrder page.
 
