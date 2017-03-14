@@ -63,8 +63,11 @@
 
   
     <button ion-button block icon-right (click)="facebookLogin()" id="facebook" [disabled]="fbLoggingIn">Sign in with Facebook <ion-icon id="fbLogo" name="logo-facebook" style="font-size:2.5em;"></ion-icon>
+
 </button>
-    
+<div text-center>
+    <span color="danger">* Use this only if you use <b>email</b> to login</span>
+</div>
 </div>
     <div *ngSwitchCase="'signUp'">
 <div text-center>
@@ -102,6 +105,9 @@
   <h3 text-center>OR</h3>
    <button ion-button block icon-right (click)="facebookLogin()" id="facebook" [disabled]="fbLoggingIn">Sign in with Facebook <ion-icon id="fbLogo" name="logo-facebook" style="font-size:2.5em;"></ion-icon>
 </button>
+<div text-center>
+    <span color="danger">* Use this only if you use <b>email</b> to login</span>
+</div>
     </div>
 
    

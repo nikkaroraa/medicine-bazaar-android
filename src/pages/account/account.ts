@@ -264,7 +264,40 @@ export class AccountPage {
      this.nav.push(ResetPasswordPage);
    }
 
+   checkFbMail(){
+      let alert = this.alertCtrl.create({
+      title: 'Warning',
+      message: 'Continue only if you use facebook with your email...',
+      buttons: [
+      {
+        text: 'Cancel',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+          return;
+        }
+      },
+      {
+        text: 'Continue',
+        handler: () => {
+          console.log('Continuing...');
+          this.facebookSignin();
+        }
+      }
+    ]
+    });
+    alert.present();
+
+   }
+
    facebookLogin(){
+
+     this.checkFbMail();
+    
+  }
+
+facebookSignin(){
+   console.log('returned');
     Facebook.login(['email']).then( (response) => {
       
       this.zone = new NgZone({});
@@ -347,14 +380,18 @@ export class AccountPage {
     .catch((error) => {
     //  alert("error: "+ error);
     console.log("Firebase failure: " + JSON.stringify(error));
-
+     let alert = this.alertCtrl.create({
+      title: 'Login unsuccessfull!',
+      subTitle: 'Try with different credentials',
+      buttons: ['OK']
+    });
+     alert.present();
   });
 
     }).catch((error) => { console.log(error);
     // alert(error);
       });
-  }
-
+}
    sendVerificationMail(){
     this.user.sendEmailVerification().then(function() {
       console.log("Email sent successfully");
