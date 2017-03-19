@@ -68,7 +68,7 @@ openMenu() {
 
       toast.onDidDismiss(() => {
         console.log('Dismissed toast');
-        this.navCtrl.setRoot(AddressPage); 
+        this.navCtrl.push(AddressPage); 
       });
 
       toast.present(toast);

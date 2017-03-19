@@ -49,6 +49,8 @@ export class AccountPage {
   loggingIn: boolean = false;
   signingIn: boolean = false;
   fbLoggingIn: boolean =false;
+  userEmail: any;
+  FBMobile: boolean = false;
   constructor(public nav: NavController, public authData: AuthData, public formBuilder: FormBuilder,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, public storage: Storage) {
         this.signupForm = formBuilder.group({
@@ -292,8 +294,7 @@ export class AccountPage {
 
    facebookLogin(){
 
-     this.checkFbMail();
-    
+     this.facebookSignin();
   }
 
 facebookSignin(){
@@ -316,33 +317,49 @@ facebookSignin(){
         this.userProfile = success;
          this.userFB = firebase.auth().currentUser;
           this.userFBUID = this.userFB.uid;
-         // alert('fbuserid: ' + this.userFBUID);
+          
+
+         // alert("this.userEmail "+ this.userFB.email);
+
+          if(!this.userFB.email){
+            
+           // alert('userEmail doesn\'t exist');
+
+            this.userEmail = this.userFBUID + '@gmail.com';
+            // alert('Now this.userEmail is '+ this.userEmail);
+            this.FBMobile = true;
+          }
+          //alert('fbuserid: ' + this.userFBUID);
+          
+          setTimeout(() => {
+          }, 500);
        this.userProfiler = firebase.database().ref('userProfile');
-      // alert('userProfiling: ' + that.userProfiler);
+       //alert('userProfiling: ' + that.userProfiler);
         that.userProfiler.on('value', function(snapshot) {
           
-          //  alert('wooo');
+         //   alert('wooo');
         console.log("Snapshot",snapshot.val());
         let exists = snapshot.child(that.userFBUID).exists();
-       // alert("exists:" + exists);
+        //alert("exists:" + exists);
         if(exists){
           //login for the second time or above   
 //alert('beforeeee');
             let billingExists = snapshot.child(that.userFBUID).val().billing;
            if(billingExists){
-        //    alert("billing exists");
+         // alert("billing exists");
           //user has been created in the WooCommerce
-        //  alert('that.userFBUID: '+ that.userFB.uid);
+         // alert('that.userFBUID: '+ that.userFB.uid);
            that.FBUserDetails = snapshot.child(that.userFBUID).val();
         console.log("this.FBUserDetails", that.FBUserDetails);
-      //  alert('goin');
+       // alert('goin');
         that.FBUserBilling = that.FBUserDetails.billing;
         console.log("this.FBUserBilling", that.FBUserBilling);
-      //  alert('going');
-      //  alert("PHONE" + that.FBUserBilling.phone);
-      //  alert("customerEmail" + that.FBUserBilling.email);
+       // alert('going');
+        //alert("PHONE" + that.FBUserBilling.phone);
+        //alert("customerEmail" + that.FBUserBilling.email);
         that.FBCustomerContact = {customerContact: that.FBUserBilling.phone, customerEmail: that.FBUserBilling.email};
           that.storage.set('customerContact',that.FBCustomerContact);
+          //alert('customerContact' + that.FBCustomerContact);
           console.log('FB Customer Contact: ', that.FBCustomerContact);
            that.databaseExists = true;
       //  alert('gone'); 
@@ -358,9 +375,12 @@ facebookSignin(){
            //login for the first time
          //  alert("1st time");
            that.userProfiling = firebase.database().ref('userProfile');
-           that.userProfiling.child(that.userFBUID).set({fbLogin: true, email: that.userProfile.email}); 
+
+           if(that.FBMobile){
+             that.userProfiling.child(that.userFBUID).set({fbLogin: true, email: that.userEmail});
+           }else{that.userProfiling.child(that.userFBUID).set({fbLogin: true, email: that.userProfile.email}); 
            //  alert('done');
-          
+           }
         }
          
 
@@ -368,9 +388,15 @@ facebookSignin(){
 
 });
          
-       that.userDetails = {email: that.userProfile.email, password: that.userFBUID};
-          that.storage.set('userDetails',that.userDetails);
-          console.log("this.userDetails", that.userDetails);
+         if(that.FBMobile){
+           that.userDetails = {email: that.userEmail, password: that.userFBUID};
+         }else{
+            that.userDetails = {email: that.userProfile.email, password: that.userFBUID};
+            
+         }
+       that.storage.set('userDetails',that.userDetails);
+          console.log("this.userDetails", that.userDetails); 
+        
         that.successLogin();
         
           
