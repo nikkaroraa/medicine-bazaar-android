@@ -320,7 +320,8 @@ facebookSignin(){
           
 
          // alert("this.userEmail "+ this.userFB.email);
-
+setTimeout(() => {
+          }, 200);
           if(!this.userFB.email){
             
            // alert('userEmail doesn\'t exist');
@@ -328,11 +329,13 @@ facebookSignin(){
             this.userEmail = this.userFBUID + '@gmail.com';
             // alert('Now this.userEmail is '+ this.userEmail);
             this.FBMobile = true;
+            setTimeout(() => {
+            }, 300);
           }
           //alert('fbuserid: ' + this.userFBUID);
           
           setTimeout(() => {
-          }, 500);
+          }, 300);
        this.userProfiler = firebase.database().ref('userProfile');
        //alert('userProfiling: ' + that.userProfiler);
         that.userProfiler.on('value', function(snapshot) {

@@ -143,19 +143,20 @@ firebase.auth().onAuthStateChanged((user) => {
   }
   menuOpen(){
      this.nZone = new NgZone({});
-
+this.billingExists = false;
     var that = this;
     this.storage.get('userDetails').then((val)=>{
       
        this.nZone.run(()=>{
 
-console.log(val);
+console.log("userDetails myApp", val);
           if(val){
           that.loggedIn = true;
+         // console.log("Voilaaa");
           if(firebase.auth().currentUser){
             //alert('User Exists');
             //alert("User" + firebase.auth().currentUser);
-             
+            // console.log("You know what?");
             that.user = firebase.auth().currentUser;
            that.userUID = that.user.uid;
           
@@ -183,7 +184,7 @@ console.log(val);
         }
     
        console.log('logged: ',that.loggedIn);
-
+       console.log('billingExists ', that.billingExists);
        });
          
     });
