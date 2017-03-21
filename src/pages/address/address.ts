@@ -321,7 +321,7 @@ let toast = this.toastCtrl.create({
  sentSmsAlert()  {
   let alert = this.alertCtrl.create({
     title: 'OTP Sent',
-    subTitle: 'OTP sent succesfully!',
+    subTitle: 'OTP sent successfully!',
     buttons: ['Dismiss']
   });
   alert.present();

@@ -36,6 +36,7 @@ export class AccountPage {
   public userProfiling: any;
   zone: NgZone;
   nZone: NgZone;
+  signZone: NgZone;
   userUID:any;
   userProfilium: any;
   userBilling: any;
@@ -79,9 +80,10 @@ export class AccountPage {
    * If the form is invalid it will just log the form value, feel free to handle that as you like.
    */
   signupUser(){
+        
     this.submitAttempt = true;
-
-    if (!this.signupForm.valid){
+    
+     if (!this.signupForm.valid){
       console.log(this.signupForm.value);
     } 
     else 
@@ -108,8 +110,13 @@ export class AccountPage {
             console.log("User Details are: ", val);
           });*/
       }, (error) => {
-        this.failureSignUp();
-      });
+        
+          
+          this.failureSignUp();
+        
+        });
+        
+      
 
       /*this.loading = this.loadingCtrl.create({
         dismissOnPageChange: true,
@@ -125,9 +132,9 @@ export class AccountPage {
   }
 
   loginUser(){
-
+    this.signZone = new NgZone({});
     this.submitAttempt = true;
-
+    var that = this;
     if (!this.loginForm.valid){
       console.log(this.loginForm.value);
     } else {
@@ -168,7 +175,7 @@ export class AccountPage {
 
       toast.onDidDismiss(() => {
         console.log('Dismissed toast');
-        this.navCtrl.setRoot(AddressPage); 
+        this.navCtrl.push(AddressPage); 
       });
 
       toast.present(toast);
@@ -176,8 +183,11 @@ export class AccountPage {
 });
         this.successLogin();
       }, error => {
-        console.log("ERROR: ", error);
-        this.failureLogin();
+        that.signZone.run( () => {
+          console.log("ERROR: ", error);
+          that.signingIn = false;
+          that.failureLogin();
+        });
       });
 
   
@@ -212,9 +222,28 @@ export class AccountPage {
 
    let alert = this.alertCtrl.create({
       title: 'Login unsuccessfull!',
-      subTitle: 'Please check your username and password!',
-      buttons: ['OK']
-    });
+      message: 'Please check your username and password!',
+    buttons: [
+      {
+        text: 'Cancel',
+        handler: () => {
+          this.nav.popToRoot();
+        }
+
+
+      },
+      {
+        text: 'Ok',
+        handler: () => {
+          
+          this.nav.push(this.nav.getActive().component);
+        }
+      }
+
+        ] 
+        
+        });       
+    
     alert.present();
 
   
@@ -246,8 +275,26 @@ export class AccountPage {
 
    let alert = this.alertCtrl.create({
       title: 'Sign up unsuccessfull!',
-      subTitle: 'Please try again with different credentials...',
-      buttons: ['OK']
+       message: 'Please try again with different credentials...',
+    buttons: [
+      {
+        text: 'Cancel',
+        handler: () => {
+          this.nav.popToRoot();
+        }
+
+
+      },
+      {
+        text: 'Ok',
+        handler: () => {
+          
+          this.nav.push(this.nav.getActive().component);
+        }
+      }
+
+        ] 
+     
     });
     alert.present();
 
@@ -411,8 +458,26 @@ setTimeout(() => {
     console.log("Firebase failure: " + JSON.stringify(error));
      let alert = this.alertCtrl.create({
       title: 'Login unsuccessfull!',
-      subTitle: 'Try with different credentials',
-      buttons: ['OK']
+       message: 'Try with different credentials',
+    buttons: [
+      {
+        text: 'Cancel',
+        handler: () => {
+          this.nav.popToRoot();
+        }
+
+
+      },
+      {
+        text: 'Ok',
+        handler: () => {
+          
+          this.nav.push(this.nav.getActive().component);
+        }
+      }
+
+        ] 
+      
     });
      alert.present();
   });
@@ -421,6 +486,8 @@ setTimeout(() => {
     // alert(error);
       });
 }
+   
+
    sendVerificationMail(){
     this.user.sendEmailVerification().then(function() {
       console.log("Email sent successfully");
