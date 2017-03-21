@@ -144,6 +144,7 @@ firebase.auth().onAuthStateChanged((user) => {
   menuOpen(){
      this.nZone = new NgZone({});
 this.billingExists = false;
+this.loggedIn = false;
     var that = this;
     this.storage.get('userDetails').then((val)=>{
       
