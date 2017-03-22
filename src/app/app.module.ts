@@ -28,6 +28,8 @@ import { AddressPage } from '../pages/address/address';
 // Import Providers
 
 import { AuthData } from '../providers/auth-data';
+import { TestCategoryPage } from '../pages/test-category/test-category';
+import { SearchCategoryPage } from '../pages/search-category/search-category';
 
 
 // YOUR SETTINGS GOES HERE!
@@ -63,6 +65,8 @@ export function provideStorage() {
     SigninModalPage,
     
     AddressPage,
+    TestCategoryPage,
+    SearchCategoryPage
    
 
   ],
@@ -93,6 +97,8 @@ export function provideStorage() {
     SigninModalPage,
    
     AddressPage,
+    TestCategoryPage,
+    SearchCategoryPage
     
       
   ],

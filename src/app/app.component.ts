@@ -21,6 +21,9 @@ import { CheckoutPage } from '../pages/checkout/checkout';
 
 import { AddressPage } from '../pages/address/address';
 import { LoginTestPage } from '../pages/login-test/login-test';
+import { TestCategoryPage } from '../pages/test-category/test-category';
+
+
 import { Storage } from '@ionic/storage';   
 @Component({
   templateUrl: 'app.html'
@@ -95,7 +98,9 @@ firebase.auth().onAuthStateChanged((user) => {
       
       {title: 'Cart', component: CartPage},
       
-      {title: 'Login Test', component: LoginTestPage}
+      {title: 'Login Test', component: LoginTestPage},
+
+      {title: 'Test Category', component: TestCategoryPage}
       
      
 

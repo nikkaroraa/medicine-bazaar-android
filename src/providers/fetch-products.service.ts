@@ -14,7 +14,7 @@ public data: any;
 
 
   constructor(public http: Http) {}
-
+ 
   //get all orders
    getAllOrders()
    {

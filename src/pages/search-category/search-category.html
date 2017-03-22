@@ -1,27 +1,28 @@
 <!--
-  Generated template for the Search page.
+  Generated template for the SearchCategory page.
 
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 -->
 <ion-header>
-
+ 
   <ion-navbar>
-  
-<button ion-button menuToggle>
+    <button ion-button menuToggle>
       <ion-icon name="menu" color="blank"></ion-icon>
     </button>
-      <ion-title><span color="blank">Search</span></ion-title>
+      <ion-title><span color="blank">Search Category</span></ion-title>
   </ion-navbar>
 
 </ion-header>
+
+
 
 
 <ion-content padding>
 <div text-center>* <span color="danger">Search with a minimum of 3 alphabets</span></div>
 <ion-searchbar (ionInput)="search($event)" placeholder="Search..."></ion-searchbar>
 <ion-list [virtualScroll]="products" approxItemHeight="50px;">
-  <ion-item *virtualItem="let product" (click)="itemTapped($event, product)">
+  <ion-item *virtualItem="let product">
     {{ product.name }}
   </ion-item>
 
@@ -39,3 +40,4 @@
   </div>
 -->
 </ion-content>
+
