@@ -32,7 +32,13 @@
 
     {{product.name}}
   </ion-card-header>
-
+<ion-slides *ngIf="imageExists">
+  <ion-slide *ngFor="let image of product.images">
+  <div text-center>
+    <img src={{image.src}} />
+  </div>
+  </ion-slide>
+</ion-slides>
 
   <ion-card-content text-center>
       <div style="" [innerHTML]="product.description"></div>

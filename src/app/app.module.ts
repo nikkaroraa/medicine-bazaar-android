@@ -66,7 +66,8 @@ export function provideStorage() {
     
     AddressPage,
     TestCategoryPage,
-    SearchCategoryPage
+    SearchCategoryPage,
+    
    
 
   ],
@@ -98,7 +99,8 @@ export function provideStorage() {
    
     AddressPage,
     TestCategoryPage,
-    SearchCategoryPage
+    SearchCategoryPage,
+   
     
       
   ],

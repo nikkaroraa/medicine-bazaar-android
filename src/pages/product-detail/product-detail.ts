@@ -13,7 +13,7 @@ import { CartPage } from '../cart/cart';
 providers: [ SearchProduct ]
 })
 export class ProductDetailPage {
-
+ 
     selectedItem: any;
     s_products: any;
     selectedItemName: any;
@@ -25,6 +25,7 @@ export class ProductDetailPage {
     public countIncreased = false;
     public productCount:any = 0;
     substitutesExist: boolean = false;
+    imageExists: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct,public toastCtrl: ToastController,public storage: Storage) {
       
 
@@ -53,6 +54,12 @@ export class ProductDetailPage {
       
       //end storage try
       this.selectedItem = navParams.get('product');
+      this.imageExists = false;
+      if(this.selectedItem.images[0].src != "https://www.medicinebazaar.in/wp-content/plugins/woocommerce/assets/images/placeholder.png"){
+        this.imageExists = true;
+        console.log("this.imageExists", this.imageExists);
+        console.log("this.selectedItem.images.length", this.selectedItem.images.length);
+      }
       this.selectedItemName = this.selectedItem.name;
       console.log("Lol",this.selectedItem);  
                        

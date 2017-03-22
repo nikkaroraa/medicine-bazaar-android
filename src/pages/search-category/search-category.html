@@ -21,12 +21,21 @@
 <ion-content padding>
 <div text-center>* <span color="danger">Search with a minimum of 3 alphabets</span></div>
 <ion-searchbar (ionInput)="search($event)" placeholder="Search..."></ion-searchbar>
-<ion-list [virtualScroll]="products" approxItemHeight="50px;">
-  <ion-item *virtualItem="let product">
-    {{ product.name }}
+<ion-list [virtualScroll]="products" approxItemHeight="100px;">
+  
+  
+  <ion-item *virtualItem="let product" (click)="itemTapped($event, product)">
+      <ion-thumbnail item-left>
+        <img src="{{product.images[0].src}}">
+      </ion-thumbnail>
+    <h3></h3>
+    <h2>{{ product.name }}</h2>
+    <p style="" [innerHTML]="product.description"></p>
   </ion-item>
 
+    
 
+    
 </ion-list>
 <ion-list>
   <ion-item *ngIf="noProducts" text-center>

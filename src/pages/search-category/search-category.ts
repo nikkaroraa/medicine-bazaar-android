@@ -1,6 +1,7 @@
 import { Component, NgZone } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { GetCategory } from '../../providers/get-category';
+import { ProductDetailPage } from '../product-detail/product-detail';
 /*
   Generated class for the SearchCategory page.
 
@@ -27,6 +28,12 @@ public products: Array<any> = [];
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SearchCategoryPage');
+  }
+   itemTapped(event, product) {
+    this.navCtrl.push(ProductDetailPage, {
+      product: product
+    });
+console.log("itemTapped:" + product);
   }
 
 	search(searchEvent) {

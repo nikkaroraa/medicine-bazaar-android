@@ -100,7 +100,7 @@ firebase.auth().onAuthStateChanged((user) => {
       
       {title: 'Login Test', component: LoginTestPage},
 
-      {title: 'Test Category', component: TestCategoryPage}
+      {title: 'Search by Category', component: TestCategoryPage}
       
      
 

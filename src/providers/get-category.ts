@@ -22,8 +22,8 @@ export class GetCategory {
    }
 
    getProducts(searchParam, id){
-     console.log('https://www.medicinebazaar.in/wp-json/wc/v1/products?search='+searchParam+'&filter[product_cat]=' + id + '&consumer_key=ck_3a2b7fddd1fac4e6c7ea6cec3afc19259ef76c6b&consumer_secret=cs_5653cf147e9fe76f72a98a2b0d8e3728f0e9e129');
-     return this.http.get('https://www.medicinebazaar.in/wp-json/wc/v1/products?search='+searchParam+'&filter[category]=' + id + '&consumer_key=ck_3a2b7fddd1fac4e6c7ea6cec3afc19259ef76c6b&consumer_secret=cs_5653cf147e9fe76f72a98a2b0d8e3728f0e9e129')
+     console.log('https://www.medicinebazaar.in/wp-json/wc/v1/products?filter[product_cat]=' + id + '&search='+searchParam+'&consumer_key=ck_3a2b7fddd1fac4e6c7ea6cec3afc19259ef76c6b&consumer_secret=cs_5653cf147e9fe76f72a98a2b0d8e3728f0e9e129');
+     return this.http.get('https://www.medicinebazaar.in/wp-json/wc/v1/products?filter[product_cat]=' + id + '&search='+searchParam+'&consumer_key=ck_3a2b7fddd1fac4e6c7ea6cec3afc19259ef76c6b&consumer_secret=cs_5653cf147e9fe76f72a98a2b0d8e3728f0e9e129')
       .map(res => res.json());
    }
 
