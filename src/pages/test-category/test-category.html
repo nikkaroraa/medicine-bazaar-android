@@ -7,7 +7,11 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>testCategory</ion-title>
+    
+    <button ion-button menuToggle>
+      <ion-icon name="menu" color="blank"></ion-icon>
+    </button>
+      <ion-title><span color="blank">Category Search</span></ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -19,7 +23,7 @@
     <ion-item *ngFor="let category of categories">
     	 
     	<button (click)="categorySelected(category)">
-   			{{category.name}} 
+   		<ion-icon md="md-checkmark" item-left></ion-icon>	<h2 style="display:inline;">{{category.name}}</h2> 
     	</button>
     </ion-item>
      

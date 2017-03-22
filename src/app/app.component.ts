@@ -1,6 +1,6 @@
 import { Component, ViewChild,NgZone,ChangeDetectorRef } from '@angular/core';
 
-import { Platform, MenuController, Nav } from 'ionic-angular';
+import { Platform, MenuController, Nav, LoadingController } from 'ionic-angular';
 
 import { StatusBar, Splashscreen } from 'ionic-native';
 
@@ -42,12 +42,14 @@ export class MyApp {
   billingExists: boolean= false;
   changeDetectorRefs:ChangeDetectorRef[] = [];
   userUID: any;
+  loading: any;
 user: any;
 userProfilium: any;
   constructor(
     public platform: Platform,
     public menu: MenuController,
-    public storage: Storage
+    public storage: Storage,
+    public loadingCtrl: LoadingController
   ) {
 
    const firebaseConfig = {
@@ -100,7 +102,7 @@ firebase.auth().onAuthStateChanged((user) => {
       
       {title: 'Login Test', component: LoginTestPage},
 
-      {title: 'Search by Category', component: TestCategoryPage}
+      
       
      
 
@@ -119,6 +121,25 @@ firebase.auth().onAuthStateChanged((user) => {
     // navigate to the new page if it is not the current page
     //this.nav.setRoot(page.component);
       this.nav.push(page.component);
+  }
+  openSearchByCategory(){
+    this.menu.close();
+    this.loading = this.loadingCtrl.create({
+      
+      content: 'Opening...'
+    });
+
+    this.loading.present();
+
+    setTimeout(() => {
+     this.nav.push(TestCategoryPage);
+    }, 1000);
+
+    setTimeout(() => {
+      this.loading.dismiss();
+    }, 1500);
+
+    
   }
   openAccount() {
     // close the menu when clicking a link from the menu

@@ -3,7 +3,7 @@ import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { MyOrdersPage } from '../my-orders/my-orders';
 import { UpdateAccountInfoPage } from '../update-account-info/update-account-info';
 import { AuthData } from '../../providers/auth-data';
-import {HomePage} from '../home/home';
+
 import { Storage } from '@ionic/storage';
 /*
   Generated class for the MyAccount page.

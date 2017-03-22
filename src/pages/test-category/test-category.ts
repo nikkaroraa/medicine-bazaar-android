@@ -1,4 +1,4 @@
-import { Component , NgZone} from '@angular/core';
+import { Component} from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { GetCategory } from '../../providers/get-category';
 import { SearchCategoryPage } from '../search-category/search-category';

@@ -79,8 +79,12 @@ shipping: any;
     that.loading.present();
 
     setTimeout(() => {
-      that.loading.dismiss();
+      
      that.navCtrl.setRoot(HomePage);
+    }, 500);
+
+    setTimeout(() => {
+      this.loading.dismiss();
     }, 1000);
 
     }else{
