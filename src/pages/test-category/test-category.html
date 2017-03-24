@@ -22,7 +22,7 @@
 <ion-list>
     <ion-item *ngFor="let category of categories">
     	 
-    	<button (click)="categorySelected(category)">
+    	<button (click)="categorySelected(category)" style="background-color: #ecf0f1;">
    		<ion-icon md="md-medkit" item-left></ion-icon>	<p style="display:inline; font-size: 1.8rem; font-weight: 700; font-family: 'PT Sans', sans-serif;">{{category.name}}</p> 
     	</button>
     </ion-item>
