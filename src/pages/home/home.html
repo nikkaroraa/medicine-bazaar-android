@@ -22,7 +22,11 @@
 <ion-content padding-vertical class="no-scroll">
 
 <img src="http://loremflickr.com/400/200/medicine" />
-<hr />
+
+<div text-center>
+<p class="title-app">Welcome to Medicine Bazaa&#8377;</p>
+</div>
+
 
 <ion-row>
 <ion-col width-50>
@@ -37,7 +41,30 @@
 
 <button ion-button block icon-right color="primary" (click)="navSearch()">Search<ion-icon style="font-size:2em;" name="md-search" color="blank"></ion-icon></button>
 </ion-col>
+
 </ion-row>
+
+
+
+<ion-row>
+<ion-col width-30 style="margin-top: 1rem;">
+<hr />
+</ion-col>
+<ion-col width-40 text-center>
+<span class="title-category">Categories</span>
+</ion-col>
+<ion-col width-30 style="margin-top: 1rem;">
+<hr />
+</ion-col>
+
+</ion-row>
+<ion-row text-center>
+<ion-col>
+  
+  <button ion-button color="primary" (click)="searchCategory()">Want to search by category?</button>
+</ion-col>
+</ion-row>
+
 <ion-card *ngIf="base64Image">
   <ion-card-header>
     Captured (for Testing)

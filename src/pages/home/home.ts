@@ -4,13 +4,14 @@ import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';  
 import {MailSend} from '../../providers/mail-send';
 import {Camera} from 'ionic-native';
-import { Platform, ActionSheetController,ToastController } from 'ionic-angular';
+import { Platform, ActionSheetController,ToastController, LoadingController } from 'ionic-angular';
 import { NavController} from 'ionic-angular';
 import {SearchPage} from '../search/search'; 
 import { Storage } from '@ionic/storage';   
 import {CartPage} from '../cart/cart';
 import { Transfer } from 'ionic-native';  
 import {AddressPage} from '../address/address';
+import { TestCategoryPage } from '../test-category/test-category';
 /*
   Generated class for the Home page.
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
@@ -32,7 +33,10 @@ private imageSrc: string;
  public CustomerEmail: any;
  mailResponse: any;
  public CustomerContact: any;
-  constructor(public toastCtrl: ToastController, public mailSend:MailSend,public http: Http,public platform: Platform, public actionsheetCtrl: ActionSheetController, public navCtrl: NavController, public storage: Storage) {
+ loading: any;
+  constructor(public toastCtrl: ToastController, public mailSend:MailSend,public http: Http,public platform: Platform, 
+    public actionsheetCtrl: ActionSheetController, public navCtrl: NavController, public storage: Storage,
+    public loadingCtrl: LoadingController) {
       
       this.storage.get('productCount').then((val)=>{
         if(!val){
@@ -267,6 +271,25 @@ ionViewDidEnter(){
         () => {
         console.log('Completed');
     });
+  }
+
+  searchCategory(){
+        this.loading = this.loadingCtrl.create({
+      
+      content: 'Opening...'
+    });
+
+    this.loading.present();
+
+    setTimeout(() => {
+     this.navCtrl.push(TestCategoryPage);
+    }, 2000);
+
+    setTimeout(() => {
+      this.loading.dismiss();
+    }, 3000);
+
+
   }
   
 }

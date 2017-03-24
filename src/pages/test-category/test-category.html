@@ -11,7 +11,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu" color="blank"></ion-icon>
     </button>
-      <ion-title><span color="blank">Category Search</span></ion-title>
+      <ion-title><span color="blank">Categories</span></ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -23,7 +23,7 @@
     <ion-item *ngFor="let category of categories">
     	 
     	<button (click)="categorySelected(category)">
-   		<ion-icon md="md-checkmark" item-left></ion-icon>	<h2 style="display:inline;">{{category.name}}</h2> 
+   		<ion-icon md="md-medkit" item-left></ion-icon>	<p style="display:inline; font-size: 1.8rem; font-weight: 700; font-family: 'PT Sans', sans-serif;">{{category.name}}</p> 
     	</button>
     </ion-item>
      

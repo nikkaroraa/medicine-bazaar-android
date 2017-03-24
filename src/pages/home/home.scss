@@ -1,5 +1,13 @@
 page-home {
-	
+	@import url('https://fonts.googleapis.com/css?family=Kalam');
+	.title-app{
+		font-family: 'Kalam', cursive;
+		font-size: 2rem;
+	}
+	.title-category{
+		font-family: 'Kalam', cursive;
+		font-size: 2em;
+	}	
 	
 	.no-scroll .scroll-content{
          overflow: hidden;

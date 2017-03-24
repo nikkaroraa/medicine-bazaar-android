@@ -133,11 +133,11 @@ firebase.auth().onAuthStateChanged((user) => {
 
     setTimeout(() => {
      this.nav.push(TestCategoryPage);
-    }, 1000);
+    }, 2000);
 
     setTimeout(() => {
       this.loading.dismiss();
-    }, 1500);
+    }, 3000);
 
     
   }
