@@ -153,10 +153,14 @@ export class AccountPage {
      
     that.userProfilium = firebase.database().ref('userProfile/' + that.userUID);
           that.userProfilium.on('value', function(snapshot) {
-     
-        console.log("Snapshot Login",snapshot.val());
+     console.log('Here');
+      //  console.log("Snapshot Login",snapshot.val());
         
-        if(snapshot.val().billing && snapshot.val().shipping && snapshot.val().customerDescription){
+        if(!snapshot.val()){
+          //snapshot.val() is null
+          //billing address not stored
+          that.databaseExists = false;
+        }else if(snapshot.val().billing && snapshot.val().shipping && snapshot.val().customerDescription){
           //user has been created in the WooCommerce
            that.userDetails = snapshot.val();
         console.log("this.userDetails", that.userDetails);
@@ -166,21 +170,8 @@ export class AccountPage {
           that.storage.set('customerContact',that.customerContact);
           console.log('Customer Contact: ', that.customerContact);
           that.databaseExists = true;
-        }else{   
-          //User has not been created in the WooCommerce and hence no contact details.
-           let toast = this.toastCtrl.create({
-        message: 'You need to fill up the details!',
-        duration: 2000,
-        position: 'bottom'
-       });
-
-      toast.onDidDismiss(() => {
-        console.log('Dismissed toast');
-        this.navCtrl.push(AddressPage); 
-      });
-
-      toast.present(toast);
         }
+        
 });
         this.successLogin();
       }, error => {

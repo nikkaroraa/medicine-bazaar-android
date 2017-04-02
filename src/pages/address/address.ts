@@ -8,6 +8,7 @@ import { SendSms } from '../../providers/send-sms';
 import {AlertController,  LoadingController} from 'ionic-angular';
 import { HomePage} from '../home/home';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CartPage } from '../cart/cart';
 
 /*
   Generated class for the Address page.
@@ -116,7 +117,7 @@ shipping: any;
           that.storage.get('customerContact').then((details)=>{
       if(details){
         console.log("customerContactTrue", details);
-        that.navCtrl.push(CheckoutPage);
+        that.navCtrl.push(CartPage);
       }else{
         console.log("customerContactFalse", details);
            that.user = firebase.auth().currentUser;
@@ -174,7 +175,7 @@ shipping: any;
         }
 
         if(snapshot.val().billing && snapshot.val().shipping && snapshot.val().customerDescription){
-          that.navCtrl.push(CheckoutPage);
+          that.navCtrl.push(CartPage);
         }else{
 
 
@@ -355,7 +356,7 @@ let toast = this.toastCtrl.create({
  presentAlert()  {
   let alert = this.alertCtrl.create({
     title: 'OTP Verify',
-    subTitle: 'Otp verified successfully!',
+    subTitle: 'OTP verified successfully!',
     buttons: ['Dismiss']
   });
   alert.present();

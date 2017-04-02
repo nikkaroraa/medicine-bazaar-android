@@ -27,13 +27,13 @@
     <p style="font-size:1.3em;font-size:600;">{{userShipping.address2}}</p>
     <br />
     <div style="font-size: 1.3em;">
-
-    <span style="font-size: 1em;font-family: 'Roboto', sans-serif;">Have a coupon?</span>
+    <ion-checkbox color="dark" (ionChange)='couponChange()' [(ngModel)]="couponStatus" checked="false"></ion-checkbox>
+    &nbsp;<span style="font-size: 1em;font-family: 'Roboto', sans-serif;">Have a coupon?</span>
     </div>
     <div *ngIf="couponApplied">
-      Yay! {{couponAmount}}{{couponDiscountType}} Coupon Successfully applied!
+      Yay! {{couponAmount}}{{couponDiscountType}} Discount coupon successfully applied!
     </div>
-    
+    <div [hidden]="!hasCoupon">
     <form [formGroup]="couponValidationForm" (submit)="couponValidate()" novalidate>
 
     <ion-item>
@@ -51,7 +51,7 @@
     </button>
 
   </form>
-    
+    </div>
     
     <div>&nbsp;</div>
 
