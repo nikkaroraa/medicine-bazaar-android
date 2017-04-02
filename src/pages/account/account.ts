@@ -36,7 +36,7 @@ export class AccountPage {
   public userProfiling: any;
   zone: NgZone;
   nZone: NgZone;
-  signZone: NgZone;
+  signInZone: NgZone;
   userUID:any;
   userProfilium: any;
   userBilling: any;
@@ -132,7 +132,7 @@ export class AccountPage {
   }
 
   loginUser(){
-    this.signZone = new NgZone({});
+    this.signInZone = new NgZone({});
     this.submitAttempt = true;
     var that = this;
     if (!this.loginForm.valid){
@@ -141,7 +141,7 @@ export class AccountPage {
       this.loggingIn = true;
    var that = this;   
       this.authData.loginUser(this.loginForm.value.email, this.loginForm.value.password).then( authData => {
-        
+         
         this.userDetails = {email: this.loginForm.value.email, password:this.loginForm.value.password};
           this.storage.set('userDetails',this.userDetails);
           console.log("this.userDetails Login", this.userDetails);
@@ -183,7 +183,7 @@ export class AccountPage {
 });
         this.successLogin();
       }, error => {
-        that.signZone.run( () => {
+        that.signInZone.run( () => {
           console.log("ERROR: ", error);
           that.signingIn = false;
           that.failureLogin();
@@ -205,7 +205,9 @@ export class AccountPage {
 
     setTimeout(() => {
       if(this.databaseExists){
+
         this.nav.push(CheckoutPage);
+      
       }else{this.nav.push(AddressPage);}
      
     }, 1000);

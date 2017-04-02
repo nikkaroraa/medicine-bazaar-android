@@ -178,8 +178,17 @@ firebase.auth().onAuthStateChanged((user) => {
 console.log("userDetails myApp", val);
           if(val){
           that.loggedIn = true;
+    that.storage.get('customerContact').then((details)=>{
+      if(details){
+        console.log("customerContactTrue", details);
+        that.billingExists = true;
+      }else{
+        console.log("customerContactFalse", details);
+        that.billingExists = false;
+      }
+      });         
          // console.log("Voilaaa");
-          if(firebase.auth().currentUser){
+        /*  if(firebase.auth().currentUser){
             //alert('User Exists');
             //alert("User" + firebase.auth().currentUser);
             // console.log("You know what?");
@@ -204,14 +213,13 @@ console.log("userDetails myApp", val);
           }else if(!firebase.auth().currentUser){
             console.log('User doesn\'t exist');
           }
-
+          */
         }else{
           that.loggedIn = false;
           that.billingExists = false;
         }
-    
        console.log('logged: ',that.loggedIn);
-       console.log('billingExists ', that.billingExists);
+       //console.log('billingExists ', that.billingExists);
        });
          
     });

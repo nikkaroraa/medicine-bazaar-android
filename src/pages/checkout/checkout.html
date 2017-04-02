@@ -28,12 +28,12 @@
     <br />
     <div style="font-size: 1.3em;">
 
-    <ion-checkbox color="dark" checked="false" style="display: inline-block;" [(ngModel)]="couponStatus" (ionChange)="couponChange()"></ion-checkbox> &nbsp;<span style="font-size: 1em;font-family: 'Roboto', sans-serif;">Have a coupon?</span>
+    <span style="font-size: 1em;font-family: 'Roboto', sans-serif;">Have a coupon?</span>
     </div>
     <div *ngIf="couponApplied">
       Yay! Coupon Successfully applied!
     </div>
-    <div *ngIf="hasCoupon">
+    
     <form [formGroup]="couponValidationForm" (submit)="couponValidate()" novalidate>
 
     <ion-item>
@@ -51,7 +51,7 @@
     </button>
 
   </form>
-    </div>
+    
     
     <div>&nbsp;</div>
 

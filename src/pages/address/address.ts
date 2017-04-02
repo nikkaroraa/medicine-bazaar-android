@@ -84,7 +84,7 @@ shipping: any;
     }, 500);
 
     setTimeout(() => {
-      this.loading.dismiss();
+      that.loading.dismiss();
     }, 1000);
 
     }else{
