@@ -20,7 +20,7 @@ export class ResetPasswordPage {
 
     this.resetPasswordForm = formBuilder.group({
       email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
-    })
+    });
   }
 
   /**

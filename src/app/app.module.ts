@@ -31,7 +31,6 @@ import { AuthData } from '../providers/auth-data';
 import { TestCategoryPage } from '../pages/test-category/test-category';
 import { SearchCategoryPage } from '../pages/search-category/search-category';
 
-
 // YOUR SETTINGS GOES HERE!
 
 
@@ -66,7 +65,7 @@ export function provideStorage() {
     
     AddressPage,
     TestCategoryPage,
-    SearchCategoryPage,
+    SearchCategoryPage
     
    
 
@@ -99,8 +98,7 @@ export function provideStorage() {
    
     AddressPage,
     TestCategoryPage,
-    SearchCategoryPage,
-   
+    SearchCategoryPage   
     
       
   ],

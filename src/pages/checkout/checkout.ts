@@ -1,5 +1,5 @@
 import { Component,NgZone } from '@angular/core';
-import { NavController, NavParams, LoadingController,ToastController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController,ToastController, ModalController, AlertController } from 'ionic-angular';
 import {FetchProducts } from '../../providers/fetch-products.service';
 
 import { Storage } from '@ionic/storage';
@@ -7,14 +7,14 @@ import {LastOrderPage} from '../last-order/last-order';
 import {AddressPage} from '../address/address';
 import {HomePage} from '../home/home';
 import { App } from 'ionic-angular';
-
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import firebase from 'firebase';
+import { CouponGet } from '../../providers/coupon-get';
 
 @Component({
   selector: 'page-checkout',
   templateUrl: 'checkout.html',
-  providers:  [FetchProducts]
+  providers:  [FetchProducts, CouponGet]
 })
 export class CheckoutPage {
     
@@ -27,6 +27,7 @@ public userShipping: any = {};
 zone: NgZone;
 public orderForm: FormGroup;
 submitAttempt: boolean = false;
+hasCoupon: boolean = false;
 
 public newOrder: any = {};
 public productsArray: Array<any> = [];
@@ -38,10 +39,21 @@ public productsArray: Array<any> = [];
     loading: any;
     orderDataID: any;
     emailVerified: boolean = false;
+    couponChanged: boolean = false;
+  
+  
+  couponDetails: any;
     
     orderPlaced: boolean = false;
+    couponStatus: boolean = false;
+    public couponValidationForm: FormGroup;
+    couponApplied: boolean = false;
+    couponNotFound: boolean = false;
+    couponError: boolean = false;
+    submitAttemptCoupon: boolean = false;
  constructor(public formBuilder:FormBuilder,public navCtrl:NavController,public nav:NavParams,public fetchProducts:FetchProducts, public storage:Storage,
-   public loadingCtrl: LoadingController, public toastCtrl: ToastController, private app: App) 
+   public loadingCtrl: LoadingController, public toastCtrl: ToastController, private app: App, public modalCtrl: ModalController, 
+   public couponGet: CouponGet, public alertCtrl: AlertController) 
     {
       this.orderForm=this.formBuilder.group({
           sFirstName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
@@ -54,6 +66,9 @@ public productsArray: Array<any> = [];
           sCity:['New Delhi',]
           
 }); 
+      this.couponValidationForm = formBuilder.group({
+      coupon : ['', Validators.compose([Validators.required])],
+    });
       this.zone = new NgZone({});
   this.user = firebase.auth().currentUser;
   this.userUID = this.user.uid;
@@ -117,13 +132,59 @@ this.storage.get('cartProducts').then((val)=> {
 
             });
       }
-      
+
+      couponChange(){
+        console.log('tryingg....');
+        this.submitAttemptCoupon = false;
+        if(this.couponStatus){
+
+
+          console.log("Coupon Validation page appearing....");
+          this.hasCoupon = true;
+
+          
+        }else{
+          this.hasCoupon = false;
+          console.log("Coupon Validation page not appearing....");
+        }
+     
+      }      
         elementChanged(input){
     let field = input.inputControl.name;
     this[field + "Changed"] = true;
 }
 
+couponValidate(){
 
+    this.submitAttemptCoupon = true;
+     this.couponApplied = false;
+    this.couponNotFound = false;
+    this.couponError = false;
+    if (!this.couponValidationForm.valid){
+      console.log(this.couponValidationForm.value);
+    } else {
+      this.couponGet.useCoupon(this.couponValidationForm.value.coupon).subscribe((coupon) => {
+        
+        if(coupon.length > 0 && coupon.length < 2){
+          console.log('Coupon is valid. Here it is: ', coupon);
+          this.couponDetails = coupon;
+          this.couponApplied = true;
+           
+          
+        }else{
+          console.log('Coupon is not valid.');
+          this.couponNotFound = true;
+          
+        }
+      
+        this.submitAttemptCoupon = false;
+      }, (error) => {
+        this.couponError = true;
+
+        this.submitAttemptCoupon = false;
+      });
+    }
+  }
       placeOrderDefault(){
         
         if(this.products){
@@ -156,6 +217,15 @@ this.storage.get('cartProducts').then((val)=> {
       },
       "customer_id": this.customerDescription.customerID,
       "line_items": this.products
+     /* "coupon_lines":
+    [
+        [
+            'code'=>'wer',
+            'id'=>128,
+            'amount'=>'10.00',
+            'discount'=>'10'
+        ]
+    ]*/
     }
     this.fetchProducts.placeOrder(this.newOrder).subscribe(data => {
         // we've got back the raw data, now generate the core schedule data
@@ -169,6 +239,7 @@ this.storage.get('cartProducts').then((val)=> {
         this.storage.remove('cartProducts');
         this.storage.remove('productCount');
         this.storage.remove('cartInitialised');
+        
         this.successOrder();
       },
         err => {
@@ -246,6 +317,7 @@ console.log("newUser: ", this.orderForm);
         this.storage.remove('cartProducts');
         this.storage.remove('productCount');
         this.storage.remove('cartInitialised');
+        
         this.successOrder();
       },
         err => {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,NgZone } from '@angular/core';
 import { NavController, LoadingController, AlertController, ViewController } from 'ionic-angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { EmailValidator } from '../../validators/email';
@@ -24,6 +24,19 @@ submitAttempt: boolean = false;
 public userDetails: any = {};
  loading: any;
   userProfile: any = null;
+  zone: NgZone;
+  public userFB: any;
+  public userFBUID: any;
+  public userProfiling: any;
+  fbLoggingIn: boolean =false;
+  userEmail: any;
+  FBMobile: boolean = false;
+  userProfiler: any;
+  FBUserBilling: any;
+FBUserDetails: any;
+
+FBCustomerContact: any;
+databaseExists: boolean = false;
   constructor(public nav: NavController, public authData: AuthData, public formBuilder: FormBuilder,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, public storage: Storage, public viewCtrl: ViewController) {
 
@@ -66,7 +79,7 @@ public userDetails: any = {};
   	let data = { 'foo': 'bar' };
    this.viewCtrl.dismiss(data);
     
-  
+   
 
   }
 
@@ -85,24 +98,128 @@ public userDetails: any = {};
 
   }
   facebookLogin(){
+     console.log('returned');
     Facebook.login(['email']).then( (response) => {
+      
+      this.zone = new NgZone({});
+      this.fbLoggingIn = true;
+      var that = this;
       let facebookCredential = firebase.auth.FacebookAuthProvider
         .credential(response.authResponse.accessToken);
 
     firebase.auth().signInWithCredential(facebookCredential)
       .then((success) => {
-        console.log("Firebase success: " + JSON.stringify(success));
+         that.zone.run( () => {
+        
+
+          console.log("Firebase success: " + JSON.stringify(success));
+         // alert("Success: "+ success);
         this.userProfile = success;
-        this.userDetails = {email: this.userProfile.email};
-          this.storage.set('userDetails',this.userDetails);
-          console.log("this.userDetails", this.userDetails);
-          this.successLogin();
+         this.userFB = firebase.auth().currentUser;
+          this.userFBUID = this.userFB.uid;
+          
+
+         // alert("this.userEmail "+ this.userFB.email);
+setTimeout(() => {
+          }, 200);
+          if(!this.userFB.email){
+            
+           // alert('userEmail doesn\'t exist');
+
+            this.userEmail = this.userFBUID + '@gmail.com';
+            // alert('Now this.userEmail is '+ this.userEmail);
+            this.FBMobile = true;
+            setTimeout(() => {
+            }, 300);
+          }
+          //alert('fbuserid: ' + this.userFBUID);
+          
+          setTimeout(() => {
+          }, 300);
+       this.userProfiler = firebase.database().ref('userProfile');
+       //alert('userProfiling: ' + that.userProfiler);
+        that.userProfiler.on('value', function(snapshot) {
+          
+         //   alert('wooo');
+        console.log("Snapshot",snapshot.val());
+        let exists = snapshot.child(that.userFBUID).exists();
+        //alert("exists:" + exists);
+        if(exists){
+          //login for the second time or above   
+//alert('beforeeee');
+            let billingExists = snapshot.child(that.userFBUID).val().billing;
+           if(billingExists){
+         // alert("billing exists");
+          //user has been created in the WooCommerce
+         // alert('that.userFBUID: '+ that.userFB.uid);
+           that.FBUserDetails = snapshot.child(that.userFBUID).val();
+        console.log("this.FBUserDetails", that.FBUserDetails);
+       // alert('goin');
+        that.FBUserBilling = that.FBUserDetails.billing;
+        console.log("this.FBUserBilling", that.FBUserBilling);
+       // alert('going');
+        //alert("PHONE" + that.FBUserBilling.phone);
+        //alert("customerEmail" + that.FBUserBilling.email);
+        that.FBCustomerContact = {customerContact: that.FBUserBilling.phone, customerEmail: that.FBUserBilling.email};
+          that.storage.set('customerContact',that.FBCustomerContact);
+          //alert('customerContact' + that.FBCustomerContact);
+          console.log('FB Customer Contact: ', that.FBCustomerContact);
+           that.databaseExists = true;
+      //  alert('gone'); 
+      }else{
+        //user has not been created in Woocommerce yet!
+       // alert('billing does not exist');
+      }
+               
+          
+          
+        
+        }else{
+           //login for the first time
+         //  alert("1st time");
+           that.userProfiling = firebase.database().ref('userProfile');
+
+           if(that.FBMobile){
+             that.userProfiling.child(that.userFBUID).set({fbLogin: true, email: that.userEmail});
+           }else{that.userProfiling.child(that.userFBUID).set({fbLogin: true, email: that.userProfile.email}); 
+           //  alert('done');
+           }
+        }
+         
+
+      
+
+});
+         
+         if(that.FBMobile){
+           that.userDetails = {email: that.userEmail, password: that.userFBUID};
+         }else{
+            that.userDetails = {email: that.userProfile.email, password: that.userFBUID};
+            
+         }
+       that.storage.set('userDetails',that.userDetails);
+          console.log("this.userDetails", that.userDetails); 
+        
+        that.successLogin();
+        
+          
+          
+         }); 
     })
     .catch((error) => {
+    //  alert("error: "+ error);
     console.log("Firebase failure: " + JSON.stringify(error));
+     let alert = this.alertCtrl.create({
+      title: 'Login Unsuccessfull!',
+      subTitle: 'Login Unsuccessfull! Please try again.',
+      buttons: ['OK']
+    });
+    alert.present();
   });
 
-    }).catch((error) => { console.log(error) });
+    }).catch((error) => { console.log(error);
+    // alert(error);
+      });
   }
 
 }

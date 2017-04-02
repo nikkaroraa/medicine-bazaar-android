@@ -26,7 +26,7 @@ export class MailSend {
         "text": "Testing123",
         "subject": "New User Prescription",
         "from_email": "admin@medicinebazaar.in",
-        "from_name": "Example Name",
+        "from_name": "User Prescription",
         "to": [
             {
                 "email":"genithub@gmail.com",

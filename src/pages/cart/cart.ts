@@ -132,7 +132,7 @@ if(firebase.auth().currentUser){
       console.log("Count increased by 1 for: ", product.name);
       this.costSum = this.costSum + Number(product.price);
       this.costSumString = this.costSum.toFixed(2);
-  }
+  } 
   deleteItem(product){
       var that = this;
       this.cartItems.forEach(function(element, index){

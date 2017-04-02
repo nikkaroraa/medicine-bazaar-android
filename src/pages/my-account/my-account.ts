@@ -39,6 +39,7 @@ loading: any;
       this.storage.remove('userDetails');
       this.storage.remove('customerContact');
       this.storage.remove('emailVerified');
+      
       this.successLogout();
 
       

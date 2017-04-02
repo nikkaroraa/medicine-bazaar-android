@@ -14,7 +14,7 @@
 
 
 <ion-content padding>
-
+ 
     <ion-card>
   <ion-card-header text-center>
     Use stored address
@@ -25,6 +25,37 @@
   
     <p style="font-size:1.3em;font-size:600;">{{userShipping.address1}}</p>
     <p style="font-size:1.3em;font-size:600;">{{userShipping.address2}}</p>
+    <br />
+    <div style="font-size: 1.3em;">
+
+    <ion-checkbox color="dark" checked="false" style="display: inline-block;" [(ngModel)]="couponStatus" (ionChange)="couponChange()"></ion-checkbox> &nbsp;<span style="font-size: 1em;font-family: 'Roboto', sans-serif;">Have a coupon?</span>
+    </div>
+    <div *ngIf="couponApplied">
+      Yay! Coupon Successfully applied!
+    </div>
+    <div *ngIf="hasCoupon">
+    <form [formGroup]="couponValidationForm" (submit)="couponValidate()" novalidate>
+
+    <ion-item>
+      <ion-label stacked>Coupon</ion-label>
+      <ion-input #coupon formControlName="coupon" type="text" (change)="elementChanged(coupon)"
+        placeholder="Type coupon name..."
+        [class.invalid]="!couponValidationForm.controls.coupon.valid && (couponChanged || submitAttempt)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!couponValidationForm.controls.coupon.valid  && (couponChanged || submitAttempt)">
+      <p>Please enter a valid coupon.</p>
+    </ion-item>
+
+    <button ion-button [disabled]="submitAttemptCoupon" block type="submit">
+      Apply Coupon
+    </button>
+
+  </form>
+    </div>
+    
+    <div>&nbsp;</div>
+
+   
     <button text-center ion-button block color="secondary" (click)="placeOrderDefault()" [hidden]="orderPlaced">Place Order</button> 
   </ion-card-content>
 </ion-card>
