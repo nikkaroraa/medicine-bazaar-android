@@ -31,7 +31,7 @@
     <span style="font-size: 1em;font-family: 'Roboto', sans-serif;">Have a coupon?</span>
     </div>
     <div *ngIf="couponApplied">
-      Yay! Coupon Successfully applied!
+      Yay! {{couponAmount}}{{couponDiscountType}} Coupon Successfully applied!
     </div>
     
     <form [formGroup]="couponValidationForm" (submit)="couponValidate()" novalidate>

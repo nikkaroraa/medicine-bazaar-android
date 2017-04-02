@@ -187,39 +187,13 @@ console.log("userDetails myApp", val);
         that.billingExists = false;
       }
       });         
-         // console.log("Voilaaa");
-        /*  if(firebase.auth().currentUser){
-            //alert('User Exists');
-            //alert("User" + firebase.auth().currentUser);
-            // console.log("You know what?");
-            that.user = firebase.auth().currentUser;
-           that.userUID = that.user.uid;
-          
-     
-    that.userProfilium = firebase.database().ref('userProfile/' + that.userUID);
-          that.userProfilium.on('value', function(snapshot) {
-
-            if(snapshot.val().billing && snapshot.val().shipping && snapshot.val().customerDescription){
-             // alert("Snapshot exists");
-               that.billingExists = true;
-               console.log('Billing Exists');
-            }else{
-             // alert("Snapshot doesnt exist");
-               that.billingExists = false;
-               console.log('Billing does not exist');
-            }
-
-          });
-          }else if(!firebase.auth().currentUser){
-            console.log('User doesn\'t exist');
-          }
-          */
+         
         }else{
           that.loggedIn = false;
           that.billingExists = false;
         }
        console.log('logged: ',that.loggedIn);
-       //console.log('billingExists ', that.billingExists);
+       
        });
          
     });

@@ -51,6 +51,9 @@ public productsArray: Array<any> = [];
     couponNotFound: boolean = false;
     couponError: boolean = false;
     submitAttemptCoupon: boolean = false;
+    couponType: any;
+    couponDiscountType: any;
+    couponAmount: any;
  constructor(public formBuilder:FormBuilder,public navCtrl:NavController,public nav:NavParams,public fetchProducts:FetchProducts, public storage:Storage,
    public loadingCtrl: LoadingController, public toastCtrl: ToastController, private app: App, public modalCtrl: ModalController, 
    public couponGet: CouponGet, public alertCtrl: AlertController) 
@@ -165,11 +168,16 @@ couponValidate(){
     } else {
       this.couponGet.useCoupon(this.couponValidationForm.value.coupon).subscribe((coupon) => {
         
-        if(coupon.length > 0 && coupon.length < 2){
+        if(coupon.length == 1){
           console.log('Coupon is valid. Here it is: ', coupon);
           this.couponDetails = coupon;
           this.couponApplied = true;
-           
+          this.couponAmount = coupon[0].amount;
+
+          this.couponType = coupon[0].discount_type;
+          if(this.couponType == 'percent'){
+            this.couponDiscountType = '%';
+          }
           
         }else{
           console.log('Coupon is not valid.');
