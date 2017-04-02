@@ -65,8 +65,7 @@ shipping: any;
           botp: ['',]
 }); 
     var that = this;
-    
-    
+
     if(!firebase.auth().currentUser){
 
       that.loading = that.loadingCtrl.create({
@@ -81,11 +80,11 @@ shipping: any;
     setTimeout(() => {
       
      that.navCtrl.setRoot(HomePage);
-    }, 500);
+    }, 1000);
 
     setTimeout(() => {
       that.loading.dismiss();
-    }, 1000);
+    }, 2000);
 
     }else{
 
@@ -114,6 +113,12 @@ shipping: any;
            console.log("The value of count is:", that.count);
           // User is signed in and currentUser will no longer return null.
            
+          that.storage.get('customerContact').then((details)=>{
+      if(details){
+        console.log("customerContactTrue", details);
+        that.navCtrl.push(CheckoutPage);
+      }else{
+        console.log("customerContactFalse", details);
            that.user = firebase.auth().currentUser;
            that.userUID = that.user.uid;
           
@@ -210,6 +215,10 @@ shipping: any;
                   
           
         });
+      }
+      });         
+
+          
 
          }
 

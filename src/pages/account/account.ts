@@ -9,7 +9,8 @@ import { Facebook } from 'ionic-native';
 import firebase from 'firebase';
 import { Storage } from '@ionic/storage';
 import {AddressPage} from '../address/address';
-import {CheckoutPage} from '../checkout/checkout';
+//import {CheckoutPage} from '../checkout/checkout';
+import { HomePage } from '../home/home';
 /*
   Generated class for the Account page.
 
@@ -206,7 +207,7 @@ export class AccountPage {
     setTimeout(() => {
       if(this.databaseExists){
 
-        this.nav.push(CheckoutPage);
+        this.nav.setRoot(HomePage);
       
       }else{this.nav.push(AddressPage);}
      
@@ -315,31 +316,7 @@ export class AccountPage {
      this.nav.push(ResetPasswordPage);
    }
 
-   checkFbMail(){
-      let alert = this.alertCtrl.create({
-      title: 'Warning',
-      message: 'Continue only if you use facebook with your email...',
-      buttons: [
-      {
-        text: 'Cancel',
-        role: 'cancel',
-        handler: () => {
-          console.log('Cancel clicked');
-          return;
-        }
-      },
-      {
-        text: 'Continue',
-        handler: () => {
-          console.log('Continuing...');
-          this.facebookSignin();
-        }
-      }
-    ]
-    });
-    alert.present();
-
-   }
+   
 
    facebookLogin(){
 
@@ -418,6 +395,7 @@ setTimeout(() => {
       }else{
         //user has not been created in Woocommerce yet!
        // alert('billing does not exist');
+       that.databaseExists = false;
       }
                
           
