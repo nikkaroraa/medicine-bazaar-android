@@ -15,7 +15,7 @@
 
 <ion-content padding>
  
-    <ion-card>
+    <ion-card *ngIf="!useDifferentAddress">
   <ion-card-header text-center>
     Use stored address
   </ion-card-header>
@@ -27,11 +27,14 @@
     <p style="font-size:1.3em;font-size:600;">{{userShipping.address2}}</p>
     <br />
     <div style="font-size: 1.3em;">
-    <ion-checkbox color="dark" (ionChange)='couponChange()' [(ngModel)]="couponStatus" checked="false"></ion-checkbox>
+    <ion-checkbox color="primary" (ionChange)='couponChange()' [(ngModel)]="couponStatus" checked="false"></ion-checkbox>
     &nbsp;<span style="font-size: 1em;font-family: 'Roboto', sans-serif;">Have a coupon?</span>
     </div>
     <div *ngIf="couponApplied">
-      Yay! {{couponAmount}}{{couponDiscountType}} Discount coupon successfully applied!
+      Yay! {{couponAmount}}{{couponDiscountType}} Discount Coupon Successfully Applied!
+    </div>
+    <div *ngIf="couponNotFound">
+      No discount coupon found for this code! Try again with a different one.
     </div>
     <div [hidden]="!hasCoupon">
     <form [formGroup]="couponValidationForm" (submit)="couponValidate()" novalidate>
@@ -39,7 +42,7 @@
     <ion-item>
       <ion-label stacked>Coupon</ion-label>
       <ion-input #coupon formControlName="coupon" type="text" (change)="elementChanged(coupon)"
-        placeholder="Type coupon name..."
+        placeholder="Type coupon code..."
         [class.invalid]="!couponValidationForm.controls.coupon.valid && (couponChanged || submitAttempt)"></ion-input>
     </ion-item>
     <ion-item class="error-message" *ngIf="!couponValidationForm.controls.coupon.valid  && (couponChanged || submitAttempt)">
@@ -59,8 +62,12 @@
     <button text-center ion-button block color="secondary" (click)="placeOrderDefault()" [hidden]="orderPlaced">Place Order</button> 
   </ion-card-content>
 </ion-card>
-<h2 text-center> OR </h2>
-<ion-card>
+<h2 text-center *ngIf="!useDifferentAddress"> OR </h2>
+<div text-center>
+<ion-checkbox color="dark" (ionChange)='changeAddress()' [(ngModel)]="differentAddressFlag" checked="false"></ion-checkbox>
+    &nbsp;<span style="font-size: 1em;font-family: 'Roboto', sans-serif;">Want to Use a New Delivery Address?</span>
+</div>
+<ion-card *ngIf="useDifferentAddress">
   <ion-card-header text-center>
     Use a New Delivery Address
   </ion-card-header>
@@ -130,9 +137,42 @@
      <ion-item class="error-message" *ngIf="!orderForm.controls.sPinCode.valid && (sPinCodeChanged || submitAttempt)">
       <p>Enter six digit pincode</p>
 </ion-item>
+
 <div>&nbsp;</div>
+
  <button text-center ion-button block color="secondary" type="submit" [hidden]="orderPlaced">Place Order</button>
   </form>
+  <!--
+  <div style="font-size: 1.3em;">
+    <ion-checkbox color="primary" (ionChange)='couponChange()' [(ngModel)]="couponStatus" checked="false"></ion-checkbox>
+    &nbsp;<span style="font-size: 1em;font-family: 'Roboto', sans-serif;">Have a coupon?</span>
+    </div>
+    <div *ngIf="couponApplied">
+      Yay! {{couponAmount}}{{couponDiscountType}} Discount Coupon Successfully Applied!
+    </div>
+    <div *ngIf="couponNotFound">
+      No discount coupon found for this code! Try again with a different one.
+    </div>
+    <div [hidden]="!hasCoupon">
+    
+
+    
+    <ion-item>
+    <ion-label stacked>Coupon</ion-label>
+    <ion-input #couponCode (change)="elementChanged(couponCode)" type="text" [(ngModel)]="couponCode" placeholder="Type coupon code..."></ion-input>
+  </ion-item>
+      
+    
+    <ion-item class="error-message" *ngIf="coupon  && (couponCodeChanged || submitAttempt)">
+      <p>Please enter a valid coupon.</p>
+    </ion-item>
+
+    <button ion-button [disabled]="submitAttemptCoupon" block (click)="couponValidate()">
+      Apply Coupon
+    </button>
+
+  
+    </div>-->
   </ion-list>
 
 

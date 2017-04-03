@@ -33,6 +33,7 @@ public newOrder: any = {};
 public productsArray: Array<any> = [];
     public orderData = {};
     public products: Array<any> = [];
+   productsFinal: Array<any> = [];
     public customerID: any;
     public shipping_address: any = {};
     public customerDescription: any = {};
@@ -47,13 +48,27 @@ public productsArray: Array<any> = [];
     orderPlaced: boolean = false;
     couponStatus: boolean = false;
     public couponValidationForm: FormGroup;
+    //public couponValidationForm2: FormGroup;
     couponApplied: boolean = false;
     couponNotFound: boolean = false;
     couponError: boolean = false;
     submitAttemptCoupon: boolean = false;
+    coupon2Applied: boolean = false;
+    coupon2NotFound: boolean = false;
+    coupon2Error: boolean = false;
+    submitAttemptCoupon2: boolean = false;
+    couponCode: any;
     couponType: any;
     couponDiscountType: any;
     couponAmount: any;
+
+    differentAddressFlag: boolean = false;
+    useDifferentAddress: boolean = false;
+    couponCodeInvalid: boolean = false;
+    subtotalBeforeCoupon: any = 0;
+    totalAfterCoupon: any = 0;
+    discountTotalMul: any = 0;
+
  constructor(public formBuilder:FormBuilder,public navCtrl:NavController,public nav:NavParams,public fetchProducts:FetchProducts, public storage:Storage,
    public loadingCtrl: LoadingController, public toastCtrl: ToastController, private app: App, public modalCtrl: ModalController, 
    public couponGet: CouponGet, public alertCtrl: AlertController) 
@@ -72,6 +87,7 @@ public productsArray: Array<any> = [];
       this.couponValidationForm = formBuilder.group({
       coupon : ['', Validators.compose([Validators.required])],
     });
+      
       this.zone = new NgZone({});
   this.user = firebase.auth().currentUser;
   this.userUID = this.user.uid;
@@ -126,7 +142,7 @@ this.storage.get('cartProducts').then((val)=> {
          var that = this;
          this.productsArray.forEach(function(element, index){
           
-          that.products.push({product_id: element.id, quantity: element.count});
+          that.products.push({product_id: element.id, quantity: element.count, subtotal: element.price});
         });
        }else if(!val){
          this.products = val;
@@ -170,7 +186,7 @@ couponValidate(){
         
         if(coupon.length == 1){
           console.log('Coupon is valid. Here it is: ', coupon);
-          this.couponDetails = coupon;
+          this.couponDetails = coupon[0];
           this.couponApplied = true;
           this.couponAmount = coupon[0].amount;
 
@@ -193,11 +209,124 @@ couponValidate(){
       });
     }
   }
-      placeOrderDefault(){
+couponValidate2(){
+
+    this.submitAttemptCoupon2 = true;
+     this.coupon2Applied = false;
+    this.coupon2NotFound = false;
+    this.coupon2Error = false;
+
+    console.log("code is:", this.couponCode);
+    console.log("length is:", this.couponCode.length);
+    if (this.couponCode.length == 0){
+      //console.log(this.couponValidationForm.value);
+      this.couponCodeInvalid = true;
+    } else {
+      this.couponGet.useCoupon(this.couponCode).subscribe((coupon) => {
         
+        if(coupon.length == 1){
+          console.log('Coupon is valid. Here it is: ', coupon);
+          this.couponDetails = coupon[0];
+          this.couponApplied = true;
+          this.couponAmount = coupon[0].amount;
+
+          this.couponType = coupon[0].discount_type;
+          if(this.couponType == 'percent'){
+            this.couponDiscountType = '%';
+          }
+          
+        }else{
+          console.log('Coupon is not valid.');
+          this.couponNotFound = true;
+          
+        }
+      
+        this.submitAttemptCoupon = false;
+      }, (error) => {
+        this.couponError = true;
+
+        this.submitAttemptCoupon = false;
+      });
+    }
+  }
+  changeAddress(){
+
+        
+        if(this.differentAddressFlag){
+
+
+          console.log("Using Different Address");
+          this.useDifferentAddress = true;
+
+          
+        }else{
+          this.useDifferentAddress = false;
+          console.log("Using the Same Address");
+        }
+     
+
+
+  }
+      placeOrderDefault(){
+        var that = this;
         if(this.products){
           this.orderPlaced = true;
-          this.newOrder = {
+
+          //if(this.discountcouponapplied)
+          if(this.couponApplied){
+            this.subtotalBeforeCoupon = 0;
+            this.totalAfterCoupon = 0;
+            this.discountTotalMul = ((100 - Number(that.couponAmount))/100);
+            
+            this.products.forEach(function(element, index){
+             that.subtotalBeforeCoupon = element.subtotal;
+             that.totalAfterCoupon = that.discountTotalMul * that.subtotalBeforeCoupon;
+          that.productsFinal.push({product_id: element.product_id, quantity: element.quantity, subtotal: element.subtotal, total: that.totalAfterCoupon});
+        });
+
+            console.log("Path to coupon applied");
+            this.newOrder = {
+      "payment_method": "COD",
+      "payment_method_title": "Cash On Delivery",
+      "set_paid": true,
+      "billing": {
+        "first_name": this.userBilling.first_name,
+        "last_name": this.userBilling.last_name,
+        "address_1": this.userBilling.address1,
+        "address_2": this.userBilling.address2,
+        "city": this.userBilling.city,
+        "state": this.userBilling.state,
+        "postcode": this.userBilling.postcode,
+        "country": this.userBilling.country,
+        "email": this.customerDescription.email,
+        "phone": this.userBilling.phone
+      },
+      "shipping": {
+        "first_name": this.userShipping.first_name,
+        "last_name": this.userShipping.last_name,
+        "address_1": this.userShipping.address1,
+        "address_2": this.userShipping.address2,
+        "city": this.userShipping.city,
+        "state": this.userShipping.state,
+        "postcode": this.userShipping.postcode,
+        "country": this.userShipping.country
+      },
+      "customer_id": this.customerDescription.customerID,
+      "line_items": this.productsFinal,
+      "coupon_lines":
+    [
+        {
+            'code': this.couponDetails.code,
+            'id': this.couponDetails.id,
+            'discount': 1400,
+            'discount_tax': 100 
+        }
+    ]
+    }
+
+          }else{
+            console.log("Path to coupon not applied");
+            this.newOrder = {
       "payment_method": "COD",
       "payment_method_title": "Cash On Delivery",
       "set_paid": true,
@@ -235,6 +364,8 @@ couponValidate(){
         ]
     ]*/
     }
+          }
+          
     this.fetchProducts.placeOrder(this.newOrder).subscribe(data => {
         // we've got back the raw data, now generate the core schedule data
         // and save the data for later reference
