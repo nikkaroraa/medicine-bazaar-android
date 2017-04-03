@@ -68,6 +68,7 @@ public productsArray: Array<any> = [];
     subtotalBeforeCoupon: any = 0;
     totalAfterCoupon: any = 0;
     discountTotalMul: any = 0;
+    couponAmountDisplay: any = 0;
 
  constructor(public formBuilder:FormBuilder,public navCtrl:NavController,public nav:NavParams,public fetchProducts:FetchProducts, public storage:Storage,
    public loadingCtrl: LoadingController, public toastCtrl: ToastController, private app: App, public modalCtrl: ModalController, 
@@ -189,7 +190,7 @@ couponValidate(){
           this.couponDetails = coupon[0];
           this.couponApplied = true;
           this.couponAmount = coupon[0].amount;
-
+           this.couponAmountDisplay = this.couponAmount.toFixed(2);
           this.couponType = coupon[0].discount_type;
           if(this.couponType == 'percent'){
             this.couponDiscountType = '%';
@@ -390,7 +391,7 @@ couponValidate2(){
   }else{
      let toast = this.toastCtrl.create({
         message: 'Cart is empty',
-        duration: 3000,
+        duration: 2000,
         position: 'bottom'
        });
 

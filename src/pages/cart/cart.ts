@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import {AddressPage} from '../address/address';
 import { CheckoutPage } from '../checkout/checkout';
 import firebase from 'firebase';
+import {HomePage} from '../home/home';
 /*
   Generated class for the Cart page.
 
@@ -25,9 +26,11 @@ billingExists: boolean= false;
 userUID: any;
 user: any;
 userProfilium: any;
+hasProducts: boolean = false;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,public storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,public storage: Storage,
+    public toastCtrl: ToastController) {
 var that = this;
       this.costSumString = this.costSum.toFixed(2);
     this.storage.get('cartProducts').then((val)=> {
@@ -37,20 +40,25 @@ var that = this;
 if(val){
 
   this.cartArray = val;
-        
-
-this.cartItems = this.cartArray;
+  if(this.cartArray.length){
+   that.hasProducts = true;     
+    this.cartItems = this.cartArray;
 console.log(this.cartItems);
 this.cartItems.forEach(function(element, index){
      that.costSum += element.count*Number(element.price);
     that.costSumString = that.costSum.toFixed(2);
     console.log("Added: ", that.costSum);
   });
+  }else{
+    that.hasProducts = false; 
+  }
+
+
       
 }else{
   this.cartArray = [];
   this.cartItems = [];
-  
+  that.hasProducts = false;
 }
               });
 
@@ -104,10 +112,26 @@ if(firebase.auth().currentUser){
  
  //go to checkout page
  goToCheckOut()
- {
-   if(this.billingExists)
+ { 
+   
+   if(this.billingExists && this.hasProducts)
      {this.navCtrl.push(CheckoutPage);}
-     else{this.navCtrl.push(AddressPage);}
+     else if(!this.billingExists && this.hasProducts)
+       {this.navCtrl.push(AddressPage);}
+     else if(!this.hasProducts){
+       let toast = this.toastCtrl.create({
+        message: 'Cart is empty',
+        duration: 2000,
+        position: 'bottom'
+       });
+
+      toast.onDidDismiss(() => {
+        console.log('Dismissed toast');
+        this.navCtrl.setRoot(HomePage); 
+      });
+
+      toast.present(toast);
+     }
    
  }
   increaseCount(product){
@@ -141,6 +165,9 @@ if(firebase.auth().currentUser){
       console.log("Product.count here is:", product.count);
         this.costSum = this.costSum - product.count*Number(product.price);
       console.log("Last Cost sum", this.costSum);
+      if(!this.costSum){
+        this.hasProducts = false; 
+      }
       this.costSumString = this.costSum.toFixed(2);
   }    
 }

@@ -31,7 +31,7 @@
     &nbsp;<span style="font-size: 1em;font-family: 'Roboto', sans-serif;">Have a coupon?</span>
     </div>
     <div *ngIf="couponApplied">
-      Yay! {{couponAmount}}{{couponDiscountType}} Discount Coupon Successfully Applied!
+      Yay! {{couponAmountDisplay}}{{couponDiscountType}} Discount Coupon Successfully Applied!
     </div>
     <div *ngIf="couponNotFound">
       No discount coupon found for this code! Try again with a different one.
@@ -60,6 +60,7 @@
 
    
     <button text-center ion-button block color="secondary" (click)="placeOrderDefault()" [hidden]="orderPlaced">Place Order</button> 
+     <button text-center ion-button block color="danger" (click)="cancel()">Cancel</button>
   </ion-card-content>
 </ion-card>
 <h2 text-center *ngIf="!useDifferentAddress"> OR </h2>
