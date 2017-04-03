@@ -320,9 +320,7 @@ couponValidate2(){
     [
         {
             'code': this.couponDetails.code,
-            'id': this.couponDetails.id,
-            'discount': 1400,
-            'discount_tax': 100 
+            'id': this.couponDetails.id 
         }
     ]
     }

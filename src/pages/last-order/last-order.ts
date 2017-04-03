@@ -19,18 +19,28 @@ public lastOrderID: any = {};
 
 public orderDetails: any = {};
 public orderShipping: any = {};
+subTotal: any = 0;
+orderTotal: any = 0;
+discountAmount: any = 0;
+public couponApplied: any = {};
   constructor(public navCtrl: NavController, public navParams: NavParams, public fetchProducts: FetchProducts) {
+    var that = this;
     console.log("Hello");
   	this.lastOrderID = this.navParams.get('response');
   	console.log(this.lastOrderID);
-  	
+  	this.subTotal = 0;
   	this.fetchProducts.retrieveOrder(this.lastOrderID).subscribe((data)=>{
   		this.orderDetails = data;
+      this.couponApplied = data.coupon_lines[0];
       this.orderDetails.line_items.forEach(function(element, index){
-     
+       that.subTotal += Number(element.subtotal);
       element.price = (Number(element.subtotal))/(element.quantity);
   });
-  		console.log(this.orderDetails);
+  		this.orderTotal = Number(this.orderDetails.total);
+      console.log(this.orderTotal);
+      console.log("this.subTotal ", this.subTotal);
+      this.discountAmount =  (this.subTotal - this.orderTotal).toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
+      console.log(this.orderDetails);
       this.orderShipping = data.shipping;
   	},
   	(err)=>{

@@ -32,11 +32,16 @@
 		<ion-item text-center>
 			Quantity: #<span style="font-size:1.5em;">{{order.quantity}}</span>
 		</ion-item>
-		<ion-item text-center>
-			Sub-total: &#8377;<span style="font-size:1.5em;">{{order.subtotal}}</span>
-		</ion-item>
+		
+    
     </ion-list>
-    	Total: <span style="font-size:1.5em;">&#8377;{{orderDetails.total}}</span>
+    	Sub-total: &#8377;<span style="font-size:1.5em;">{{subTotal}}</span>
+      <br />
+      Discount Coupon: <span style="font-size:1.3em;">{{couponApplied.code}}</span>
+      <br />
+      Discount: &#8377;<span style="font-size:1.5em;">{{discountAmount}}</span>
+      <br />
+      Total: <span style="font-size:1.5em;">&#8377;{{orderDetails.total}}</span>
 </ion-card-content>
 </ion-card>
 <ion-card>
