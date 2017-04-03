@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { FetchProducts } from '../../providers/fetch-products.service';
-
+ 
 /*
   Generated class for the LastOrder page.
 
@@ -26,6 +26,10 @@ public orderShipping: any = {};
   	
   	this.fetchProducts.retrieveOrder(this.lastOrderID).subscribe((data)=>{
   		this.orderDetails = data;
+      this.orderDetails.line_items.forEach(function(element, index){
+     
+      element.price = (Number(element.subtotal))/(element.quantity);
+  });
   		console.log(this.orderDetails);
       this.orderShipping = data.shipping;
   	},

@@ -69,6 +69,7 @@ public productsArray: Array<any> = [];
     totalAfterCoupon: any = 0;
     discountTotalMul: any = 0;
     couponAmountDisplay: any = 0;
+    subtotalAmount: any = 0;
 
  constructor(public formBuilder:FormBuilder,public navCtrl:NavController,public nav:NavParams,public fetchProducts:FetchProducts, public storage:Storage,
    public loadingCtrl: LoadingController, public toastCtrl: ToastController, private app: App, public modalCtrl: ModalController, 
@@ -142,8 +143,8 @@ this.storage.get('cartProducts').then((val)=> {
           this.productsArray = val;
          var that = this;
          this.productsArray.forEach(function(element, index){
-          
-          that.products.push({product_id: element.id, quantity: element.count, subtotal: element.price});
+          that.subtotalAmount = (element.count)*(element.price)
+          that.products.push({product_id: element.id, quantity: element.count, subtotal: that.subtotalAmount});
         });
        }else if(!val){
          this.products = val;
@@ -190,7 +191,7 @@ couponValidate(){
           this.couponDetails = coupon[0];
           this.couponApplied = true;
           this.couponAmount = coupon[0].amount;
-           this.couponAmountDisplay = this.couponAmount.toFixed(2);
+           this.couponAmountDisplay = Math.floor(Number(this.couponAmount));
           this.couponType = coupon[0].discount_type;
           if(this.couponType == 'percent'){
             this.couponDiscountType = '%';
@@ -230,7 +231,7 @@ couponValidate2(){
           this.couponDetails = coupon[0];
           this.couponApplied = true;
           this.couponAmount = coupon[0].amount;
-
+          this.couponAmountDisplay = Number(coupon[0].amount);
           this.couponType = coupon[0].discount_type;
           if(this.couponType == 'percent'){
             this.couponDiscountType = '%';
@@ -286,6 +287,7 @@ couponValidate2(){
         });
 
             console.log("Path to coupon applied");
+            console.log('that.productsFinal ', that.productsFinal);
             this.newOrder = {
       "payment_method": "COD",
       "payment_method_title": "Cash On Delivery",
