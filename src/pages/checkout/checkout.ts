@@ -34,6 +34,8 @@ public productsArray: Array<any> = [];
     public orderData = {};
     public products: Array<any> = [];
    productsFinal: Array<any> = [];
+   couponExcludeProducts: Array<any> = []; 
+      couponExcludeCategories: Array<any> = [];
     productCategoriesID: Array<any> = [];
     public customerID: any;
     public shipping_address: any = {};
@@ -75,6 +77,8 @@ public productsArray: Array<any> = [];
     subTotalSum: any = 0;
     totalSum: any = 0;
     totalDiscountSum: any = 0;
+    excludedProductsFound: boolean = false;
+    excludedCategoriesFound: boolean = false;
 
  constructor(public formBuilder:FormBuilder,public navCtrl:NavController,public nav:NavParams,public fetchProducts:FetchProducts, public storage:Storage,
    public loadingCtrl: LoadingController, public toastCtrl: ToastController, private app: App, public modalCtrl: ModalController, 
@@ -153,6 +157,7 @@ this.storage.get('cartProducts').then((val)=> {
           that.subtotalAmount = (element.count) * (Number(element.price));
           that.subTotalSum += that.subtotalAmount;
           // element.categories is an array
+          that.productCategoriesID = [];
             element.categories.forEach(function(category, position){
                 that.productCategoriesID.push(category.id);
             });
@@ -204,18 +209,83 @@ couponValidate(){
         if(coupon.length == 1){
           console.log('Coupon is valid. Here it is: ', coupon);
           this.couponDetails = coupon[0];
-          this.couponApplied = true;
           this.couponAmount = coupon[0].amount;
           this.discountTotalMul = ((100 - Number(this.couponAmount))/100);
-           //  this.totalAfterCoupon = this.discountTotalMul * that.subtotalBeforeCoupon;
-             // that.subTotalSum += Number(element.subtotal);
-             //that.totalSum += Number(that.totalAfterCoupon);
+          
            this.couponAmountDisplay = Math.floor(Number(this.couponAmount));
           this.couponType = coupon[0].discount_type;
           if(this.couponType == 'percent'){
             this.couponDiscountType = '%';
           }
+     
+          this.couponExcludeProducts = this.couponDetails.exclude_product_ids; 
+          console.log('couponExcludeProducts ', this.couponExcludeProducts);
+
+          this.couponExcludeCategories = this.couponDetails.excluded_product_categories;
+          console.log('couponExcludeCategories ', this.couponExcludeCategories);
+          var that = this;
           
+          that.productsFinal = [];
+          console.log('productsFinal ', that.productsFinal);
+          console.log('products ', that.products);
+          //this.products.forEach(function(element, index){
+             for(let element of this.products){
+
+            //that.couponDetails
+            console.log('product_id ', element.product_id);
+            console.log('Inside forEach');
+            that.excludedProductsFound = false;
+              //that.couponExcludeProducts.forEach(function (product, pos){
+                for(let product of that.couponExcludeProducts){
+                  console.log('productId ', element.product_id);
+                  if(element.product_id == product){
+                      that.productsFinal.push({product_id: element.product_id, quantity: element.quantity, subtotal: element.subtotal, total: element.subtotal});
+                       that.excludedProductsFound = true;   
+                      console.log('excludedProductsFound ', that.excludedProductsFound);
+                      
+                      console.log('productsFinal excludeProducts ', that.productsFinal);
+                      break;                      
+                  }
+
+              }
+              //element.categories_id.forEach(function(category_id, pos){
+                if(!that.excludedProductsFound){
+                  for(let category_id of element.categories_id){
+                that.excludedCategoriesFound = false;
+                //that.couponExcludeCategories.forEach(function (category, position){
+                  for(let category of that.couponExcludeCategories){
+                   console.log('categoryId ', category_id);
+                  
+                  if(category_id == category){
+
+                      that.productsFinal.push({product_id: element.product_id, quantity: element.quantity, subtotal: element.subtotal, total: element.subtotal});
+                       that.excludedCategoriesFound = true;   
+
+                      console.log('productsFinal excludeCategories ', that.productsFinal);
+                      break;                      
+                  }
+                }
+
+                if(that.excludedCategoriesFound){
+                  break;  
+                }        
+              }
+                }
+                
+              
+              if(!that.excludedProductsFound && !that.excludedCategoriesFound){
+                that.couponApplied = true;
+                       that.totalAfterCoupon = that.discountTotalMul * element.subtotal;
+                       //that.subTotalSum += Number(element.subtotal);
+                   //that.totalSum += Number(that.totalAfterCoupon);
+                that.productsFinal.push({product_id: element.product_id, quantity: element.quantity, subtotal: element.subtotal, total: that.totalAfterCoupon});
+               
+                      console.log('productsFinal None excluded ', that.productsFinal);
+              }
+
+          //that.productsFinal.push({product_id: element.product_id, quantity: element.quantity, subtotal: element.subtotal, total: that.totalAfterCoupon});
+        }
+               
         }else{
           console.log('Coupon is not valid.');
           this.couponNotFound = true;
@@ -295,18 +365,18 @@ couponValidate2(){
 
           //if(this.discountcouponapplied)
           if(this.couponApplied){
-            this.subtotalBeforeCoupon = 0;
-            this.totalAfterCoupon = 0;
+           // this.subtotalBeforeCoupon = 0;
+           // this.totalAfterCoupon = 0;
             
-            this.discountTotalMul = ((100 - Number(that.couponAmount))/100);
+          //  this.discountTotalMul = ((100 - Number(that.couponAmount))/100);
             
-            this.products.forEach(function(element, index){
+         /*   this.products.forEach(function(element, index){
              
 
                        
           that.productsFinal.push({product_id: element.product_id, quantity: element.quantity, subtotal: element.subtotal, total: that.totalAfterCoupon});
-        });
-            this.totalDiscountSum = (this.subTotalSum - this.totalSum).toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
+        });*/
+           // this.totalDiscountSum = (this.subTotalSum - this.totalSum).toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
             console.log("Path to coupon applied");
             console.log('that.productsFinal ', that.productsFinal);
             this.newOrder = {
