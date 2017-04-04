@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.medicinebazaar361733" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.ionicframework.medicinebazaar361733" version="1.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Medicine Bazaar</name>
   <description>Android E-commerce Application for Medicine Bazaar.</description>
   <author email="genithub@gmail.com" href="http://genithub.com/">genithub Team</author>

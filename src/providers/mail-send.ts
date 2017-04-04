@@ -29,7 +29,7 @@ export class MailSend {
         "from_name": "User Prescription",
         "to": [
             {
-                "email":"genithub@gmail.com",
+                "email":"medicinebazaar.in@gmail.com",
                 "name": "Recipient Name",
                 "type": "to"
             }

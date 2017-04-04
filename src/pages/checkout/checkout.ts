@@ -79,6 +79,9 @@ public productsArray: Array<any> = [];
     totalDiscountSum: any = 0;
     excludedProductsFound: boolean = false;
     excludedCategoriesFound: boolean = false;
+    couponApplicable: boolean = false;
+    couponRequestInitiated: boolean = false;
+    couponRequestCompleted: boolean = false;
 
  constructor(public formBuilder:FormBuilder,public navCtrl:NavController,public nav:NavParams,public fetchProducts:FetchProducts, public storage:Storage,
    public loadingCtrl: LoadingController, public toastCtrl: ToastController, private app: App, public modalCtrl: ModalController, 
@@ -201,6 +204,9 @@ couponValidate(){
      this.couponApplied = false;
     this.couponNotFound = false;
     this.couponError = false;
+    this.couponApplicable = false; 
+    this.couponRequestInitiated = true;
+    this.couponRequestCompleted = false;
     if (!this.couponValidationForm.valid){
       console.log(this.couponValidationForm.value);
     } else {
@@ -226,6 +232,7 @@ couponValidate(){
           var that = this;
           
           that.productsFinal = [];
+          that.totalSum = 0;
           console.log('productsFinal ', that.productsFinal);
           console.log('products ', that.products);
           //this.products.forEach(function(element, index){
@@ -239,6 +246,8 @@ couponValidate(){
                 for(let product of that.couponExcludeProducts){
                   console.log('productId ', element.product_id);
                   if(element.product_id == product){
+                    that.couponApplicable = false;
+                      that.totalSum += element.subtotal;
                       that.productsFinal.push({product_id: element.product_id, quantity: element.quantity, subtotal: element.subtotal, total: element.subtotal});
                        that.excludedProductsFound = true;   
                       console.log('excludedProductsFound ', that.excludedProductsFound);
@@ -257,7 +266,8 @@ couponValidate(){
                    console.log('categoryId ', category_id);
                   
                   if(category_id == category){
-
+                    that.couponApplicable = false;
+                    that.totalSum += element.subtotal;
                       that.productsFinal.push({product_id: element.product_id, quantity: element.quantity, subtotal: element.subtotal, total: element.subtotal});
                        that.excludedCategoriesFound = true;   
 
@@ -275,9 +285,11 @@ couponValidate(){
               
               if(!that.excludedProductsFound && !that.excludedCategoriesFound){
                 that.couponApplied = true;
+                that.couponApplicable = true;
                        that.totalAfterCoupon = that.discountTotalMul * element.subtotal;
                        //that.subTotalSum += Number(element.subtotal);
                    //that.totalSum += Number(that.totalAfterCoupon);
+                   that.totalSum += that.totalAfterCoupon;
                 that.productsFinal.push({product_id: element.product_id, quantity: element.quantity, subtotal: element.subtotal, total: that.totalAfterCoupon});
                
                       console.log('productsFinal None excluded ', that.productsFinal);
@@ -285,13 +297,13 @@ couponValidate(){
 
           //that.productsFinal.push({product_id: element.product_id, quantity: element.quantity, subtotal: element.subtotal, total: that.totalAfterCoupon});
         }
-               
+            that.totalDiscountSum = (that.subTotalSum - that.totalSum).toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];;   
         }else{
           console.log('Coupon is not valid.');
           this.couponNotFound = true;
           
         }
-      
+        this.couponRequestCompleted = true;
         this.submitAttemptCoupon = false;
       }, (error) => {
         this.couponError = true;

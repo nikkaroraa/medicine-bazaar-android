@@ -2,7 +2,7 @@ import { Component, NgZone } from '@angular/core';
 import { NavController, NavParams, ToastController, ModalController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import {FetchProducts} from '../../providers/fetch-products.service';
-import { CheckoutPage } from '../checkout/checkout';
+
 import firebase from 'firebase';
 import { SendSms } from '../../providers/send-sms';
 import {AlertController,  LoadingController} from 'ionic-angular';
