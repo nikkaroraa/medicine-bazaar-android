@@ -25,6 +25,8 @@
   
     <p style="font-size:1.3em;font-size:600;">{{userShipping.address1}}</p>
     <p style="font-size:1.3em;font-size:600;">{{userShipping.address2}}</p>
+    
+    Subtotal: <span style="font-size:1.3em;font-size:600;">&#8377;{{subTotalSum}}</span>
     <br />
     <div style="font-size: 1.3em;">
     <ion-checkbox color="primary" (ionChange)='couponChange()' [(ngModel)]="couponStatus" checked="false"></ion-checkbox>
@@ -32,7 +34,11 @@
     </div>
     <div *ngIf="couponApplied">
       Yay! {{couponAmountDisplay}}{{couponDiscountType}} Discount Coupon Successfully Applied!
+      <br />
+      Discount: &#8377;<span style="font-size:1.3em;">{{totalDiscountSum}}</span>
+      Total Amount: &#8377;<span style="font-size:1.3em;font-size:600;">{{totalSum}}</span>
     </div>
+
     <div *ngIf="couponNotFound">
       No discount coupon found for this code! Try again with a different one.
     </div>

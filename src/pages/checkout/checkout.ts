@@ -34,9 +34,11 @@ public productsArray: Array<any> = [];
     public orderData = {};
     public products: Array<any> = [];
    productsFinal: Array<any> = [];
+    productCategoriesID: Array<any> = [];
     public customerID: any;
     public shipping_address: any = {};
     public customerDescription: any = {};
+
     loading: any;
     orderDataID: any;
     emailVerified: boolean = false;
@@ -69,7 +71,10 @@ public productsArray: Array<any> = [];
     totalAfterCoupon: any = 0;
     discountTotalMul: any = 0;
     couponAmountDisplay: any = 0;
-    subtotalAmount: any = 0;
+    subtotalAmount: any = 0
+    subTotalSum: any = 0;
+    totalSum: any = 0;
+    totalDiscountSum: any = 0;
 
  constructor(public formBuilder:FormBuilder,public navCtrl:NavController,public nav:NavParams,public fetchProducts:FetchProducts, public storage:Storage,
    public loadingCtrl: LoadingController, public toastCtrl: ToastController, private app: App, public modalCtrl: ModalController, 
@@ -137,18 +142,28 @@ public productsArray: Array<any> = [];
 this.storage.get('cartProducts').then((val)=> {
         
        console.log('On the test-page: ', val);
-       
+       this.subTotalSum = 0;
        if(val){
 
           this.productsArray = val;
          var that = this;
+         console.log('Products array in the constructor (productsArray): ', that.productsArray);
          this.productsArray.forEach(function(element, index){
-          that.subtotalAmount = (element.count)*(element.price)
-          that.products.push({product_id: element.id, quantity: element.count, subtotal: that.subtotalAmount});
+           
+          that.subtotalAmount = (element.count) * (Number(element.price));
+          that.subTotalSum += that.subtotalAmount;
+          // element.categories is an array
+            element.categories.forEach(function(category, position){
+                that.productCategoriesID.push(category.id);
+            });
+          
+          that.products.push({product_id: element.id, quantity: element.count, subtotal: that.subtotalAmount, categories_id: that.productCategoriesID});
+
         });
        }else if(!val){
          this.products = val;
        }
+       console.log('Products array in the constructor (products): ', that.products);
       
 
             });
@@ -191,6 +206,10 @@ couponValidate(){
           this.couponDetails = coupon[0];
           this.couponApplied = true;
           this.couponAmount = coupon[0].amount;
+          this.discountTotalMul = ((100 - Number(this.couponAmount))/100);
+           //  this.totalAfterCoupon = this.discountTotalMul * that.subtotalBeforeCoupon;
+             // that.subTotalSum += Number(element.subtotal);
+             //that.totalSum += Number(that.totalAfterCoupon);
            this.couponAmountDisplay = Math.floor(Number(this.couponAmount));
           this.couponType = coupon[0].discount_type;
           if(this.couponType == 'percent'){
@@ -278,14 +297,16 @@ couponValidate2(){
           if(this.couponApplied){
             this.subtotalBeforeCoupon = 0;
             this.totalAfterCoupon = 0;
+            
             this.discountTotalMul = ((100 - Number(that.couponAmount))/100);
             
             this.products.forEach(function(element, index){
-             that.subtotalBeforeCoupon = element.subtotal;
-             that.totalAfterCoupon = that.discountTotalMul * that.subtotalBeforeCoupon;
+             
+
+                       
           that.productsFinal.push({product_id: element.product_id, quantity: element.quantity, subtotal: element.subtotal, total: that.totalAfterCoupon});
         });
-
+            this.totalDiscountSum = (this.subTotalSum - this.totalSum).toString().match(/^-?\d+(?:\.\d{0,2})?/)[0];
             console.log("Path to coupon applied");
             console.log('that.productsFinal ', that.productsFinal);
             this.newOrder = {
