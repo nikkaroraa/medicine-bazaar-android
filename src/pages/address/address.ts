@@ -57,6 +57,7 @@ shipping: any;
           bLastName: ['', Validators.compose([Validators.maxLength(30), Validators.pattern('[a-zA-Z ]*'), Validators.required])],
           bAddress1:['', Validators.compose([Validators.maxLength(70),  Validators.required])],
           bAddress2:['', Validators.compose([Validators.maxLength(70)])],
+          bnearestLandmark: ['', Validators.compose([Validators.maxLength(70)])],
           bPinCode:['', Validators.compose([Validators.maxLength(6), Validators.pattern('[0-9 ]*'), Validators.required])],
         //bPhone:['', Validators.compose([Validators.maxLength(10), Validators.pattern('[0-9 ]*'), Validators.required])],
           bPhone:['', Validators.compose([Validators.maxLength(10), Validators.pattern('[0-9 ]*')])],
@@ -385,6 +386,7 @@ if(this.signUpForm.valid){
     this.submitAttempt=true;
       console.log("signUp function");
 console.log("newUser: ", this.signUpForm);
+console.log('Billing Address Line 2: ', this.signUpForm.value.bAddress2 + ' Near: ' + this.signUpForm.value.bnearestLandmark);
   this.userSend = {
   "email": this.userDetails.email,
   "password": this.userDetails.password,
@@ -396,7 +398,7 @@ console.log("newUser: ", this.signUpForm);
     "last_name": this.signUpForm.value.bLastName,
     "company": "",
     "address_1": this.signUpForm.value.bAddress1,
-    "address_2": this.signUpForm.value.bAddress2,
+    "address_2": this.signUpForm.value.bAddress2 + ' Near: ' + this.signUpForm.value.bnearestLandmark,
     "city": this.signUpForm.value.bCity,
     "state": this.signUpForm.value.bState,
     "postcode": this.signUpForm.value.bPinCode,
@@ -409,7 +411,7 @@ console.log("newUser: ", this.signUpForm);
     "last_name": this.signUpForm.value.bLastName,
     "company": "",
     "address_1": this.signUpForm.value.bAddress1,
-    "address_2": this.signUpForm.value.bAddress2,
+    "address_2": this.signUpForm.value.bAddress2 + ' Near: ' + this.signUpForm.value.bnearestLandmark,
     "city": this.signUpForm.value.bCity,
     "state": this.signUpForm.value.bState,
     "postcode": this.signUpForm.value.bPinCode,
@@ -502,7 +504,7 @@ console.log("newUser: ", this.signUpForm);
     last_name: this.signUpForm.value.bLastName,
     
     address1: this.signUpForm.value.bAddress1,
-    address2: this.signUpForm.value.bAddress2,
+    address2: this.signUpForm.value.bAddress2 + ' Near: ' + this.signUpForm.value.bnearestLandmark,
     city: this.signUpForm.value.bCity,
     state: this.signUpForm.value.bState,
     postcode: this.signUpForm.value.bPinCode,
@@ -516,7 +518,7 @@ console.log("newUser: ", this.signUpForm);
     last_name: this.signUpForm.value.bLastName,
     
     address1: this.signUpForm.value.bAddress1,
-    address2: this.signUpForm.value.bAddress2,
+    address2: this.signUpForm.value.bAddress2 + ' Near: ' + this.signUpForm.value.bnearestLandmark,
     city: this.signUpForm.value.bCity,
     state: this.signUpForm.value.bState,
     postcode: this.signUpForm.value.bPinCode,

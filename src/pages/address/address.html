@@ -44,7 +44,14 @@
       <ion-input type="text" #bAddress2 formControlName="bAddress2" (change)="elementChanged(bAddress2)"></ion-input>
     </ion-item>
     <ion-item class="error-message" *ngIf="!signUpForm.controls.bAddress2.valid && (bAddress2 || submitAttempt)">
-      <p>Only alphabets allowed</p>
+      <p>Maximum length is set to 70 characters</p>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Nearest Landmark</ion-label>
+      <ion-input type="text" #bnearestLandmark formControlName="bnearestLandmark" (change)="elementChanged(bnearestLandmark)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!signUpForm.controls.bnearestLandmark.valid && (bnearestLandmark || submitAttempt)">
+      <p>Maximum length is set to 70 characters</p>
     </ion-item>
     <ion-item>
     <ion-label floating>Country</ion-label>
@@ -85,7 +92,7 @@
    
     <ion-item>
 
-     <ion-label floating>Phone</ion-label>
+     <ion-label floating>Mobile</ion-label>
      <ion-input type="text" #bPhone formControlName="bPhone" name="bPhone" (change)="elementChanged(bPhone)"> </ion-input><ion-icon *ngIf="phoneVerified" md="md-checkmark-circle"></ion-icon>
      </ion-item>
      <ion-item class="error-message" *ngIf="!signUpForm.controls.bPhone.valid && (bPhoneChanged || submitAttempt)">
