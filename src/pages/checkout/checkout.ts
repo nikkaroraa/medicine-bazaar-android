@@ -7,7 +7,7 @@ import {LastOrderPage} from '../last-order/last-order';
 import {AddressPage} from '../address/address';
 import {HomePage} from '../home/home';
 import { App } from 'ionic-angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import firebase from 'firebase';
 import { CouponGet } from '../../providers/coupon-get';
 import {SelectAddressPagePage} from '../select-address-page/select-address-page';
@@ -84,6 +84,11 @@ public productsArray: Array<any> = [];
     couponRequestInitiated: boolean = false;
     couponRequestCompleted: boolean = false;
     orderShippingAddress: any = {};
+    paymentMethods;
+    paymentMethodForm;
+    paymentMethod: any = 'COD';
+    paymentMethodTitle: any = 'Cash On Delivery';
+    paymentMethodObject: any = {};
 
  constructor(public formBuilder:FormBuilder,public navCtrl:NavController,public navParams:NavParams,public fetchProducts:FetchProducts, public storage:Storage,
    public loadingCtrl: LoadingController, public toastCtrl: ToastController, private app: App, public modalCtrl: ModalController, 
@@ -100,6 +105,9 @@ public productsArray: Array<any> = [];
           sCity:['New Delhi',]
           
 }); 
+      this.paymentMethodForm = new FormGroup({
+      "paymentMethods": new FormControl({value: 'COD', disabled: false})
+});
       this.couponValidationForm = formBuilder.group({
       coupon : ['', Validators.compose([Validators.required])],
     });
@@ -218,7 +226,38 @@ this.storage.get('cartProducts').then((val)=> {
           console.log("Coupon Validation page not appearing....");
         }
      
-      }      
+      }    
+      
+      placeOrder(event) {
+    console.log('Submitting form', this.paymentMethodForm.value);
+    this.paymentMethodObject = this.paymentMethodForm.value;
+    this.paymentMethod = this.paymentMethodObject.paymentMethods;
+    switch(this.paymentMethod){
+      case 'COD':
+       this.paymentMethodTitle = 'Cash On Delivery';
+       break;
+      case 'paytm':
+      this.paymentMethodTitle = 'PayTM';
+      break;
+      case 'onlinepayment':
+      this.paymentMethodTitle = 'Online Payment';
+      break;
+      case 'payugateway':
+      this.paymentMethodTitle = 'PayU Gateway';
+      break;
+      case 'cheque/dd':
+      this.paymentMethodTitle = 'Cheque / DD';
+      break;
+      default:
+      this.paymentMethodTitle = 'Cash On Delivery';
+    }
+    setTimeout(() => {
+      
+    }, 300);
+    this.placeOrderDefault();
+    
+}
+
         elementChanged(input){
     let field = input.inputControl.name;
     this[field + "Changed"] = true;
@@ -338,6 +377,7 @@ couponValidate(){
       });
     }
   }
+  /*
 couponValidate2(){
 
     this.submitAttemptCoupon2 = true;
@@ -377,7 +417,7 @@ couponValidate2(){
         this.submitAttemptCoupon = false;
       });
     }
-  }
+  }*/
   changeAddress(){
 
         
@@ -418,8 +458,8 @@ couponValidate2(){
             console.log("Path to coupon applied");
             console.log('that.productsFinal ', that.productsFinal);
             this.newOrder = {
-      "payment_method": "COD",
-      "payment_method_title": "Cash On Delivery",
+      "payment_method": that.paymentMethod,
+      "payment_method_title": this.paymentMethodTitle,
       "set_paid": true,
       "billing": {
         "first_name": this.userBilling.first_name,
@@ -457,8 +497,8 @@ couponValidate2(){
           }else{
             console.log("Path to coupon not applied");
             this.newOrder = {
-      "payment_method": "COD",
-      "payment_method_title": "Cash On Delivery",
+      "payment_method": this.paymentMethod,
+      "payment_method_title": this.paymentMethodTitle,
       "set_paid": true,
       "billing": {
         "first_name": this.userBilling.first_name,

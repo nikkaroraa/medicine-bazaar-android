@@ -160,7 +160,7 @@ firebase.auth().onAuthStateChanged((user) => {
     // navigate to the new page if it is not the current page
     //this.nav.setRoot(page.component);
     if(this.billingExists){
-      this.nav.push(SelectAddressPagePage);
+      this.nav.push(CartPage);
     }else{
       this.nav.push(AddressPage);
     }

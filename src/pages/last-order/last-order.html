@@ -35,13 +35,17 @@
 		
     
     </ion-list>
-    	Sub-total: &#8377;<span style="font-size:1.5em;">{{subTotal}}</span>
+    	<div *ngIf='couponDiscount'>
+      Sub-total: &#8377;<span style="font-size:1.5em;">{{subTotal}}</span>
       <br />
+      
       Discount Coupon: <span style="font-size:1.3em;">{{couponApplied.code}}</span>
       <br />
       Discount: &#8377;<span style="font-size:1.5em;">{{discountAmount}}</span>
+      </div>
       <br />
       Total: <span style="font-size:1.5em;">&#8377;{{orderDetails.total}}</span>
+      
 </ion-card-content>
 </ion-card>
 <ion-card>
@@ -52,8 +56,8 @@
     	
     	<p style="font-size:1.2em;">{{orderShipping.first_name}} {{orderShipping.last_name}}</p>
     	
-    	<p style="font-size:1.2em;">{{orderShipping.address_1}}</p>
-    	<p style="font-size:1.2em;">{{orderShipping.address_2}}</p>
+    	<p style="font-size:1.2em;" >{{orderShipping.address_1}}</p>
+    	<p style="font-size:1.2em;" [innerHTML]="orderShipping.address_2"></p>
     	<p style="font-size:1.2em;">{{orderShipping.postcode}}</p>
     	
   </ion-card-content>

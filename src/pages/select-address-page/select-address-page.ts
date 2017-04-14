@@ -151,7 +151,7 @@ this.submitAttempt=true;
     last_name: this.orderForm.value.sLastName,
     
     address1: this.orderForm.value.sAddress1,
-    address2: this.orderForm.value.sAddress2 + ' Near: ' + this.orderForm.value.snearestLandmark,
+    address2: this.orderForm.value.sAddress2 + '<br />Near: ' + this.orderForm.value.snearestLandmark,
     city: this.orderForm.value.sCity,
     state: this.orderForm.value.sState,
     postcode: this.orderForm.value.sPinCode,

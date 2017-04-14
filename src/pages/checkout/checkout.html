@@ -15,7 +15,7 @@
 
 <ion-content padding>
  
-    <ion-card *ngIf="!useDifferentAddress">
+    <ion-card>
   <ion-card-header text-center>
     Use stored address
   </ion-card-header>
@@ -69,8 +69,47 @@
     
     <div>&nbsp;</div>
 
-   
-    <button text-center ion-button block color="secondary" (click)="placeOrderDefault()" [hidden]="orderPlaced">Place Order</button> 
+   <ion-card>
+    <ion-card-header>
+    Choose Payment Method
+    </ion-card-header>
+    <ion-card-content>
+    <form (submit)="placeOrder($event)" [formGroup]="paymentMethodForm">
+    <ion-list radio-group formControlName="paymentMethods">
+
+      <ion-list-header>
+        Payment Methods
+      </ion-list-header>
+
+      <ion-item>
+        <ion-label>Cash On Delivery</ion-label>
+        <ion-radio value="COD" checked="true"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Paytm</ion-label>
+        <ion-radio value="paytm" disabled="true"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Online Payment</ion-label>
+        <ion-radio value="onlinepayment" disabled="true"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>PayU Gateway</ion-label>
+        <ion-radio value="payugateway" disabled="true"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Cheque / DD</ion-label>
+        <ion-radio value="cheque/dd" disabled="true"></ion-radio>
+      </ion-item>
+      
+    </ion-list>
+    <button text-center ion-button block color="secondary" type="submit" [hidden]="orderPlaced">Place Order</button> 
+    
+  </form>
+
+    </ion-card-content>
+   </ion-card>
+  
      <button text-center ion-button block color="danger" (click)="cancel()">Cancel</button>
   </ion-card-content>
 </ion-card>
@@ -80,6 +119,7 @@
 <ion-checkbox color="dark" (ionChange)='changeAddress()' [(ngModel)]="differentAddressFlag" checked="false"></ion-checkbox>
     &nbsp;<span style="font-size: 1em;font-family: 'Roboto', sans-serif;">Want to Use a New Delivery Address?</span>
 </div>-->
+<!--
 <ion-card *ngIf="useDifferentAddress">
   <ion-card-header text-center>
     Use a New Delivery Address
@@ -154,7 +194,7 @@
 <div>&nbsp;</div>
 
  <button text-center ion-button block color="secondary" type="submit" [hidden]="orderPlaced">Place Order</button>
-  </form>
+  </form> -->
   <!--
   <div style="font-size: 1.3em;">
     <ion-checkbox color="primary" (ionChange)='couponChange()' [(ngModel)]="couponStatus" checked="false"></ion-checkbox>
@@ -186,12 +226,12 @@
 
   
     </div>-->
-  </ion-list>
+ <!-- </ion-list>
 
 
 
    <button text-center ion-button block color="danger" (click)="cancel()">Cancel</button>
    
   </ion-card-content>
-</ion-card>
+</ion-card>-->
 </ion-content>
