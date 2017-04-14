@@ -1,85 +1,40 @@
 <!--
-  Generated template for the Checkout page.
+  Generated template for the SelectAddressPage page.
 
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 -->
 <ion-header>
 
-  <ion-navbar hideBackButton="true">
-    <ion-title><span color="blank">Checkout</span></ion-title>
+  <ion-navbar>
+    <ion-title>Shipping Address</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
- 
+
     <ion-card *ngIf="!useDifferentAddress">
   <ion-card-header text-center>
     Use stored address
   </ion-card-header>
   <ion-card-content text-center>
  
-    <p style="font-size:1.3em;font-size:600;">{{orderShippingAddress.first_name}} {{orderShippingAddress.last_name}}</p>
+    <p style="font-size:1.3em;font-size:600;">{{userShipping.first_name}} {{userShipping.last_name}}</p>
   
-    <p style="font-size:1.3em;font-size:600;">{{orderShippingAddress.address1}}</p>
-    <!--<p style="font-size:1.3em;font-size:600;">{{orderShippingAddress.address2}}</p>-->
-    
-    Subtotal: &#8377;<span style="font-size:1.5em;font-size:600;">{{subTotalSum}}</span>
-    <br />
-    <div *ngIf="couponApplicable && couponRequestInitiated && couponRequestCompleted">
-      <span color="danger" style="font-size: 1em;">Yay! {{couponAmountDisplay}}{{couponDiscountType}} Discount Coupon Successfully Applied!</span>
-      <br />
-      Discount: &#8377;<span style="font-size:1.5em;">{{totalDiscountSum}}</span>
-      <br />
-      Total Amount: &#8377;<span style="font-size:1.5em;font-size:600;">{{totalSum}}</span>
-    </div>
-    <div *ngIf="couponRequestInitiated && !couponApplicable && couponRequestCompleted">
-      <span color="danger" style="font-size: 1em;">Sorry! The coupon doesn't apply on the products in the cart.</span>
-    </div>
-
-    <div *ngIf="couponNotFound">
-      <span color="danger" style="font-size: 1em;">No discount coupon found for this code! Try again with a different one.</span>
-    </div>
-    <div style="font-size: 1.3em;">
-    <ion-checkbox color="primary" (ionChange)='couponChange()' [(ngModel)]="couponStatus" checked="false"></ion-checkbox>
-    &nbsp;<span style="font-size: 1em;font-family: 'Roboto', sans-serif;">Have a coupon?</span>
-    </div>
-    
-    <div [hidden]="!hasCoupon">
-    <form [formGroup]="couponValidationForm" (submit)="couponValidate()" novalidate>
-
-    <ion-item>
-      <ion-label stacked>Coupon</ion-label>
-      <ion-input #coupon formControlName="coupon" type="text" (change)="elementChanged(coupon)"
-        placeholder="Type coupon code..."
-        [class.invalid]="!couponValidationForm.controls.coupon.valid && (couponChanged || submitAttempt)"></ion-input>
-    </ion-item>
-    <ion-item class="error-message" *ngIf="!couponValidationForm.controls.coupon.valid  && (couponChanged || submitAttempt)">
-      <p>Please enter a valid coupon.</p>
-    </ion-item>
-
-    <button ion-button [disabled]="submitAttemptCoupon" block type="submit">
-      Apply Coupon
-    </button>
-
-  </form>
-    </div>
-    
-    <div>&nbsp;</div>
-
-   
-    <button text-center ion-button block color="secondary" (click)="placeOrderDefault()" [hidden]="orderPlaced">Place Order</button> 
+    <p style="font-size:1.3em;font-size:600;">{{userShipping.address1}}</p>
+    <!--<p style="font-size:1.3em;font-size:600;">{{userShipping.address2}}</p>-->
+    <button text-center ion-button block color="secondary" (click)="setShippingAddressDefault()" [hidden]="orderPlaced">Proceed</button> 
      <button text-center ion-button block color="danger" (click)="cancel()">Cancel</button>
   </ion-card-content>
 </ion-card>
-<!--
+
 <h2 text-center *ngIf="!useDifferentAddress"> OR </h2>
 <div text-center>
 <ion-checkbox color="dark" (ionChange)='changeAddress()' [(ngModel)]="differentAddressFlag" checked="false"></ion-checkbox>
     &nbsp;<span style="font-size: 1em;font-family: 'Roboto', sans-serif;">Want to Use a New Delivery Address?</span>
-</div>-->
+</div>
 <ion-card *ngIf="useDifferentAddress">
   <ion-card-header text-center>
     Use a New Delivery Address
@@ -88,7 +43,7 @@
 
     <h3 text-center>Shipping Address</h3>
    <ion-list no-lines>  
-<form [formGroup]="orderForm" (ngSubmit)="placeOrder()">
+<form [formGroup]="orderForm" (ngSubmit)="setShippingAddress()">
     <ion-item>
       <ion-label floating>First Name</ion-label>
       <ion-input type="text" #sFirstName formControlName="sFirstName" (change)="elementChanged(sFirstName)"></ion-input>
@@ -116,6 +71,13 @@
     </ion-item>
     <ion-item class="error-message" *ngIf="!orderForm.controls.sAddress2.valid && (sAddress2 || submitAttempt)">
       <p>Only alphabets and numerals are required</p>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Nearest Landmark</ion-label>
+      <ion-input type="text" #snearestLandmark formControlName="snearestLandmark" (change)="elementChanged(snearestLandmark)"></ion-input>
+    </ion-item>
+    <ion-item class="error-message" *ngIf="!orderForm.controls.snearestLandmark.valid && (snearestLandmark || submitAttempt)">
+      <p>Maximum length is set to 70 characters</p>
     </ion-item>
     <ion-item>
     <ion-label floating>Country</ion-label>
@@ -153,39 +115,8 @@
 
 <div>&nbsp;</div>
 
- <button text-center ion-button block color="secondary" type="submit" [hidden]="orderPlaced">Place Order</button>
+ <button text-center ion-button block color="secondary" type="submit" [hidden]="orderPlaced">Proceed</button>
   </form>
-  <!--
-  <div style="font-size: 1.3em;">
-    <ion-checkbox color="primary" (ionChange)='couponChange()' [(ngModel)]="couponStatus" checked="false"></ion-checkbox>
-    &nbsp;<span style="font-size: 1em;font-family: 'Roboto', sans-serif;">Have a coupon?</span>
-    </div>
-    <div *ngIf="couponApplied">
-      Yay! {{couponAmount}}{{couponDiscountType}} Discount Coupon Successfully Applied!
-    </div>
-    <div *ngIf="couponNotFound">
-      No discount coupon found for this code! Try again with a different one.
-    </div>
-    <div [hidden]="!hasCoupon">
-    
-
-    
-    <ion-item>
-    <ion-label stacked>Coupon</ion-label>
-    <ion-input #couponCode (change)="elementChanged(couponCode)" type="text" [(ngModel)]="couponCode" placeholder="Type coupon code..."></ion-input>
-  </ion-item>
-      
-    
-    <ion-item class="error-message" *ngIf="coupon  && (couponCodeChanged || submitAttempt)">
-      <p>Please enter a valid coupon.</p>
-    </ion-item>
-
-    <button ion-button [disabled]="submitAttemptCoupon" block (click)="couponValidate()">
-      Apply Coupon
-    </button>
-
-  
-    </div>-->
   </ion-list>
 
 
@@ -194,4 +125,5 @@
    
   </ion-card-content>
 </ion-card>
+
 </ion-content>

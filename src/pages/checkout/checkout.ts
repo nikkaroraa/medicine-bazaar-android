@@ -10,7 +10,8 @@ import { App } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import firebase from 'firebase';
 import { CouponGet } from '../../providers/coupon-get';
-
+import {SelectAddressPagePage} from '../select-address-page/select-address-page';
+ 
 @Component({
   selector: 'page-checkout',
   templateUrl: 'checkout.html',
@@ -82,8 +83,9 @@ public productsArray: Array<any> = [];
     couponApplicable: boolean = false;
     couponRequestInitiated: boolean = false;
     couponRequestCompleted: boolean = false;
+    orderShippingAddress: any = {};
 
- constructor(public formBuilder:FormBuilder,public navCtrl:NavController,public nav:NavParams,public fetchProducts:FetchProducts, public storage:Storage,
+ constructor(public formBuilder:FormBuilder,public navCtrl:NavController,public navParams:NavParams,public fetchProducts:FetchProducts, public storage:Storage,
    public loadingCtrl: LoadingController, public toastCtrl: ToastController, private app: App, public modalCtrl: ModalController, 
    public couponGet: CouponGet, public alertCtrl: AlertController) 
     {
@@ -102,10 +104,34 @@ public productsArray: Array<any> = [];
       coupon : ['', Validators.compose([Validators.required])],
     });
       
+      var that = this;
       this.zone = new NgZone({});
+      if(navParams.get('shippingAddress')){
+      this.orderShippingAddress = navParams.get('shippingAddress');
+          console.log('orderShippingAddress', this.orderShippingAddress);
+          
+      }else if(!navParams.get('shippingAddress')){
+         //shippingAddress is not set
+
+         this.loading = this.loadingCtrl.create({
+      
+    
+      content: 'Shipping Address is not set...'
+      
+    });
+    
+    this.loading.present();
+
+    setTimeout(() => {
+      this.loading.dismiss();
+     this.navCtrl.push(SelectAddressPagePage);
+    }, 2000);
+       }
+
+      
   this.user = firebase.auth().currentUser;
   this.userUID = this.user.uid;
-  var that = this;
+  
  
   
 
@@ -408,14 +434,14 @@ couponValidate2(){
         "phone": this.userBilling.phone
       },
       "shipping": {
-        "first_name": this.userShipping.first_name,
-        "last_name": this.userShipping.last_name,
-        "address_1": this.userShipping.address1,
-        "address_2": this.userShipping.address2,
-        "city": this.userShipping.city,
-        "state": this.userShipping.state,
-        "postcode": this.userShipping.postcode,
-        "country": this.userShipping.country
+        "first_name": this.orderShippingAddress.first_name,
+        "last_name": this.orderShippingAddress.last_name,
+        "address_1": this.orderShippingAddress.address1,
+        "address_2": this.orderShippingAddress.address2,
+        "city": this.orderShippingAddress.city,
+        "state": this.orderShippingAddress.state,
+        "postcode": this.orderShippingAddress.postcode,
+        "country": this.orderShippingAddress.country
       },
       "customer_id": this.customerDescription.customerID,
       "line_items": this.productsFinal,
@@ -447,14 +473,14 @@ couponValidate2(){
         "phone": this.userBilling.phone
       },
       "shipping": {
-        "first_name": this.userShipping.first_name,
-        "last_name": this.userShipping.last_name,
-        "address_1": this.userShipping.address1,
-        "address_2": this.userShipping.address2,
-        "city": this.userShipping.city,
-        "state": this.userShipping.state,
-        "postcode": this.userShipping.postcode,
-        "country": this.userShipping.country
+        "first_name": this.orderShippingAddress.first_name,
+        "last_name": this.orderShippingAddress.last_name,
+        "address_1": this.orderShippingAddress.address1,
+        "address_2": this.orderShippingAddress.address2,
+        "city": this.orderShippingAddress.city,
+        "state": this.orderShippingAddress.state,
+        "postcode": this.orderShippingAddress.postcode,
+        "country": this.orderShippingAddress.country
       },
       "customer_id": this.customerDescription.customerID,
       "line_items": this.products
@@ -508,6 +534,7 @@ couponValidate2(){
   }
         
       }
+      /*
       placeOrder(){
         if(this.orderForm.valid){
 
@@ -602,7 +629,7 @@ console.log("newUser: ", this.orderForm);
         }
            
 
-  }
+  }*/
  
  successOrder(){
 

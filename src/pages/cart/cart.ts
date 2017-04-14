@@ -6,6 +6,7 @@ import {AddressPage} from '../address/address';
 import { CheckoutPage } from '../checkout/checkout';
 import firebase from 'firebase';
 import {HomePage} from '../home/home';
+import {SelectAddressPagePage} from '../select-address-page/select-address-page';
 /*
   Generated class for the Cart page.
 
@@ -115,7 +116,7 @@ if(firebase.auth().currentUser){
  { 
    
    if(this.billingExists && this.hasProducts)
-     {this.navCtrl.push(CheckoutPage);}
+     {this.navCtrl.push(SelectAddressPagePage);}
      else if(!this.billingExists && this.hasProducts)
        {this.navCtrl.push(AddressPage);}
      else if(!this.hasProducts){

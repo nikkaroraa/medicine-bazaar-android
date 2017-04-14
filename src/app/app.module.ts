@@ -30,6 +30,7 @@ import { AddressPage } from '../pages/address/address';
 import { AuthData } from '../providers/auth-data';
 import { TestCategoryPage } from '../pages/test-category/test-category';
 import { SearchCategoryPage } from '../pages/search-category/search-category';
+import { SelectAddressPagePage } from '../pages/select-address-page/select-address-page';
 
 // YOUR SETTINGS GOES HERE!
 
@@ -65,7 +66,8 @@ export function provideStorage() {
     
     AddressPage,
     TestCategoryPage,
-    SearchCategoryPage
+    SearchCategoryPage,
+    SelectAddressPagePage
     
    
 
@@ -98,7 +100,8 @@ export function provideStorage() {
    
     AddressPage,
     TestCategoryPage,
-    SearchCategoryPage   
+    SearchCategoryPage,
+    SelectAddressPagePage   
     
       
   ],

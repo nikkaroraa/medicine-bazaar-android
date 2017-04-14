@@ -24,7 +24,9 @@ import { LoginTestPage } from '../pages/login-test/login-test';
 import { TestCategoryPage } from '../pages/test-category/test-category';
 
 
-import { Storage } from '@ionic/storage';   
+import { Storage } from '@ionic/storage'; 
+
+import {SelectAddressPagePage} from '../pages/select-address-page/select-address-page';
 @Component({
   templateUrl: 'app.html'
 })
@@ -158,7 +160,7 @@ firebase.auth().onAuthStateChanged((user) => {
     // navigate to the new page if it is not the current page
     //this.nav.setRoot(page.component);
     if(this.billingExists){
-      this.nav.push(CheckoutPage);
+      this.nav.push(SelectAddressPagePage);
     }else{
       this.nav.push(AddressPage);
     }
