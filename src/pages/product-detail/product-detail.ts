@@ -128,7 +128,8 @@ export class ProductDetailPage {
     for(var j=0; j< this.itemUpsell.length; j++){
         this.searchProduct.loadById(this.itemUpsell[j])
             .then(data => {
-    
+                            var that = this;
+ 
                 console.log("Value of "+ j + data);
                 this.substitutes.push(data);
 
@@ -138,12 +139,23 @@ export class ProductDetailPage {
                 }
                 
                 console.log(this.substitutes);
+                for(var q=0; q<that.substitutes.length; q++){
+                  if(that.substitutes[q].sale_price != ''){
+                    
+              that.saleOn = true;
+              that.substitutes[q].discount = that.substitutes[q].regular_price - that.substitutes[q].sale_price;
+              console.log('this.saleOn ', that.saleOn);
+            }else{
+              that.saleOn = false;
+
+              console.log('this.saleOn ', that.saleOn);
+            }
+          }
 
                 this.storage.get('cartProducts').then((val)=> {
 
               if(val){
 
-               var that = this;
                console.log('Inside the showToast: ', val);
                this.cartProducts = [];
 
@@ -154,15 +166,7 @@ export class ProductDetailPage {
                 console.log("This is forEach", item);
 
                 for(var q=0; q<that.substitutes.length; q++){
-                  if(that.substitutes[q].sale_price != ''){
-              that.saleOn = true;
-              that.substitutes[q].discount = that.substitutes[q].regular_price - that.substitutes[q].sale_price
-              console.log('this.saleOn ', that.saleOn);
-            }else{
-              that.saleOn = false;
-
-              console.log('this.saleOn ', that.saleOn);
-            }
+                  
                    if(item.id == that.substitutes[q].id){
                    console.log(item.id + "==" + that.substitutes[q].id);
                    that.substitutes[q].count  = item.count;

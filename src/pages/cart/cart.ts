@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
 import {AddressPage} from '../address/address';
-import { CheckoutPage } from '../checkout/checkout';
+
 import firebase from 'firebase';
 import {HomePage} from '../home/home';
 import {SelectAddressPagePage} from '../select-address-page/select-address-page';
@@ -28,10 +28,11 @@ userUID: any;
 user: any;
 userProfilium: any;
 hasProducts: boolean = false;
+loading: any;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,public storage: Storage,
-    public toastCtrl: ToastController) {
+    public toastCtrl: ToastController,public loadingCtrl: LoadingController) {
 var that = this;
       this.costSumString = this.costSum.toFixed(2);
     this.storage.get('cartProducts').then((val)=> {
@@ -116,7 +117,33 @@ if(firebase.auth().currentUser){
  { 
    
    if(this.billingExists && this.hasProducts)
-     {this.navCtrl.push(SelectAddressPagePage);}
+     { var that = this;
+       
+       that.loading = that.loadingCtrl.create({
+      
+    
+      content: 'Please Wait...'
+      
+    });
+    
+    that.loading.present();
+
+    
+     setTimeout(() => {
+     this.navCtrl.push(SelectAddressPagePage);
+    }, 200);
+
+    setTimeout(() => {
+      this.loading.dismiss();
+    }, 2000);
+
+
+      
+
+
+     }
+     
+
      else if(!this.billingExists && this.hasProducts)
        {this.navCtrl.push(AddressPage);}
      else if(!this.hasProducts){

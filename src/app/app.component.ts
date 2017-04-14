@@ -17,7 +17,7 @@ import { AccountPage } from '../pages/account/account';
 import firebase from 'firebase';
 
 import { MyAccountPage } from '../pages/my-account/my-account';
-import { CheckoutPage } from '../pages/checkout/checkout';
+
 
 import { AddressPage } from '../pages/address/address';
 import { LoginTestPage } from '../pages/login-test/login-test';
@@ -25,8 +25,6 @@ import { TestCategoryPage } from '../pages/test-category/test-category';
 
 
 import { Storage } from '@ionic/storage'; 
-
-import {SelectAddressPagePage} from '../pages/select-address-page/select-address-page';
 @Component({
   templateUrl: 'app.html'
 })

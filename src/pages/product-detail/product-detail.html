@@ -69,12 +69,10 @@
       
 
       
-      <span *ngIf="saleOn" class="value"><del>&#x20b9; {{substitute.regular_price}}</del></span>
-      <br />
-      <span class="value">&#x20b9; <span class="number">{{substitute.price}}</span></span>
+      <del *ngIf="saleOn" [innerHTML]="substitute.regular_price">&#x20b9; </del>&nbsp;&#x20b9; <span [innerHTML]="substitute.price"></span>
       <br />
       <div style="color: #E94444;font-size: 1.1em; font-weight: 600;">
-      <span>You Save: </span><span class="value">&#x20b9; <span class="number">{{substitute.discount}}</span></span>
+      You Save: &#x20b9; <span [innerHTML]="substitute.discount"></span>
       </div>
       
 <div>&nbsp;</div>
