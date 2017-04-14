@@ -26,9 +26,11 @@ export class ProductDetailPage {
     public productCount:any = 0;
     substitutesExist: boolean = false;
     imageExists: boolean = false;
+    saleOn: boolean = false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public searchProduct: SearchProduct,public toastCtrl: ToastController,public storage: Storage) {
       
-
+ 
       this.storage.get('productCount').then((val)=>{
         if(!val){
             this.productCount = 0;
@@ -54,6 +56,7 @@ export class ProductDetailPage {
       
       //end storage try
       this.selectedItem = navParams.get('product');
+      this.saleOn = false;
       this.imageExists = false;
       if(this.selectedItem.images[0].src != "https://www.medicinebazaar.in/wp-content/plugins/woocommerce/assets/images/placeholder.png"){
         this.imageExists = true;
@@ -77,10 +80,13 @@ export class ProductDetailPage {
         //this.searchProducts(this.selectedItem);
         console.log("The id's are " + this.itemUpsell);
     }
+
     this.searchProduct.load(this.selectedItemName)
         .then(data => {
             this.s_products = data;
-            console.log("The retrieved detailed product is",this.s_products);
+            console.log("The retrieved detailed product is", this.s_products);
+
+            
             this.storage.get('cartProducts').then((val)=> {
 
               if(val){
@@ -98,7 +104,7 @@ export class ProductDetailPage {
                    console.log(item.id + "==" + that.s_products[0].id);
                    that.s_products[0].count  = item.count;
                    console.log("Count changed");
-                   
+                         
                }
                
 
@@ -128,7 +134,9 @@ export class ProductDetailPage {
 
                 if(data){
                   this.substitutesExist  = true;
+                  
                 }
+                
                 console.log(this.substitutes);
 
                 this.storage.get('cartProducts').then((val)=> {
@@ -146,7 +154,15 @@ export class ProductDetailPage {
                 console.log("This is forEach", item);
 
                 for(var q=0; q<that.substitutes.length; q++){
+                  if(that.substitutes[q].sale_price != ''){
+              that.saleOn = true;
+              that.substitutes[q].discount = that.substitutes[q].regular_price - that.substitutes[q].sale_price
+              console.log('this.saleOn ', that.saleOn);
+            }else{
+              that.saleOn = false;
 
+              console.log('this.saleOn ', that.saleOn);
+            }
                    if(item.id == that.substitutes[q].id){
                    console.log(item.id + "==" + that.substitutes[q].id);
                    that.substitutes[q].count  = item.count;

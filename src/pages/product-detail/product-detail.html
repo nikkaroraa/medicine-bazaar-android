@@ -45,6 +45,7 @@
       
 
       <span class="value">&#x20b9; {{product.price}}</span>
+      
 <div>&nbsp;</div>
 <div>
     <button ion-button icon-only clear (click)="decreaseCount(product)"><ion-icon style="font-size:2em;" md="md-remove-circle" color="secondary"></ion-icon></button><span style="font-size:2em;">{{product.count}}</span><button ion-button icon-only clear (click)="increaseCount(product)"><ion-icon style="font-size:2em;" md="md-add-circle" color="secondary" style="font-size:2em;" ></ion-icon></button>
@@ -67,7 +68,15 @@
       <div style="" [innerHTML]="substitute.description"></div>
       
 
+      
+      <span *ngIf="saleOn" class="value"><del>&#x20b9; {{substitute.regular_price}}</del></span>
+      <br />
       <span class="value">&#x20b9; <span class="number">{{substitute.price}}</span></span>
+      <br />
+      <div style="color: #E94444;font-size: 1.1em; font-weight: 600;">
+      <span>You Save: </span><span class="value">&#x20b9; <span class="number">{{substitute.discount}}</span></span>
+      </div>
+      
 <div>&nbsp;</div>
 <div>
     <button ion-button icon-only clear (click)="decreaseCount(substitute)"><ion-icon style="font-size:2em;" md="md-remove-circle" color="secondary"></ion-icon></button><span style="font-size:2em;">{{substitute.count}}</span><button ion-button icon-only clear (click)="increaseCount(substitute)"><ion-icon style="font-size:2em;" md="md-add-circle" color="secondary" style="font-size:2em;" ></ion-icon></button>
